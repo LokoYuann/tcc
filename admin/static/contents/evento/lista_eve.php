@@ -22,7 +22,7 @@
 	}
 	?>
 	<form action="?page=lista_eve" method="post" >
-	Filtrar por calendário:&nbsp<select name="calendario" action="post" onchange='this.form.submit()';>
+	Filtrar por calendário:&nbsp<select name="calendario" class="form-control" action="post" onchange='this.form.submit()';>
 	<option value="none">Todos</option>
 	<?php 
 	for($i = 0; $i < count($ids); $i++)
