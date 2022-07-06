@@ -43,6 +43,12 @@
             			</a>
 					</li>
 
+					<li class="sidebar-item">
+						<a class="sidebar-link" href="?page=lista_usu">
+              			<i class="align-middle" data-feather="list"></i> <span class="align-middle">Visualizar Usuários</span>
+            			</a>
+					</li>
+
 
 				</ul>
 

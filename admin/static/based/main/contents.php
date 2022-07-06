@@ -91,6 +91,36 @@
             case 'insere_leg':
                 include "contents/legenda/insere_leg.php";
                 break;
+            
+            // usuários
+            
+            case 'addusu':
+                include "contents/usuário/addusu.php";
+                break;
+
+            case 'edit_usu':
+                include "contents/usuário/edit_usu.php";
+                break;
+
+            case 'lista_usu':
+                 include "contents/usuário/lista_usu.php";
+                break;
+
+            case 'atualiza_usu':
+                include "contents/usuário/atualiza_usu.php";
+                break;
+            
+            case 'excluir_usu':
+                include "contents/usuário/excluir_usu.php";
+                break;
+
+            case 'view_usu':
+                include "contents/usuário/view_usu.php";
+                break;
+
+            case 'insere_usu':
+                include "contents/instituição/insere_ue.php";
+                break;
 
             // home
 

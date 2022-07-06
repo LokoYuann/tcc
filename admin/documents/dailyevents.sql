@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Servidor:                     127.0.0.1
--- Versão do servidor:           10.4.22-MariaDB - mariadb.org binary distribution
+-- Versão do servidor:           10.4.18-MariaDB - mariadb.org binary distribution
 -- OS do Servidor:               Win64
 -- HeidiSQL Versão:              12.0.0.6468
 -- --------------------------------------------------------
@@ -26,15 +26,17 @@ CREATE TABLE IF NOT EXISTS `calendario` (
   `id_calendario` int(11) NOT NULL AUTO_INCREMENT,
   `ano_letivo` year(4) DEFAULT NULL,
   `id_ue` int(11) DEFAULT NULL,
+  `data_pb` date DEFAULT NULL,
   PRIMARY KEY (`id_calendario`),
   KEY `FK_calendario_ue` (`id_ue`),
   CONSTRAINT `FK_calendario_ue` FOREIGN KEY (`id_ue`) REFERENCES `ue` (`id_ue`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.calendario: ~2 rows (aproximadamente)
-REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`) VALUES
-	(1, '2022', 1),
-	(2, '2022', 2);
+DELETE FROM `calendario`;
+INSERT INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `data_pb`) VALUES
+	(1, '2022', 1, NULL),
+	(2, '2022', 2, NULL);
 
 -- Copiando estrutura para tabela dailyevent.eventos
 DROP TABLE IF EXISTS `eventos`;
@@ -52,7 +54,8 @@ CREATE TABLE IF NOT EXISTS `eventos` (
 ) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.eventos: ~2 rows (aproximadamente)
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+DELETE FROM `eventos`;
+INSERT INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(17, '2022-07-05', '2022-08-05', 1, 1),
 	(19, '2022-05-05', '2022-10-05', NULL, NULL);
 
@@ -76,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.funcionario: ~0 rows (aproximadamente)
+DELETE FROM `funcionario`;
 
 -- Copiando estrutura para tabela dailyevent.legenda
 DROP TABLE IF EXISTS `legenda`;
@@ -89,8 +93,9 @@ CREATE TABLE IF NOT EXISTS `legenda` (
   PRIMARY KEY (`id_leg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.legenda: ~2 rows (aproximadamente)
-REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
+-- Copiando dados para a tabela dailyevent.legenda: ~6 rows (aproximadamente)
+DELETE FROM `legenda`;
+INSERT INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(1, 'Avaliação', 'Avaliação', 'fa-burst', 'AV', '#d73333'),
 	(2, 'Avaliação', 'Semana que devem ocorrer as pr', 'fa-book', 'SP', '#2fc65c'),
 	(12, 'asd', 'ads', 'C:/xampp/htdocs/admin/static/img/simbolos/', 'asda', '#542626'),
@@ -112,7 +117,8 @@ CREATE TABLE IF NOT EXISTS `localidade` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.localidade: ~2 rows (aproximadamente)
-REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+DELETE FROM `localidade`;
+INSERT INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(0, 'RJ', 'RJ', 'Quintino', 'Clarimundo de Melo', '847', NULL),
 	(1, NULL, NULL, NULL, NULL, NULL, NULL);
 
@@ -132,7 +138,8 @@ CREATE TABLE IF NOT EXISTS `ue` (
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.ue: ~2 rows (aproximadamente)
-REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
+DELETE FROM `ue`;
+INSERT INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(1, '2123324085', 'Escola Técnica Estadual República', 'ETER', 'caq@faetec.rj.gov.br', NULL, 0),
 	(2, NULL, NULL, NULL, NULL, NULL, 1);
 
@@ -140,21 +147,20 @@ REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_u
 DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `mat_func` int(11) NOT NULL AUTO_INCREMENT,
-  `usuario` varchar(25) DEFAULT NULL,
-  `senha` varchar(40) DEFAULT NULL,
+  `usuario` varchar(25) CHARACTER SET utf8mb4 DEFAULT NULL,
+  `senha` varchar(40) CHARACTER SET utf8mb4 DEFAULT NULL,
   `nivel` int(1) unsigned DEFAULT 1,
   PRIMARY KEY (`mat_func`) USING BTREE,
   UNIQUE KEY `usuario` (`usuario`) USING BTREE,
   KEY `nivel` (`nivel`) USING BTREE
-) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela dailyevent.usuarios: 3 rows
-/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-REPLACE INTO `usuarios` (`mat_func`, `usuario`, `senha`, `nivel`) VALUES
-	(7, 'admin1', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 1),
-	(8, 'admin2', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 2),
-	(9, 'admin3', '40bd001563085fc35165329ea1ff5c5ecbdbbeef', 3);
-/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+-- Copiando dados para a tabela dailyevent.usuarios: ~3 rows (aproximadamente)
+DELETE FROM `usuarios`;
+INSERT INTO `usuarios` (`mat_func`, `usuario`, `senha`, `nivel`) VALUES
+	(7, 'admin1', '123', 1),
+	(8, 'admin2', '123', 2),
+	(9, 'admin3', '123', 3);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

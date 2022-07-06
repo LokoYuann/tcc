@@ -11,7 +11,7 @@ $senha = mysqli_real_escape_string($con, $_POST['senha']);
 
 // Validação do usuário/senha digitados
 $sql  = "select mat_func, usuario, nivel from usuarios where (usuario = '". $usuario ."') ";
-$sql .= "and (senha = '". sha1($senha) ."')";
+$sql .= "and (senha = '". $senha ."')";
 
 $query = mysqli_query($con, $sql);
 
