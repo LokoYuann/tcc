@@ -9,8 +9,8 @@
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
 			<div class="form-group col-md-2">
-				<label for="id_ue">ID Instituição</label>
-				<input type="text" class="form-control" name="id_ue" readonly>
+				<label for="mat_func">ID Instituição</label>
+				<input type="text" class="form-control" name="mat_func" readonly>
 			</div>
 			<div class="form-group col-md-7">
 				<label for="nome_ue">Nome Instituição</label>

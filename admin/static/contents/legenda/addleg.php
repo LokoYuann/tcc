@@ -43,7 +43,7 @@
 				<div class="modal-dialog" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLongTitle">Escolha o símbolo</h5>
+							<h5 class="modal-title" id="exampleModalLongTitle">Símbolos</h5>
 							<button type="button" class="close" data-dismiss="modal" aria-label="Close" >
 							<span aria-hidden="true">&times;</span>
 							</button>
@@ -51,11 +51,25 @@
 						<div class="modal-body">
 						<div class="container-fluid">
 						<div class="row">
-							<input class="col-md-1" type="radio" name="simbolo_leg" value="fa-home"><i class="fa fa-home"></i>
-							<input class="col-md-1" type="radio" name="simbolo_leg" value="fa-house"><i class="fa fa-book"></i>
-							<input class="col-md-1" type="radio" name="simbolo_leg" value="fa-glass"><i class="fa fa-glass"></i>
-							<input class="col-md-1" type="radio" name="simbolo_leg" value="fa-home"><i class="fa fa-home"></i>
-							<input class="col-md-1" type="radio" name="simbolo_leg" value="fa-home"><i class="fa fa-home"></i>
+						<label class="switch">
+							<input  type="radio" name="simbolo_leg" value="fa-home">
+							<span class="slider round"><i class="fa fa-home" style="font-size:190%;"></i></span>
+						</label>
+						<label class="switch" >
+							<input  type="radio" name="simbolo_leg" value="fa-glass" >
+							<span class="slider round"><i class="fa fa-glass" style="font-size:160%;"></i></span>
+						</label>
+						<label class="switch" >
+							<input  type="radio" name="simbolo_leg" value="fa-book" >
+							<span class="slider round"><i class="fa fa-book" style="font-size:160%;"></i></span>
+						</label>
+							<!-- <input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1 "><i class="fa fa-home"></i>
+							<input  type="radio" name="simbolo_leg" value="fa-book" class="col-md-1"><i class="fa fa-book"></i>
+							<input  type="radio" name="simbolo_leg" value="fa-glass" class="col-md-1"><i class="fa fa-glass"></i>
+							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i>
+							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i> -->
+							<!-- <button type="button" class="btn col-md-1 legbutton" value="fa-home"><i class="fa fa-home"></i></button>
+                            <button type="button" class="btn col-md-1 legbutton" value="fa-book"><i class="fa fa-book"></i></button> -->
 						</div>
 					</div>
 						<div class="modal-footer">

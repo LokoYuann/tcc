@@ -36,7 +36,7 @@
         <div class="clearfix"></div>
 
       </div> <!-- end login -->
-      <div class="logo">LOGO
+      <div class="logo"><img src="img/faetec.png" width="450" height="150" alt="">
           
           <div class="clearfix"></div>
       </div>

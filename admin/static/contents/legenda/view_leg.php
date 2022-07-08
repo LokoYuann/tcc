@@ -25,8 +25,8 @@
 
 	<div class="row">
 	<div class="form-group col-md-4">
-			<label for="simbolo_leg">Símbolo</label>
-			<input type="text" class="form-control" name="simbolo_leg" value="<?php echo $row["simbolo_leg"];?>" readonly>
+			<label for="simbolo_leg">Símbolo</label><br>
+			<i class='fa <?php echo $row["simbolo_leg"];?>'></i>
 		</div>
 		<div class="form-group col-md-4">
 			<label for="sigla_leg">Sigla</label><br>

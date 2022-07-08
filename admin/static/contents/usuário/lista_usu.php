@@ -42,9 +42,9 @@
 						echo "<td>".$info['nivel']." </td>";
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
-						echo "<a class='btn btn-success btn-xs' href=?page=view_ue&id_ue=".$info['mat_func']."> Visualizar </a>";
-						echo "<a class='btn btn-warning btn-xs' href=?page=edit_ue&id_ue=".$info['mat_func']."> Editar </a>"; 
-						echo "<a href=?page=excluir_ue&id_ue=".$info['mat_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
+						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&mat_func=".$info['mat_func']."> Visualizar </a>";
+						echo "<a class='btn btn-warning btn-xs' href=?page=edit_usu&mat_func=".$info['mat_func']."> Editar </a>"; 
+						echo "<a href=?page=excluir_usu&mat_func=".$info['mat_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
 					}
 				echo "</tr></tbody></table>";
 			?>				
@@ -67,18 +67,18 @@
 					$posterior = (($pagina+1) >= $totalpagina) ? $totalpagina : $pagina+1;
 
 					echo "<ul class='pagination'>";
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_ue&pagina=1'> Primeira</a></li> "; 
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_ue&pagina=$anterior\"> Anterior</a></li> ";
+					echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=1'> Primeira</a></li> "; 
+					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$anterior\"> Anterior</a></li> ";
 
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_ue&pagina=".$pagina."'><strong>".$pagina."</strong></a></li> ";
+					echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=".$pagina."'><strong>".$pagina."</strong></a></li> ";
 
 					for($i = $pagina+1; $i < $pagina+$exibir; $i++){
 						if($i <= $totalpagina)
-						echo "<li class='page-item'><a class='page-link' href='?page=lista_ue&pagina=".$i."'> ".$i." </a></li> ";
+						echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=".$i."'> ".$i." </a></li> ";
 					}
 
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_ue&pagina=$posterior\"> Pr&oacute;xima</a></li> ";
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_ue&pagina=$totalpagina\"> &Uacute;ltima</a></li></ul>";
+					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$posterior\"> Pr&oacute;xima</a></li> ";
+					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$totalpagina\"> &Uacute;ltima</a></li></ul>";
 
 				?>	
 			</div>

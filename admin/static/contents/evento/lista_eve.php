@@ -107,11 +107,11 @@
 
 					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_eve&pagina=$posterior\"> Pr&oacute;xima</a></li> ";
 					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_eve&pagina=$totalpagina\"> &Uacute;ltima</a></li></ul>";
-
 				?>	
 			</div>
 		</div><!--bottom-->
 	</div>
+	<?php mysqli_close($con); ?>
 </div><!--main-->
 
 
