@@ -119,7 +119,7 @@
                 break;
 
             case 'insere_usu':
-                include "contents/instituição/insere_ue.php";
+                include "contents/usuário/insere_usu.php";
                 break;
 
             // home

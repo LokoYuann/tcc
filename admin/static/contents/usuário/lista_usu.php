@@ -1,4 +1,10 @@
-﻿<div class="container-fluid">
+﻿<style>
+	.centro {
+		text-align:center;
+	}
+</style>
+
+<div class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
 			<h2>Usuários</h2>
@@ -28,18 +34,18 @@
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td><strong>Matricula do funcionário</strong></td>"; 
-					echo "<td><strong>Usuário</strong></td>"; 
-					echo "<td><strong>Senha</strong></td>"; 
-					echo "<td><strong>Nível</strong></td>";
+					echo "<td class='centro'><strong>Matricula do funcionário</strong></td>"; 
+					echo "<td class='centro'><strong>Usuário</strong></td>"; 
+					echo "<td class='centro'><strong>Senha</strong></td>"; 
+					echo "<td class='centro'><strong>Nível</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
-						echo "<td>".$info['mat_func']."</td>";
-						echo "<td>".$info['usuario']."</td>";
-						echo "<td>".$info['senha']." </td>";
-						echo "<td>".$info['nivel']." </td>";
+						echo "<td class='centro'>".$info['mat_func']."</td>";
+						echo "<td class='centro'>".$info['usuario']."</td>";
+						echo "<td class='centro'>".$info['senha']." </td>";
+						echo "<td class='centro'>".$info['nivel']." </td>";
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&mat_func=".$info['mat_func']."> Visualizar </a>";
