@@ -1,26 +1,22 @@
 ﻿<?php
-    $id_ue		  = $_POST["id_ue"];
-    $tel_ue      = $_POST["tel_ue"];
-    $nome_ue      = $_POST["nome_ue"];
-    $sigla_ue   = $_POST["sigla_ue"];
-    $email_ue   = $_POST["email_ue"];
-    $logo_ue   = $_POST["logo_ue"];
-    $cep   = $_POST["cep"];
+    $mat_func      = $_POST["mat_func"];
+    $usuario      = $_POST["usuario"];
+    $senha   = $_POST["senha"];
+    $nivel   = $_POST["nivel"];
 
     
-    $sql = "update ue set ";
-    $sql .= "id_ue ='".$id_ue ."', tel_ue='".$tel_ue."', nome_ue='".$nome_ue."',";
-    $sql .= "sigla_ue='".$sigla_ue."', email_ue='".$email_ue."', logo_ue='".$logo_ue."',";
-    $sql .= "cep ='".$cep ."'";
-    $sql .= " where id_ue = '".$id_ue."';";
+    $sql = "update usuarios set ";
+    $sql .= "mat_func ='".$mat_func ."', usuario='".$usuario."', senha='".$senha."',";
+    $sql .= "nivel ='".$nivel ."'";
+    $sql .= " where mat_func = '".$mat_func."';";
 
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 
     if($resultado){
-        header('Location: dash.php?page=lista_leg&msg=2');
+        header('Location: dash.php?page=lista_usu&msg=2');
         mysqli_close($con);
     }else{
-        header('Location: dash.php?page=lista_leg&msg=4');
+        header('Location: dash.php?page=lista_usu&msg=4');
         mysqli_close($con);
     }
 ?>

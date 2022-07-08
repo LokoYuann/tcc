@@ -1,14 +1,12 @@
 <?php
 
-    $tel_ue      = $_POST["tel_ue"];
-    $nome_ue      = $_POST["nome_ue"];
-    $sigla_ue   = $_POST["sigla_ue"];
-    $email_ue   = $_POST["email_ue"];
-    $logo_ue   = $_POST["logo_ue"];
-    $cep   = $_POST["cep"];
+    $mat_func      = $_POST["mat_func"];
+    $usuario      = $_POST["usuario"];
+    $senha   = $_POST["senha"];
+    $nivel   = $_POST["nivel"];
 
-   $sql = "insert into legenda values ";
-    $sql .= "('0','$tel_ue','$nome_ue','$sigla_ue','$email_ue','$logo_ue','$cep');";
+   $sql = "insert into usuarios values ";
+    $sql .= "('0','$usuario','$senha','$nivel');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
