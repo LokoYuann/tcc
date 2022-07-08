@@ -43,8 +43,8 @@
 						echo "<td>".$info['tipo_evento']."</td>";
 						echo "<td>".$info['desc_leg']." </td>";
 						echo "<td>".$info['sigla_leg']." </td>";
-							echo "<td><div style='background-color:".$info['cor_leg']."';>&nbsp</div></td>";
-							echo "<td><i class='fa ".$info['simbolo_leg']."'></i></td>";
+						echo "<td width='10px'><div style='background-color:".$info['cor_leg'].";border-radius:100%'>&nbsp</div></td>";
+						echo "<td><i class='fa ".$info['simbolo_leg']."'></i></td>";
 
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
