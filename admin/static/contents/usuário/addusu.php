@@ -27,10 +27,10 @@
 			<div class="form-group col-md-4">
 				<label for="nivel">Nível do usuário</label><br>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="2">Supervisão
+				<input  type="radio" name="nivel" value="1">Supervisão
 				</label>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="3">Admnistraddor
+				<input  type="radio" name="nivel" value="2">Admnistraddor
 				</label>
 			</div>
 		</div>
@@ -38,7 +38,7 @@
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>
-				<a href="?page=lista_leg" class="btn btn-danger">Cancelar</a>
+				<a href="?page=lista_usu" class="btn btn-danger">Cancelar</a>
 			</div>
 		</div>
 	</form> 

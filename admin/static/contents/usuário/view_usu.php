@@ -10,8 +10,6 @@
 
 	<!-- Área de campos do formulário de edição-->
 
-	<form action="?page=atualiza_usu&mat_func=<?php echo $row['mat_func']; ?>" method="post">
-
 	<!-- 1ª LINHA -->	
 	<div class="row"> 
 		<div class="form-group col-md-4">
@@ -33,10 +31,10 @@
 			<div class="form-group col-md-4">
 				<label for="nivel">Nível do usuário</label><br>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==2){echo "checked";}else{}?>  disabled>Supervisão
+				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  disabled>Supervisão
 				</label>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==3){echo "checked";}else{}?> disabled >Admnistraddor
+				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==2){echo "checked";}else{}?> disabled >Admnistraddor
 				</label>
 			</div>
 		</div>
@@ -44,9 +42,10 @@
 	<hr/>
 
 		<div id="actions" class="row">
-			<div class="col-md-12">
-				<a href="?page=lista_ue" class="btn btn-secondary">Voltar</a>
-				<button type="submit" class="btn btn-primary ">Salvar Alterações</button>
-			</div>
+		<div class="col-md-12">
+			<a href="?page=lista_usu" class="btn btn-default">Voltar</a>
+				<?php echo "<a href=?page=edit_lusu&mat_func=".$row['mat_func']." class='btn btn-primary'>Editar</a>";?>
+				<?php echo "<a href=?page=excluir_usu&mat_func=".$row['mat_func']." class='btn btn-danger'>Excluir</a>";?>
+		</div>
 		</div>
 	</div>

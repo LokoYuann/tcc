@@ -33,10 +33,10 @@
 			<div class="form-group col-md-4">
 				<label for="nivel">Nível do usuário</label><br>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==2){echo "checked";}else{}?>  >Supervisão
+				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  >Supervisão
 				</label>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==3){echo "checked";}else{}?>  >Admnistraddor
+				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==2){echo "checked";}else{}?>  >Admnistraddor
 				</label>
 			</div>
 		</div>
@@ -45,7 +45,7 @@
 
 		<div id="actions" class="row">
 			<div class="col-md-12">
-				<a href="?page=lista_ue" class="btn btn-secondary">Voltar</a>
+				<a href="?page=lista_usu" class="btn btn-secondary">Voltar</a>
 				<button type="submit" class="btn btn-primary ">Salvar Alterações</button>
 			</div>
 		</div>
