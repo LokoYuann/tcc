@@ -2,11 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="../static/fontawesome-pro/css/all.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <style>
+        td{
+            height: 32px;
+            text-align: center;
+        }
+
+        .c {
+        display: flex;
+        flex-direction: column;
+    }
+    table.table.table-bordered.border.border-warning.stripped {
+    border-color: rebeccapurple !important;
+}
+    </style>
 </head>
 <body>
     
@@ -66,19 +83,22 @@ while($row = mysqli_fetch_array($daysql)){
 
 
 
-        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";'";
+        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; width:'";
         $simb[$m_fim][$d_fim] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
     }
 echo "<div style='text-align: -webkit-center;'>";
     
     // começo do calendário
-    echo "<table border=1 class='display' style='width:80%; height:1%'>";
-    echo "<tr style='width:100%; display:flex'>";
-    echo "<th style='width:9.4%;'>meses</th>";
-    echo "<th style='width:90.6%;'>dias</th>";
+    echo "<table class='table table-bordered border border-4 border-warning stripped' style='width:80%; height:50%'>";
+    echo "<tr >";
+    echo "<td  rowspan='2'>meses</td>";
+    echo "<td colspan='31' >dias</td>";
+    echo "<tr>";
+    for ($ç=1; $ç < 32; $ç++) { 
+        echo "<td colspan='ç'>$ç</td>";
+    }
     echo "</tr>";
-    echo "</table>";
-echo "<table border=1 class='display' style='width:80%; height:50%'>";
+    echo "</tr>";
 
 // começa a criar colunas de meses
 for ($i=1; $i < 13; $i++) {
@@ -111,7 +131,7 @@ for ($i=1; $i < 13; $i++) {
                 echo $eve[$i][$j];
             }
         //echo "><span class='number' style='display:flex; justify-content:center;'>".$j."</span></td>";
-        echo ">".((!empty($simb[$i][$j]))?$simb[$i][$j]:"")."<span class='number' style='display:flex; justify-content:center;'>".$j."</span></td>";
+        echo ">".((!empty($simb[$i][$j]))?$simb[$i][$j]:"")."<span class='number' style='display:flex; justify-content:center;'></span></td>";
         }
     
     // condição alternativa do argumento acima, geralmente imprime um ou outro, então é redundante. mas como quem planta verde colhe maduro...
@@ -127,6 +147,7 @@ echo "</table>";
 echo "</div>";
 
 ?>
-
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
 </body>
 </html>

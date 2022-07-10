@@ -38,9 +38,10 @@
   					Escolher Símbolo
 				</button>
 			</div>
+			
 			<!-- Modal -->
 			<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Símbolos</h5>
@@ -50,26 +51,31 @@
 						</div>
 						<div class="modal-body">
 						<div class="container-fluid">
-						<div class="row">
+						<div class="row" style="display:flex; justify-content:space-between">
 						<label class="switch">
 							<input  type="radio" name="simbolo_leg" value="fa-home">
-							<span class="slider round"><i class="fa fa-home" style="font-size:190%;"></i></span>
+							<span class="slider round"><i class="fa fa-home" style="font-size:190%;display:flex; justify-content:center;"></i></span>
 						</label>
 						<label class="switch" >
 							<input  type="radio" name="simbolo_leg" value="fa-glass" >
-							<span class="slider round"><i class="fa fa-glass" style="font-size:160%;"></i></span>
+							<span class="slider round"><i class="fa fa-glass" style="font-size:160%;display:flex; justify-content:center;"></i></span>
 						</label>
 						<label class="switch" >
 							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;"></i></span>
+							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
 						</label>
-							<!-- <input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1 "><i class="fa fa-home"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-book" class="col-md-1"><i class="fa fa-book"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-glass" class="col-md-1"><i class="fa fa-glass"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i> -->
-							<!-- <button type="button" class="btn col-md-1 legbutton" value="fa-home"><i class="fa fa-home"></i></button>
-                            <button type="button" class="btn col-md-1 legbutton" value="fa-book"><i class="fa fa-book"></i></button> -->
+						<label class="switch" >
+							<input  type="radio" name="simbolo_leg" value="fa-book" >
+							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
+						</label>
+						<label class="switch" >
+							<input  type="radio" name="simbolo_leg" value="fa-book" >
+							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
+						</label>
+						<label class="switch" >
+							<input  type="radio" name="simbolo_leg" value="fa-book" >
+							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
+						</label>
 						</div>
 					</div>
 						<div class="modal-footer">
@@ -91,4 +97,3 @@
 		</div>
 	</form> 
 </div>
-
