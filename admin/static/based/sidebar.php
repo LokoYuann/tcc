@@ -53,7 +53,7 @@ function botina() {
 					if ($_SESSION['UsuarioNivel'] == 2){ 
 						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_ue')?"active":"")."'>
 							<a class='sidebar-link' href='?page=lista_ue'>
-							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Istituição</span>
+							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Instituição</span>
 							</a>
 						</li>";
 						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_usu')?"active":"")."'>

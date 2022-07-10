@@ -13,14 +13,43 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
+	$func_inst_sql = mysqli_query($con, "select id_ue from funcionario where mat_func = '".$_SESSION['UsuarioID']."'") or die(mysqli_error());
+	$func_inst = mysqli_fetch_array($func_inst_sql);
+	if($_SESSION['UsuarioNivel'] == 2){
+		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
+			$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		else{
+			$id_cal = mysqli_query($con, "select id_calendario from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}}
+	else{
+		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
-	$id_cal = mysqli_query($con, "select id_calendario from calendario ORDER BY id_calendario ASC") or die(mysqli_error());
+	$inst_sql = mysqli_query($con, "select id_ue from ue ORDER BY id_ue ASC") or die(mysqli_error());
+	$inst= array();
+	while($row = mysqli_fetch_array($inst_sql))
+	{
+		$inst[] = $row['id_ue'];
+	}
+
 	$ids = array();
 	while($row = mysqli_fetch_array($id_cal))
 	{
 		$ids[] = $row['id_calendario'];
 	}
 	?>
+	<form action="?page=lista_eve" method="post" >
+	Filtrar por Instituição:&nbsp<select name="ue" class="form-control" action="post" onchange='this.form.submit()';>
+	<option value="none">Todos</option>
+	<?php 
+	for($i = 0; $i < count($inst); $i++)
+	{
+		
+		echo '<option value="'.$inst[$i].'" '.(($_POST['ue']==$inst[$i])?'selected="selected"':"").'>'.$inst[$i].'</option>';
+
+	}
+
+	?> 
+	</select>
+	</form>
 	<form action="?page=lista_eve" method="post" >
 	Filtrar por calendário:&nbsp<select name="calendario" class="form-control" action="post" onchange='this.form.submit()';>
 	<option value="none">Todos</option>
@@ -48,7 +77,8 @@
 						$eventos = mysqli_query($con, "select * from eventos where id_calendario ='".$_POST['calendario']."' ORDER BY id_calendario ASC") or die(mysqli_error());
 					}
 					else{
-						$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario ASC") or die(mysqli_error());
+						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario ASC") or die(mysqli_error());}
+						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario ASC") or die(mysqli_error());}
 					}
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
