@@ -63,3 +63,14 @@
 
 /* simbolo radio */
 
+/* calendário */
+.cal-content{
+  height: 32px;
+  text-align: center;
+}
+
+
+  table.table.table-bordered.border.border-warning.stripped {
+  border-color: rebeccapurple !important;
+}
+/* calendário */

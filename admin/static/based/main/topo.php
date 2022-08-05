@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand navbar-light navbar-bg">
-	<a class="sidebar-toggle js-sidebar-toggle" onclick="botina()">
+	<a class="sidebar-toggle js-sidebar-toggle" style="padding-left: 5px;" onclick="botina()">
         <i class="hamburger align-self-center"></i>
     </a>
 
