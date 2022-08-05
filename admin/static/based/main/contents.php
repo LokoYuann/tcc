@@ -122,6 +122,37 @@
                 include "contents/usuário/insere_usu.php";
                 break;
 
+                            
+            // Funcionários
+            
+            case 'addfunc':
+                include "contents/funcionario/addfunc.php";
+                break;
+
+            case 'edit_func':
+                include "contents/funcionario/edit_func.php";
+                break;
+
+            case 'lista_func':
+                 include "contents/funcionario/lista_func.php";
+                break;
+
+            case 'atualiza_func':
+                include "contents/funcionario/atualiza_func.php";
+                break;
+            
+            case 'excluir_func':
+                include "contents/funcionario/excluir_func.php";
+                break;
+
+            case 'view_func':
+                include "contents/funcionario/view_func.php";
+                break;
+
+            case 'insere_func':
+                include "contents/funcionario/insere_func.php";
+                break;
+
             // home
 
             case 'perfil':
