@@ -65,12 +65,30 @@
 
 /* calendário */
 .cal-content{
-  height: 32px;
   text-align: center;
 }
+
 
 
   table.table.table-bordered.border.border-warning.stripped {
   border-color: rebeccapurple !important;
 }
 /* calendário */
+
+table.table-fit {
+  width: auto !important;
+  table-layout: auto !important;
+}
+table.table-fit thead th, table.table-fit tfoot th {
+  width: auto !important;
+}
+table.table-fit thead th, table.table-fit tfoot td {
+  width: auto !important;
+}
+tr{
+  white-space: nowrap !important;
+    width: 1% !important;
+}
+tbody{
+  display: table !important;
+}

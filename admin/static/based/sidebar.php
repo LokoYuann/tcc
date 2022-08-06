@@ -61,6 +61,11 @@ function botina() {
 							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Usuários</span>
 							</a>
 						</li>";
+						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_func')?"active":"")."'>
+						<a class='sidebar-link' href='?page=lista_func'>
+						<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Funcionários</span>
+						</a>
+					</li>";
 					}
 					?>
 

@@ -34,7 +34,7 @@ while($row = mysqli_fetch_array($id_cal))
 	for($i = 0; $i < count($ids); $i++)
 	{
 		
-		echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0])?'selected="selected"':"").'>'.$ids[$i].'</option>';
+		echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$ids[$i].'</option>';
 
 	}
 
@@ -65,11 +65,11 @@ while($row = mysqli_fetch_array($daysql)){
         $m_fim = $row['m_fim'];
         $d_fim = $row['d_fim'];
         $leg_sql = mysqli_query($con, "select * from legenda where id_leg = ".$row['id_leg'].";");
-        $leg = mysqli_fetch_array($leg_sql);
+        $leg = mysqli_fetch_array($leg_sql); 
         array_push($leg_use,$leg[0]);
         if ($d_ini <= $d_fim && $m_ini == $m_fim) {
             for ($d_ini; $d_ini < $d_fim; $d_ini++) { 
-                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
+                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                 $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
             }
         }
@@ -120,10 +120,9 @@ while($row = mysqli_fetch_array($daysql)){
        $simb[$domingo_m][$domingo_d] = "<a>D</a>";
     }
 echo "<div style='text-align: -webkit-center;'>";
-    
     // começo do calendário
-    echo "<table class='table table-bordered border border-4 border-warning stripped' style='width:10%; height:10%'>";
-    echo "<tr >";
+    echo "<table class='table table-bordered border border-4 border-warning stripped table-fit table-responsive' style=''>";
+    echo "<tr class=''>";
     echo "<td  rowspan='2' class='cal-content'>meses</td>";
     echo "<td colspan='31' class='cal-content'>dias</td>";
     echo "<tr>";
@@ -136,9 +135,9 @@ echo "<div style='text-align: -webkit-center;'>";
 // começa a criar colunas de meses
 for ($i=1; $i < 13; $i++) {
     // abre a linha dos meses
-    echo "<tr class='cils' style='width:100%;'>";
+    echo "<tr class='cils' style=''>";
     // abre a coluna dos meses
-    echo "<td class='mis cal-content' style='width:10%;'>";
+    echo "<td class='mis cal-content' style=''>";
 
     // cria um array para armazenar os meses, o primeiro fica vazio pois dá erro na criação do calendário
     $meses = array("","janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro");
@@ -181,8 +180,6 @@ echo "<br>";
 echo "Legenda";
 
 
-
-if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){}
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 echo "<table class='table table-bordered border border-3 border-warning stripped' style='width:60%; height:10%'>";
 while($row = mysqli_fetch_array($leg_sql)){

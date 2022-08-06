@@ -35,6 +35,7 @@
 	{
 		$ids[] = $row['id_calendario'];
 	}
+	if($_SESSION['UsuarioNivel'] == 2){
 	?>
 	<form action="?page=lista_eve" method="post" >
 	Filtrar por Instituição:&nbsp<select name="ue" class="form-control" action="post" onchange='this.form.submit()';>
@@ -61,9 +62,11 @@
 
 	}
 
-	?> 
-	</select>
-	</form>
+	 
+	echo "</select>";
+	echo "</form>";
+	}
+	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
 			<div class="table-responsive col-md-12">
