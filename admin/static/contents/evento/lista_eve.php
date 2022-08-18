@@ -13,8 +13,6 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
-	$func_inst_sql = mysqli_query($con, "select id_ue from funcionario where mat_func = '".$_SESSION['UsuarioID']."'") or die(mysqli_error());
-	$func_inst = mysqli_fetch_array($func_inst_sql);
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
 			$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
@@ -23,12 +21,7 @@
 	else{
 		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
-	$inst_sql = mysqli_query($con, "select id_ue from ue ORDER BY id_ue ASC") or die(mysqli_error());
-	$inst= array();
-	while($row = mysqli_fetch_array($inst_sql))
-	{
-		$inst[] = $row['id_ue'];
-	}
+
 
 	$ids = array();
 	while($row = mysqli_fetch_array($id_cal))
@@ -59,6 +52,7 @@
 	{
 		
 		echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i])?'selected="selected"':"").'>'.$ids[$i].'</option>';
+		
 
 	}
 

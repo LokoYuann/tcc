@@ -4,8 +4,13 @@
 	
 	$sql = mysqli_query($con, "select * from eventos where id_evento = '".$id_evento."';");
 	$row = mysqli_fetch_array($sql);
+	$cal_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row['id_calendario']."';");
+	$cal = mysqli_fetch_array($cal_sql);
+	$cal_inst_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$cal[0]."';");
+	$cal_inst = mysqli_fetch_array($cal_inst_sql);
 ?>
 <div id="main" class="container-fluid">
+
 	<br><h3 class="page-header">Editar registro do Evento : <?php echo $id_evento;?></h3>
 
 	<!-- Área de campos do formulário de edição-->
@@ -16,31 +21,44 @@
 	<div class="row"> 
 		<div class="form-group col-md-2">
 			<label for="id_evento">ID</label>
-			<input type="text" class="form-control" readonly name="id_evento" value="<?php echo $row["id_evento"];?>">
+			<input type="text" class="form-control"  name="id_evento" value="<?php echo $row["id_evento"];?>" >
 		</div>
 		<div class="form-group col-md-2">
 			<label for="id_evento">Calendário</label>
-			<select class="form-control" id="id_calendario" name="id_calendario">
-				<option value="1"<?php if (!(strcmp(1, htmlentities($row['id_calendario'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>ETER</option>
-				<option value="2"<?php if (!(strcmp(2, htmlentities($row['id_calendario'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>ETEVM</option>
-				<option value="3"<?php if (!(strcmp(3, htmlentities($row['id_calendario'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>ETEOT</option>		
-				<option value="4"<?php if (!(strcmp(3, htmlentities($row['id_calendario'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>ETEMMMT</option>		
+			<select class="form-control " id="id_calendario" name="id_calendario" <?php if ($_SESSION['UsuarioNivel'] == 1)echo 'readonly="readonly" tabindex="-1" aria-disabled="true"' ?>>
+				<option> --------- </option>
+					<?php
+					
+					for($i = 0; $i < count($inst); $i++)
+					{
+					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$id_ue[$i]."';");
+					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
+					echo '<option value="'.$cal_tmp[0].'" '.((!(strcmp($cal_inst[0], $inst[$i])))?"SELECTED":"").'>'.$inst[$i].'</option>';
+						
+					}
+															
+					?>	
 
 			</select>
 		</div>
 		<div class="form-group col-md-2">
 			<label for="id_leg">Tipo de Evento</label>
 			<select class="form-control" id="id_leg" name="id_leg">
-				<option value="1"<?php if (!(strcmp(1, htmlentities($row['id_leg'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Avaliação</option>
-				<option value="2"<?php if (!(strcmp(2, htmlentities($row['id_leg'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Teste</option>
-				<option value="3"<?php if (!(strcmp(3, htmlentities($row['id_leg'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Feriado</option>		
-				<option value="4"<?php if (!(strcmp(3, htmlentities($row['id_leg'], ENT_COMPAT, 'utf-8')))) {echo "SELECTED";} ?>>Coc</option>			
+				<option> --------- </option>
+					<?php
+															
+					for($i = 0; $i < count($tipo_evento); $i++)
+					{
+					echo '<option value="'.$id_leg[$i].'" '.((!(strcmp($i+1, $row['id_leg'])))?"SELECTED":"").'>'.$tipo_evento[$i].'</option>';
+
+					}
+															
+					?>	
 
 			</select>
 
 		</div>
 	</div>
-
 	<!-- 2ª LINHA -->
 	<div class="row"> 
 		<div class="form-group col-md-3">

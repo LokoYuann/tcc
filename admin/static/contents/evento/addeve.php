@@ -14,27 +14,37 @@
 			</div>
 			<div class="form-group col-md-2">
 				<label for="id_calendario">Calendário</label>
-				<select class="form-control" name="id_calendario">
-					<option> --------- </option>
-					<option value="1">ETER</option>
-					<option value="2">ETEVM</option>
-					<option value="3">ETEOT</option>
-					<option value="4">ETEMMMT</option>
-				</select>
+			<select class="form-control " id="id_calendario" name="id_calendario" <?php if ($_SESSION['UsuarioNivel'] == 1)echo 'readonly="readonly" tabindex="-1" aria-disabled="true"' ?>>
+				<option> --------- </option>
+					<?php
+					
+					for($i = 0; $i < count($inst); $i++)
+					{
+					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$id_ue[$i]."';");
+					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
+					echo '<option value="'.$cal_tmp[0].'" '.((!(strcmp($func_inst[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
+						
+					}
+															
+					?>	
+
+			</select>
 			</div>
 			<div class="form-group col-md-2">
 				<label for="id_leg">Tipo Evento</label>
-				<select class="form-control" name="id_leg">
-					<option> --------- </option>
-					<option value="1">Avaliação</option>
-					<option value="2">Teste</option>
-					<option value="3">Feriado</option>
-					<option value="4">Férias</option>
-					<option value="5">Coc</option>
-					<option value="6">Feira Técnica</option>
-					<option value="7">Feira Literária</option>
-					<option value="8">Feira de Ciências</option>
-				</select>
+			<select class="form-control" id="id_leg" name="id_leg">
+				<option> --------- </option>
+					<?php
+															
+					for($i = 0; $i < count($tipo_evento); $i++)
+					{
+					echo '<option value="'.$id_leg[$i].'" >'.$tipo_evento[$i].'</option>';
+
+					}
+															
+					?>	
+
+			</select>
 			</div>
 		</div>
 		<!-- 2ª LINHA -->
@@ -52,7 +62,7 @@
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>
-				<a href="?page=home" class="btn btn-danger">Cancelar</a>
+				<a href="?page=lista_eve" class="btn btn-danger">Cancelar</a>
 			</div>
 		</div>
 	</form> 
