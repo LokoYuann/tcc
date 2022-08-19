@@ -167,23 +167,30 @@ echo "</tr>";
 
 echo "</table>";
 
+//Legenda
 echo "<br>";
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
-echo "<table class='table table-bordered border border-3 border-warning stripped' style='width:60%; height:10%'>";
+
 if(($leg_sql) != null){
-echo "Legenda";
+    echo "Legenda";
+    
+    
+    $i=0;
+    while($row = mysqli_fetch_array($leg_sql)){
+        if($i==5){$i=0;}
+        if($i==0){ echo "<table class='table table-bordered border border-3 border-warning stripped' style='width:60%; height:10%'>";}
+        echo "<tr>";
+        echo "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
+        echo "<td class='mis cal-content'>".$row['tipo']."</td>";
+        echo "<td class='mis cal-content'>".$row['descricao']."</td>";
 
-
-while($row = mysqli_fetch_array($leg_sql)){
-    echo "<tr>";
-    echo "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
-    echo "<td class='mis cal-content'>".$row['tipo']."</td>";
-    echo "<td class='mis cal-content'>".$row['descricao']."</td>";
-
-    echo "</tr>";
+        echo "</tr>";
+        if($i==4){echo "</table>";}
+        $i++;
     }
 
-echo "</table>";
+
+
 }
 echo "</div>";
 

@@ -37,7 +37,7 @@
 	for($i = 0; $i < count($inst); $i++)
 	{
 		
-		echo '<option value="'.$inst[$i].'" '.(($_POST['ue']==$inst[$i])?'selected="selected"':"").'>'.$inst[$i].'</option>';
+		echo '<option value="'.$id_ue[$i].'" '.(($_POST['ue']==$inst[$i])?'selected="selected"':"").'>'.$inst[$i].'</option>';
 
 	}
 
