@@ -16,27 +16,15 @@ function botina() {
 					<a class="sidebar-brand" href="?page=home">
 					  <span class="align-middle">Faetec</span>
 				</a>
-					<li class="sidebar-header">
-						Página inicial
-					</li>
-
 					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'home')echo "active";?>">
 						<a class="sidebar-link" href="?page=home">
               			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendário</span>
             			</a>
 					</li>
 
-					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'perfil')echo "active";?>">
-						<a class="sidebar-link" href="?page=perfil">
-              			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
-            			</a>
-					</li>
+					
 
 					
-					<li class="sidebar-header">
-						CRUD
-					</li>
-
 					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'lista_eve')echo "active";?>">
 						<a class="sidebar-link" href="?page=lista_eve">
               			<i class="align-middle" data-feather="list"></i> <span class="align-middle">Eventos</span>
@@ -67,8 +55,13 @@ function botina() {
 						</a>
 					</li>";
 					}
+					
 					?>
-
+					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'perfil')echo "active";?>" style="position: fixed;bottom: 0;">
+						<a class="sidebar-link" href="?page=perfil">
+              			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
+            			</a>
+					</li>
 				</ul>
 				
 			</div>

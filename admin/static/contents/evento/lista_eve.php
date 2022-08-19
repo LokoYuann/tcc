@@ -68,17 +68,18 @@
 					$quantidade = 5;
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
+					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
+					$inicio = ($quantidade * $pagina) - $quantidade;
 					
 					
 					if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
-						$eventos = mysqli_query($con, "select * from eventos where id_calendario ='".$_POST['calendario']."' ORDER BY id_calendario ASC") or die(mysqli_error());
+						$eventos = mysqli_query($con, "select * from eventos where id_calendario ='".$_POST['calendario']."' ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
 					}
 					else{
-						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario ASC") or die(mysqli_error());}
-						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario ASC") or die(mysqli_error());}
+						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
+						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
 					}
-					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-					$inicio = ($quantidade * $pagina) - $quantidade;
+					
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";

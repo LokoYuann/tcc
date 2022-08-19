@@ -11,4 +11,3 @@ function botina() {
 $(function () {
     $('[data-toggle="tooltip"]').tooltip();
 })
-

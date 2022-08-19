@@ -2,7 +2,12 @@
     <link rel="stylesheet" href="../static/fontawesome-pro/css/all.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
+<style>
+.tab{
+    height:10%;
+}
 
+</style>
 <?php
 
 
@@ -67,13 +72,13 @@ while($row = mysqli_fetch_array($daysql)){
         else{
             if ($d_ini >= $d_fim && $m_ini < $m_fim) {
             if ($d_ini <= 32) {
-                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
+                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                 $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
                 $d_ini++;
                 // se o mes inicial for menor ou igual ao mes final e o dia final for 32(máximo), reinicia o valor do dia inicial para um, voltando ao loop acima, e aumenta em um o valor do mes inicial, até satisfazer o mes inicial
                 
                 for ($d_fim; $d_fim >= 1; $d_fim--) { 
-                        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
+                        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                         $simb[$m_fim][$d_fim] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
                     }
                 } else {
@@ -85,7 +90,7 @@ while($row = mysqli_fetch_array($daysql)){
         // se os meses e os dias não estiverem naquela condição, imprime um class vazio
         }
             for ($d_ini; $d_ini < 32; $d_ini++) { 
-                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
+                $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                 $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
 
             }
@@ -94,7 +99,7 @@ while($row = mysqli_fetch_array($daysql)){
 
 
 
-        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
+        $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
         $simb[$m_fim][$d_fim] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
     }
 
@@ -170,28 +175,36 @@ echo "</table>";
 //Legenda
 echo "<br>";
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
+$sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 
 if(($leg_sql) != null){
+    $sla= array();
+    while ($kkk = mysqli_fetch_array($sla_sql)) {
+        $sla[] = $kkk[0];
+    }
     echo "Legenda";
-    
-    
+
+    $cv = sizeof($sla);
     $i=0;
+    $o=1;
+    echo "<div class= 'd-flex flex-row justify-content-between mt-4'>";
     while($row = mysqli_fetch_array($leg_sql)){
-        if($i==5){$i=0;}
-        if($i==0){ echo "<table class='table table-bordered border border-3 border-warning stripped' style='width:60%; height:10%'>";}
-        echo "<tr>";
+        if($i==20){$i=0;}
+        if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
+        echo "<tr data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' style='line-height: 25px;min-height: 25px;height: 1px ;'>";
         echo "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
         echo "<td class='mis cal-content'>".$row['tipo']."</td>";
-        echo "<td class='mis cal-content'>".$row['descricao']."</td>";
 
         echo "</tr>";
-        if($i==4){echo "</table>";}
+        if($i==20||$o==$cv){echo "</table>";} 
         $i++;
+        $o++;
+        
     }
 
 
-
 }
+echo "</div>";
 echo "</div>";
 
 ?>

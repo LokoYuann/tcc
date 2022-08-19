@@ -14,6 +14,16 @@
 			</div>
 			<div class="form-group col-md-2">
 				<label for="id_calendario">Calendário</label>
+				<?php
+				if ($_SESSION['UsuarioNivel'] == 1){
+					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."';");
+					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
+					echo '<input type="text" class="form-control" name="'.$cal_tmp[0].'" value="'.$func_inst_sigla[0].'" readonly>';
+
+				}
+				else{
+				?>
+				
 			<select class="form-control " id="id_calendario" name="id_calendario" <?php if ($_SESSION['UsuarioNivel'] == 1)echo 'readonly="readonly" tabindex="-1" aria-disabled="true"' ?>>
 				<option> --------- </option>
 					<?php
@@ -29,6 +39,7 @@
 					?>	
 
 			</select>
+			<?php } ?>
 			</div>
 			<div class="form-group col-md-2">
 				<label for="id_leg">Tipo Evento</label>

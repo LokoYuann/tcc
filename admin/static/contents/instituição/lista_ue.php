@@ -12,7 +12,7 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
-	$data = mysqli_query($con, "select * from ue ORDER BY id_ue ASC") or die(mysqli_error());
+	
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
@@ -25,7 +25,8 @@
 					
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
-					
+					$data = mysqli_query($con, "select * from ue ORDER BY id_ue asc limit $inicio, $quantidade;");
+
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
 					echo "<td><strong>ID</strong></td>"; 

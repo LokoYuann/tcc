@@ -13,7 +13,7 @@
 	<hr/>
 	<?php
 	
-	$data = mysqli_query($con, "select * from legenda ORDER BY id_leg ASC") or die(mysqli_error());
+	
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
@@ -26,6 +26,7 @@
 					
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
+					$data = mysqli_query($con, "select * from legenda order by id_leg asc limit $inicio, $quantidade;");
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";

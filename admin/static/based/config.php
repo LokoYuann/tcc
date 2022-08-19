@@ -8,6 +8,9 @@
 	//Descobre a instituição do funcionário logado
 	$func_inst_sql = mysqli_query($con, "select id_ue from funcionario where mat_func = '".$_SESSION['UsuarioID']."'") or die(mysqli_error());
 	$func_inst = mysqli_fetch_array($func_inst_sql);
+
+	$func_inst_sigla_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$func_inst[0]."'") or die(mysqli_error());
+	$func_inst_sigla = mysqli_fetch_array($func_inst_sigla_sql);
 	//Descobre calendarios da insituição do funcionário
 	$func_cal_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."'") or die(mysqli_error());
 	$func_cal = mysqli_fetch_array($func_cal_sql);
