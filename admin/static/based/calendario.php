@@ -174,10 +174,10 @@ echo "</table>";
 
 //Legenda
 echo "<br>";
+if(($leg_use) != null){
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 
-if(($leg_sql) != null){
     $sla= array();
     while ($kkk = mysqli_fetch_array($sla_sql)) {
         $sla[] = $kkk[0];
@@ -203,8 +203,8 @@ if(($leg_sql) != null){
     }
 
 
+    echo "</div>";
 }
-echo "</div>";
 echo "</div>";
 
 ?>

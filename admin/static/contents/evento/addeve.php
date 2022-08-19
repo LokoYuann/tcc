@@ -18,13 +18,13 @@
 				if ($_SESSION['UsuarioNivel'] == 1){
 					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."';");
 					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
-					echo '<input type="text" class="form-control" name="'.$cal_tmp[0].'" value="'.$func_inst_sigla[0].'" readonly>';
+					echo '<input type="text" class="form-control readonly" name="'.$cal_tmp[0].'" value="'.$func_inst_sigla[0].'" readonly>';
 
 				}
 				else{
 				?>
 				
-			<select class="form-control " id="id_calendario" name="id_calendario" <?php if ($_SESSION['UsuarioNivel'] == 1)echo 'readonly="readonly" tabindex="-1" aria-disabled="true"' ?>>
+			<select class="form-control " id="id_calendario" name="id_calendario" >
 				<option> --------- </option>
 					<?php
 					
