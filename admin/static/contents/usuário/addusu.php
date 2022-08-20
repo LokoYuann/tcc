@@ -9,8 +9,8 @@
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
 			<div class="form-group col-md-4">
-				<label for="mat_func">Matricula do Funcionário</label>
-				<input type="text" class="form-control" name="mat_func" readonly>
+				<label for="id_func">ID do Funcionário</label>
+				<input type="text" class="form-control" name="id_func" readonly>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="usuario">Nome do Usuário</label>

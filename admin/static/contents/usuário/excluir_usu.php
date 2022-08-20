@@ -1,7 +1,7 @@
 ﻿<?php
-$mat_func = (int) @$_GET['mat_func'];
+$id_func = (int) @$_GET['id_func'];
  
-$sql = "delete from usuarios where mat_func = '$mat_func';"; 
+$sql = "delete from usuarios where id_func = '$id_func';"; 
 
 $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 

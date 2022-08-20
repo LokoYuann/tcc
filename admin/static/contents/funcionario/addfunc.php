@@ -8,9 +8,13 @@
 	<form enctype="multipart/form-data" action="?page=insere_func" method="post">
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-2">
+				<label for="id_func">ID do Funcionário</label>
+				<input type="text" class="form-control" name="id_func" readonly>
+			</div>
+			<div class="form-group col-md-2">
 				<label for="mat_func">Matricula do Funcionário</label>
-				<input type="text" class="form-control" name="mat_func" readonly>
+				<input type="text" class="form-control" name="mat_func" >
 			</div>
 			<div class="form-group col-md-4">
 				<label for="funcao_func">Função do Funcionário</label>

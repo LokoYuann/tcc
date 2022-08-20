@@ -4,7 +4,7 @@
 	}
 </style>
 
-<div class="container-fluid">
+<div id="main" class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
 			<h2>Funcionários</h2>
@@ -31,10 +31,11 @@
 					
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
-					$data = mysqli_query($con, "select * from funcionario ORDER BY mat_func asc limit $inicio, $quantidade;");
+					$data = mysqli_query($con, "select * from funcionario ORDER BY id_func asc limit $inicio, $quantidade;");
 
-					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
+					echo "<table class='table table-striped ' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
+					echo "<td class='centro'><strong>ID do funcionário</strong></td>"; 
 					echo "<td class='centro'><strong>Matricula do funcionário</strong></td>"; 
 					echo "<td class='centro'><strong>Função do Funcionário</strong></td>";
 					echo "<td class='centro'><strong>Nome do funcionário</strong></td>";
@@ -48,11 +49,12 @@
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
+						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['mat_func']."</td>";
 						echo "<td class='centro'>".$info['funcao_func']." </td>";
 						echo "<td class='centro'>".$info['nome_func']." </td>";
 						echo "<td class='centro'>".$info['nasc_func']." </td>";
-						echo "<td class='centro'>".$info['sexo_func']." </td>";
+						echo "<td class='centro'>".(($info['sexo_func']=='m')? "Masculino":"feminino")." </td>";
 						echo "<td class='centro'>".$info['tel_func']." </td>";
 						echo "<td class='centro'>".$info['cpf_func']." </td>";
 						echo "<td class='centro'>".$info['cep']." </td>";
@@ -60,9 +62,9 @@
 
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
-						echo "<a class='btn btn-success btn-xs' href=?page=view_func&mat_func=".$info['mat_func']."> Visualizar </a>";
-						echo "<a class='btn btn-warning btn-xs' href=?page=edit_func&mat_func=".$info['mat_func']."> Editar </a>"; 
-						echo "<a href=?page=excluir_func&mat_func=".$info['mat_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
+						echo "<a class='btn btn-success btn-xs' href=?page=view_func&id_func=".$info['id_func']."> Visualizar </a>";
+						echo "<a class='btn btn-warning btn-xs' href=?page=edit_func&id_func=".$info['id_func']."> Editar </a>"; 
+						echo "<a href=?page=excluir_func&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
 					}
 				echo "</tr></tbody></table>";
 			?>				
@@ -74,7 +76,7 @@
 	<div id="bottom" class="row">
 			<div class="col-md-12">
 				<?php
-					$sqlTotal 		= "select mat_func from funcionario;";
+					$sqlTotal 		= "select id_func from funcionario;";
 					$qrTotal  		= mysqli_query($con, $sqlTotal) or die (mysqli_error());
 					$numTotal 		= mysqli_num_rows($qrTotal);
 					$totalpagina = (ceil($numTotal/$quantidade)<=0) ? 1 : ceil($numTotal/$quantidade);

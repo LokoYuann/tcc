@@ -31,33 +31,40 @@
 	if($_SESSION['UsuarioNivel'] == 2){
 	?>
 	<form action="?page=lista_eve" method="post" >
-	Filtrar por Instituição:&nbsp<select name="ue" class="form-control" action="post" onchange='this.form.submit()';>
-	<option value="none">Todos</option>
-	<?php 
-	for($i = 0; $i < count($inst); $i++)
-	{
-		
-		echo '<option value="'.$id_ue[$i].'" '.(($_POST['ue']==$inst[$i])?'selected="selected"':"").'>'.$inst[$i].'</option>';
+		<div class="d-flex row justify-content-between" > 
+			<div class="form-group col-md-6">
+				Filtrar por Instituição:
+				<select name="ue" class="form-control " action="post" onchange='formreact(this.value)';>
+				<option value="none">Todos</option>
+				<?php 
+				for($i = 0; $i < count($inst); $i++)
+				{
+					
+					echo '<option value="'.$id_ue[$i].'" '.(($_POST['ue']==$id_ue[$i])?'selected="selected"':"").'>'.$inst[$i].'</option>';
 
-	}
+				}
 
-	?> 
-	</select>
-	</form>
-	<form action="?page=lista_eve" method="post" >
-	Filtrar por calendário:&nbsp<select name="calendario" class="form-control" action="post" onchange='this.form.submit()';>
-	<option value="none">Todos</option>
-	<?php 
-	for($i = 0; $i < count($ids); $i++)
-	{
-		
-		echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i])?'selected="selected"':"").'>'.$ids[$i].'</option>';
-		
+				?> 
+				</select>
+			</div>
 
-	}
+			<div class="form-group col-md-6">
+				Filtrar por calendário:
+				<select name="calendario" class="form-control " id="lista_eve_form" action="post" onchange='this.form.submit()';>
+				<option value="none">Todos</option>
+				<?php 
+				for($i = 0; $i < count($ids); $i++)
+				{
+					
+					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i])?'selected="selected"':"").'>'.$ids[$i].'</option>';
+					
 
-	 
-	echo "</select>";
+				}
+
+				
+				echo "</select>
+			</div>
+		</div>";
 	echo "</form>";
 	}
 	?>

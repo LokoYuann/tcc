@@ -1,5 +1,5 @@
 <?php
-
+    $id_func      = $_POST["id_func"];
     $mat_func      = $_POST["mat_func"];
     $funcao_func   = $_POST["funcao_func"];
     $nome_func     = $_POST["nome_func"];
@@ -11,7 +11,7 @@
     $id_ue         = $_POST["id_ue"];
 
    $sql = "insert into funcionario values ";
-    $sql .= "('0','$funcao_func','$nome_func','$nasc_func','$sexo_func','$tel_func','$cpf_func','$cep','$id_ue');";
+    $sql .= "('0','$mat_func','$funcao_func','$nome_func','$nasc_func','$sexo_func','$tel_func','$cpf_func','$cep','$id_ue');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());

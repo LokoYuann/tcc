@@ -1,6 +1,6 @@
 <?php
 
-    $mat_func      = $_POST["mat_func"];
+    $id_func      = $_POST["id_func"];
     $usuario      = $_POST["usuario"];
     $senha   = $_POST["senha"];
     $nivel   = $_POST["nivel"];

@@ -1,14 +1,14 @@
 ﻿<?php
-    $mat_func      = $_POST["mat_func"];
+    $id_func      = $_POST["id_func"];
     $usuario      = $_POST["usuario"];
     $senha   = $_POST["senha"];
     $nivel   = $_POST["nivel"];
 
     
     $sql = "update usuarios set ";
-    $sql .= "mat_func ='".$mat_func ."', usuario='".$usuario."', senha='".$senha."',";
+    $sql .= "id_func ='".$id_func ."', usuario='".$usuario."', senha='".$senha."',";
     $sql .= "nivel ='".$nivel ."'";
-    $sql .= " where mat_func = '".$mat_func."';";
+    $sql .= " where id_func = '".$id_func."';";
 
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 

@@ -1,17 +1,21 @@
 ﻿<?php
 	//include "base\conexao.php";
-	$mat_func = (int) $_GET['mat_func'];
+	$id_func = (int) $_GET['id_func'];
 	
-	$sql = mysqli_query($con, "select * from funcionario where mat_func = '".$mat_func."';");
+	$sql = mysqli_query($con, "select * from funcionario where id_func = '".$id_func."';");
 	$row = mysqli_fetch_array($sql);
 ?>
 <div id="main" class="container-fluid">
-	<br><h3 class="page-header">Editar registro de Funcionário : <?php echo $mat_func;?></h3>
+	<br><h3 class="page-header">Vizualizar registro de Funcionário : <?php echo $id_func;?></h3>
 
 	<!-- Área de campos do formulário de edição-->
 
 	<div class="row"> 
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-2">
+				<label for="id_func">ID do Funcionário</label>
+				<input type="text" class="form-control" name="id_func" value="<?php echo $row["id_func"];?>" readonly>
+			</div>
+			<div class="form-group col-md-2">
 				<label for="mat_func">Matricula do Funcionário</label>
 				<input type="text" class="form-control" name="mat_func" value="<?php echo $row["mat_func"];?>" readonly>
 			</div>
@@ -66,8 +70,8 @@
 		<div id="actions" class="row">
 		<div class="col-md-12">
 			<a href="?page=lista_func" class="btn btn-default">Voltar</a>
-				<?php echo "<a href=?page=edit_func&mat_func=".$row['mat_func']." class='btn btn-primary'>Editar</a>";?>
-				<?php echo "<a href=?page=excluir_func&mat_func=".$row['mat_func']." class='btn btn-danger'>Excluir</a>";?>
+				<?php echo "<a href=?page=edit_func&id_func=".$row['id_func']." class='btn btn-primary'>Editar</a>";?>
+				<?php echo "<a href=?page=excluir_func&id_func=".$row['id_func']." class='btn btn-danger'>Excluir</a>";?>
 		</div>
 		</div>
 	</div>

@@ -1,6 +1,6 @@
 ﻿<?php
 
-
+$id_func      = $_POST["id_func"];
 $mat_func      = $_POST["mat_func"];
 $funcao_func   = $_POST["funcao_func"];
 $nome_func     = $_POST["nome_func"];
@@ -13,9 +13,9 @@ $id_ue         = $_POST["id_ue"];
 
     
     $sql = "update funcionario set ";
-    $sql .= "mat_func ='".$mat_func ."', funcao_func='".$funcao_func."', nome_func='".$nome_func."', nasc_func='".$nasc_func."', sexo_func='".$sexo_func."',";
+    $sql .= "id_func ='".$id_func."', mat_func ='".$mat_func ."', funcao_func='".$funcao_func."', nome_func='".$nome_func."', nasc_func='".$nasc_func."', sexo_func='".$sexo_func."',";
     $sql .= "tel_func='".$tel_func."', cpf_func='".$cpf_func."', cep='".$cep."', id_ue='".$id_ue."'";
-    $sql .= " where mat_func = '".$mat_func."';";
+    $sql .= " where id_func = '".$id_func."';";
 
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 

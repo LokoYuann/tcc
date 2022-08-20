@@ -12,25 +12,16 @@
 
 
 if($_SESSION['UsuarioNivel'] == 2){
- $id_cal = mysqli_query($con, "select id_calendario from calendario ORDER BY id_calendario ASC") or die(mysqli_error());}
-
-
-if($_SESSION['UsuarioNivel'] == 2){
-$ids = array();
-while($row = mysqli_fetch_array($id_cal))
-{
-    $ids[] = $row['id_calendario'];
-}
 
 ?>
     Selecionar Instituição:
 	<form action="?page=home" method="post" >
 	<select name="calendario" class="form-control" action="post" onchange='this.form.submit()';>
 	<?php 
-	for($i = 0; $i < count($ids); $i++)
+	for($i = 0; $i < count($id_cal); $i++)
 	{
 		
-		echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$inst[$i].'</option>';
+		echo '<option value="'.$id_cal[$i].'" '.(($_POST['calendario']==$id_cal[$i]||$id_cal[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$inst[$i].'</option>';
 
 	}
 
@@ -117,7 +108,7 @@ while($row = mysqli_fetch_array($daysql)){
     }
 echo "<div style='text-align: -webkit-center;'>";
     // começo do calendário
-    echo "<table class='table table-bordered border border-4 border-warning stripped table-fit table-responsive' style=''>";
+    echo "<table class='table table-bordered border border-4 border-warning stripped ' style=''>";
     echo "<tr class=''>";
     echo "<td  rowspan='2' class='cal-content'>meses</td>";
     echo "<td colspan='31' class='cal-content'>dias</td>";
@@ -173,10 +164,11 @@ echo "</tr>";
 echo "</table>";
 
 //Legenda
-echo "<br>";
 if(($leg_use) != null){
+    echo "<br>";
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
+
 
     $sla= array();
     while ($kkk = mysqli_fetch_array($sla_sql)) {
@@ -187,10 +179,10 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $cv = sizeof($sla);
     $i=0;
     $o=1;
-    echo "<div class= 'd-flex flex-row justify-content-between mt-4'>";
+    echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
     while($row = mysqli_fetch_array($leg_sql)){
         if($i==20){$i=0;}
-        if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
+        if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
         echo "<tr data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' style='line-height: 25px;min-height: 25px;height: 1px ;'>";
         echo "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
         echo "<td class='mis cal-content'>".$row['tipo']."</td>";

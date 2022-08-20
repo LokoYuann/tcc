@@ -10,7 +10,7 @@ $usuario = mysqli_real_escape_string($con, $_POST['usuario']);
 $senha = mysqli_real_escape_string($con, $_POST['senha']);
 
 // Validação do usuário/senha digitados
-$sql  = "select mat_func, usuario, nivel from usuarios where (usuario = '". $usuario ."') ";
+$sql  = "select id_func, usuario, nivel from usuarios where (usuario = '". $usuario ."') ";
 $sql .= "and (senha = '". $senha ."')";
 
 $query = mysqli_query($con, $sql);
@@ -33,7 +33,7 @@ if (mysqli_num_rows($query) != 1) {
 	if (!isset($_SESSION)) session_start();
 
 	// Salva os dados encontrados na sessão
-	$_SESSION['UsuarioID'] = $resultado['mat_func'];
+	$_SESSION['UsuarioID'] = $resultado['id_func'];
 	$_SESSION['UsuarioNome'] = $resultado['usuario'];
 	$_SESSION['UsuarioNivel'] = $resultado['nivel'];
 	

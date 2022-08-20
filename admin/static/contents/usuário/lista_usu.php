@@ -18,7 +18,7 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
-	$data = mysqli_query($con, "select * from usuarios ORDER BY mat_func ASC") or die(mysqli_error());
+	$data = mysqli_query($con, "select * from usuarios ORDER BY id_func ASC") or die(mysqli_error());
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
@@ -34,7 +34,7 @@
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td class='centro'><strong>Matricula do funcionário</strong></td>"; 
+					echo "<td class='centro'><strong>ID do funcionário</strong></td>"; 
 					echo "<td class='centro'><strong>Usuário</strong></td>"; 
 					echo "<td class='centro'><strong>Senha</strong></td>"; 
 					echo "<td class='centro'><strong>Nível</strong></td>";
@@ -42,15 +42,15 @@
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
-						echo "<td class='centro'>".$info['mat_func']."</td>";
+						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['usuario']."</td>";
 						echo "<td class='centro'>".$info['senha']." </td>";
 						echo "<td class='centro'>".$info['nivel']." </td>";
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
-						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&mat_func=".$info['mat_func']."> Visualizar </a>";
-						echo "<a class='btn btn-warning btn-xs' href=?page=edit_usu&mat_func=".$info['mat_func']."> Editar </a>"; 
-						echo "<a href=?page=excluir_usu&mat_func=".$info['mat_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
+						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."> Visualizar </a>";
+						echo "<a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."> Editar </a>"; 
+						echo "<a href=?page=excluir_usu&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
 					}
 				echo "</tr></tbody></table>";
 			?>				
@@ -62,7 +62,7 @@
 	<div id="bottom" class="row">
 			<div class="col-md-12">
 				<?php
-					$sqlTotal 		= "select mat_func from usuarios;";
+					$sqlTotal 		= "select id_func from usuarios;";
 					$qrTotal  		= mysqli_query($con, $sqlTotal) or die (mysqli_error());
 					$numTotal 		= mysqli_num_rows($qrTotal);
 					$totalpagina = (ceil($numTotal/$quantidade)<=0) ? 1 : ceil($numTotal/$quantidade);
