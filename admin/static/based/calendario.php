@@ -9,28 +9,63 @@
 
 </style>
 <?php
-
-
-if($_SESSION['UsuarioNivel'] == 2){
+	if($_SESSION['UsuarioNivel'] == 2){
+		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
+			$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		else if(isset($_POST['ue']) && $_POST['ue'] == 'none'){
+			$id_cal = mysqli_query($con, "select id_calendario from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+        else{
+            $id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());
+        }
+        }
+	else{
+		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+        $ids = array();
+        while($row = mysqli_fetch_array($id_cal))
+        {
+            $ids[] = $row['id_calendario'];
+        }
 
 ?>
-    Selecionar Instituição:
-	<form action="?page=home" method="post" >
-	<select name="calendario" class="form-control" action="post" onchange='this.form.submit()';>
-	<?php 
-	for($i = 0; $i < count($id_cal); $i++)
-	{
-		
-		echo '<option value="'.$id_cal[$i].'" '.(($_POST['calendario']==$id_cal[$i]||$id_cal[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$inst[$i].'</option>';
 
-	}
+<form action="?page=home" method="post" >
+		<div class="d-flex row justify-content-between" > 
+        <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
+			<div class="form-group col-md-6">
+				Filtrar por Instituição:
+				<select name="ue" class="form-control " action="post" onchange='formreact(this.value)';>
+				<option value="none">Todos</option>
+				<?php 
+				for($i = 0; $i < count($inst); $i++)
+				{
+					
+					echo '<option value="'.$id_ue[$i].'" '.(($_POST['ue']==$id_ue[$i]||$id_ue[$i]==$func_inst[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$inst[$i].'</option>';
 
-	?> 
-	</select>
-	</form>
-    <br>
-<?php
-}
+				}
+
+                echo "</select>
+			</div>";}
+				?> 
+			
+			<div class="form-group col-md-6">
+				Filtrar por calendário:
+				<select name="calendario" class="form-control " id="lista_form" action="post" onchange='this.form.submit()';>
+				<?php 
+				for($i = 0; $i < count($ids); $i++)
+				{
+					
+					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$ids[$i].'</option>';
+					
+
+				}
+
+				
+				echo "</select>
+			</div>
+		</div>";
+	echo "</form>";
+
+
 
 
 // armazena os dados da conexão numa variável

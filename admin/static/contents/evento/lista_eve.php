@@ -28,10 +28,10 @@
 	{
 		$ids[] = $row['id_calendario'];
 	}
-	if($_SESSION['UsuarioNivel'] == 2){
 	?>
 	<form action="?page=lista_eve" method="post" >
-		<div class="d-flex row justify-content-between" > 
+		<div class="d-flex row justify-content-between" >
+			<?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-6">
 				Filtrar por Instituição:
 				<select name="ue" class="form-control " action="post" onchange='formreact(this.value)';>
@@ -44,13 +44,13 @@
 
 				}
 
+			    echo "</select>
+				</div>";}
 				?> 
-				</select>
-			</div>
-
+			
 			<div class="form-group col-md-6">
 				Filtrar por calendário:
-				<select name="calendario" class="form-control " id="lista_eve_form" action="post" onchange='this.form.submit()';>
+				<select name="calendario" class="form-control " id="lista_form" action="post" onchange='this.form.submit()';>
 				<option value="none">Todos</option>
 				<?php 
 				for($i = 0; $i < count($ids); $i++)
@@ -66,7 +66,6 @@
 			</div>
 		</div>";
 	echo "</form>";
-	}
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">

@@ -1,6 +1,9 @@
 <?php
 $con = mysqli_connect('localhost', 'root', '', 'dailyevent');
-$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_GET['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());
+if($_GET['ue'] == "none"){
+$id_cal = mysqli_query($con, "select id_calendario from calendario ORDER BY id_calendario ASC") or die(mysqli_error());}
+else{
+$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_GET['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 $ids = array();
 	while($row = mysqli_fetch_array($id_cal))
 	{

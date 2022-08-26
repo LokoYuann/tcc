@@ -16,7 +16,7 @@ $(function () {
 function formreact(a) {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
-    document.getElementById("lista_eve_form").innerHTML = this.responseText;
+    document.getElementById("lista_form").innerHTML = this.responseText;
     }
     xhttp.open("GET", "contents/evento/select.php?ue=" +a+ "");
     xhttp.send();
