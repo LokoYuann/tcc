@@ -32,8 +32,7 @@
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
-			<div class="form-group col-md-2">
-				<br>
+			<div class="form-group col-md-2 d-flex row " id="reactive" >
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
   					Escolher Símbolo
 				</button>
@@ -79,7 +78,7 @@
 						</div>
 					</div>
 						<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Selecionar</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="formreact(document.querySelector('input[name=simbolo_leg]:checked').value,'addleg')">Selecionar</button>
 						</div>	
 					</div>
 				</div>

@@ -34,8 +34,8 @@
 			<?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-6">
 				Filtrar por Instituição:
-				<select name="ue" class="form-control " action="post" onchange='formreact(this.value)';>
-				<option value="none">Todos</option>
+				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"lista_eve")';>
+				<option value="none">Todas</option>
 				<?php 
 				for($i = 0; $i < count($inst); $i++)
 				{
@@ -50,7 +50,7 @@
 			
 			<div class="form-group col-md-6">
 				Filtrar por calendário:
-				<select name="calendario" class="form-control " id="lista_form" action="post" onchange='this.form.submit()';>
+				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
 				<option value="none">Todos</option>
 				<?php 
 				for($i = 0; $i < count($ids); $i++)

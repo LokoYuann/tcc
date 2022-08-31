@@ -33,8 +33,8 @@
         <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-6">
 				Filtrar por Instituição:
-				<select name="ue" class="form-control " action="post" onchange='formreact(this.value)';>
-				<option value="none">Todos</option>
+				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"calendario")';>
+				<option value="none">Todas</option>
 				<?php 
 				for($i = 0; $i < count($inst); $i++)
 				{
@@ -49,7 +49,7 @@
 			
 			<div class="form-group col-md-6">
 				Filtrar por calendário:
-				<select name="calendario" class="form-control " id="lista_form" action="post" onchange='this.form.submit()';>
+				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
 				<?php 
 				for($i = 0; $i < count($ids); $i++)
 				{
@@ -141,36 +141,36 @@ while($row = mysqli_fetch_array($daysql)){
        $eve[$domingo_m][$domingo_d] = "";
        $simb[$domingo_m][$domingo_d] = "<a>D</a>";
     }
-echo "<div style='text-align: -webkit-center;'>";
+$html = "<div style='text-align: -webkit-center;'>";
     // começo do calendário
-    echo "<table class='table table-bordered border border-4 border-warning stripped ' style=''>";
-    echo "<tr class=''>";
-    echo "<td  rowspan='2' class='cal-content'>meses</td>";
-    echo "<td colspan='31' class='cal-content'>dias</td>";
-    echo "<tr>";
+    $html .= "<table class='table table-bordered border border-4 border-warning stripped ' style=''>";
+    $html .= "<tr class=''>";
+    $html .= "<td  rowspan='2' class='cal-content'>meses</td>";
+    $html .= "<td colspan='31' class='cal-content'>dias</td>";
+    $html .= "<tr>";
     for ($ç=1; $ç < 32; $ç++) { 
-        echo "<td colspan='ç' class='cal-content'>$ç</td>";
+        $html .= "<td colspan='ç' class='cal-content'>$ç</td>";
     }
-    echo "</tr>";
-    echo "</tr>";
+    $html .= "</tr>";
+    $html .= "</tr>";
 
 // começa a criar colunas de meses
 for ($i=1; $i < 13; $i++) {
     // abre a linha dos meses
-    echo "<tr class='cils' style=''>";
+    $html .= "<tr class='cils' style=''>";
     // abre a coluna dos meses
-    echo "<td class='mis cal-content' style=''>";
+    $html .= "<td class='mis cal-content' style=''>";
 
     // cria um array para armazenar os meses, o primeiro fica vazio pois dá erro na criação do calendário
     $meses = array("","janeiro","fevereiro","março","abril","maio","junho","julho","agosto","setembro","outubro","novembro","dezembro");
 
     // usa o array, para cada valor ele usa o número da coluna para acessar um valor do array
     foreach ($meses as $a => $value) {
-        echo "<span style='display:flex; justify-content:center;'><strong>".$meses[$i]."</strong></span>";
+        $html .= "<span style='display:flex; justify-content:center;'><strong>".$meses[$i]."</strong></span>";
         break;
     }
     // fecha a linha de meses
-    echo "</td>";
+    $html .= "</td>";
 
     // tentativa fracassada de repetir o argumento do if else
         // while ($coords = mysqli_fetch_array($daysql)) {
@@ -180,11 +180,11 @@ for ($i=1; $i < 13; $i++) {
        
         // começo da repetição dos dias $j
         for ($j=1; $j < 32; $j++) { 
-            echo "<td ";
+            $html .= "<td ";
             if(!empty($eve[$i][$j])){
-                echo $eve[$i][$j];
+                $html .= $eve[$i][$j];
             }
-        echo " class='cal-content'>".((!empty($simb[$i][$j]))?$simb[$i][$j]:"")."<span class='number' style='display:flex; justify-content:center;'></span></td>";
+        $html .= " class='cal-content'>".((!empty($simb[$i][$j]))?$simb[$i][$j]:"")."<span class='number' style='display:flex; justify-content:center;'></span></td>";
         }
     
     // condição alternativa do argumento acima, geralmente imprime um ou outro, então é redundante. mas como quem planta verde colhe maduro...
@@ -193,14 +193,14 @@ for ($i=1; $i < 13; $i++) {
 
 }
 
-echo "</tr>";
+$html .= "</tr>";
 
 
-echo "</table>";
+$html .= "</table>";
 
 //Legenda
 if(($leg_use) != null){
-    echo "<br>";
+    $html .= "<br>";
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
 
@@ -209,29 +209,31 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     while ($kkk = mysqli_fetch_array($sla_sql)) {
         $sla[] = $kkk[0];
     }
-    echo "Legenda";
+    $html .= "Legenda";
 
     $cv = sizeof($sla);
     $i=0;
     $o=1;
-    echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
+    $html .= "<div class= 'd-flex flex-row justify-content-center mt-4'>";
     while($row = mysqli_fetch_array($leg_sql)){
         if($i==20){$i=0;}
-        if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
-        echo "<tr data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' style='line-height: 25px;min-height: 25px;height: 1px ;'>";
-        echo "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
-        echo "<td class='mis cal-content'>".$row['tipo']."</td>";
+        if($i==0){ $html .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
+        $html .= "<tr data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' style='line-height: 25px;min-height: 25px;height: 1px ;'>";
+        $html .= "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
+        $html .= "<td class='mis cal-content'>".$row['tipo']."</td>";
 
-        echo "</tr>";
-        if($i==20||$o==$cv){echo "</table>";} 
+        $html .= "</tr>";
+        if($i==20||$o==$cv){$html .= "</table>";} 
         $i++;
         $o++;
         
     }
 
 
-    echo "</div>";
+    $html .= "</div>";
 }
+echo $html;
+echo "<a href='mpdf.php' style='display:flex; justify-content:center;'><button class='btn btn-primary'>Gerar PDF</button></a>";
 echo "</div>";
-
+$_SESSION['html'] = $html;
 ?>

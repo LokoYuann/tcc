@@ -13,11 +13,11 @@ $(function () {
 })
 
 //asda
-function formreact(a) {
+function formreact(a,b) {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
-    document.getElementById("lista_form").innerHTML = this.responseText;
+    document.getElementById("reactive").innerHTML = this.responseText;
     }
-    xhttp.open("GET", "contents/evento/select.php?ue=" +a+ "");
+    xhttp.open("GET", "contents/evento/reactive.php?value=" +a+ "&page=" +b+"");
     xhttp.send();
 }
