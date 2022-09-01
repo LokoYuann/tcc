@@ -10,7 +10,7 @@
 
 	<!-- Área de campos do formulário de edição-->
 
-	<form action="?page=atualiza_leg&id_leg=<?php echo $row['id_leg']; ?>" method="post">
+	<form enctype="multipart/form-data" action="?page=atualiza_leg&id_leg=<?php echo $row['id_leg']; ?>" method="post">
 
 	<!-- 1ª LINHA -->	
 	<div class="row"> 
@@ -38,27 +38,17 @@
 			<label for="cor_leg">Cor</label><br>
 			<input type="color" name="cor_leg" style="width:100%" id="cor_leg" value="<?php echo $row["cor_leg"];?>">
 		</div>
-			<div class="form-group col-md-2">
-				<br>
+			<div class="form-group col-md-2 d-flex flex-column align-items-center" id="reactive">
+				<img src="<?php echo $row["simbolo_leg"];?>" class="simbico" alt="">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
-  					Escolher Símbolo
+					<?php echo ((!empty($row["simbolo_leg"]))?"Mudar Símbolo":"Escolher Símbolo") ?>
 				</button>
 			</div>
 	</div>
 
-	<hr/>
-
-		<div id="actions" class="row">
-			<div class="col-md-12">
-				<a href="?page=lista_leg" class="btn btn-secondary">Voltar</a>
-				<button type="submit" class="btn btn-primary ">Salvar Alterações</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- Modal -->
-	<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-				<div class="modal-dialog" role="document">
+			<!-- Modal -->
+			<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Símbolos</h5>
@@ -68,32 +58,65 @@
 						</div>
 						<div class="modal-body">
 						<div class="container-fluid">
-						<div class="row">
-						<label class="switch">
-							<input  type="radio" name="simbolo_leg" value="fa-home">
-							<span class="slider round"><i class="fa fa-home" style="font-size:190%;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-glass" >
-							<span class="slider round"><i class="fa fa-glass" style="font-size:160%;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;"></i></span>
-						</label>
-							<!-- <input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1 "><i class="fa fa-home"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-book" class="col-md-1"><i class="fa fa-book"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-glass" class="col-md-1"><i class="fa fa-glass"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i>
-							<input  type="radio" name="simbolo_leg" value="fa-home" class="col-md-1"><i class="fa fa-home"></i> -->
-							<!-- <button type="button" class="btn col-md-1 legbutton" value="fa-home"><i class="fa fa-home"></i></button>
-                            <button type="button" class="btn col-md-1 legbutton" value="fa-book"><i class="fa fa-book"></i></button> -->
+						<div class="row d-flex justify-content-center ">
+						<?php 
+							foreach ($dir as $fileinfo) {
+								if (!$fileinfo->isDot()) {
+									echo '<label class="switch">
+										<input  type="radio" name="simbolo_leg" value="'.$fileinfo.'">
+										<span class="slider round"><img src="/admin/static/img/simbolos/'.$fileinfo.'" class="simbico" alt=""></span>
+									</label>';
+								}
+							}
+						?>
 						</div>
 					</div>
-						<div class="modal-footer">
-						<button type="button" class="btn btn-primary" data-dismiss="modal">Selecionar</button>
+						<div class="modal-footer d-flex justify-content-between">
+						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2">
+  							Novo Símbolo
+						</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="formreact(document.querySelector('input[name=simbolo_leg]:checked').value,'addleg')">Selecionar</button>
 						</div>	
 					</div>
 				</div>
 			</div>
+		</div>
 				<!-- Modal -->
+				<!-- Modal Arquivo-->
+				<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+						<div class="container-fluid">
+						<div class="form-group">
+							<label for="tit_doc">Nome do Símbolo</label>
+							<input type="text" class="form-control" name="tit_simb" placeholder="Deixe em branco para manter nome original">
+						</div>
+						<div class="row d-flex">
+							<div class="form-group ">
+								<input type="file" class="form-control" name="local_simb">
+							</div>
+						</div>
+					</div>
+						<div class="modal-footer d-flex justify-content-between">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" >Cancelar</button>
+						<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+							<!-- Modal Arquivo-->
+
+			
+		
+		<hr />
+		<div id="actions" class="row">
+			<div class="col-md-12">
+				<button type="submit" class="btn btn-primary ">Salvar Alterações</button>
+				<a href="?page=lista_leg" class="btn btn-secondary">Voltar</a>
+				
+			</div>
+		</div>
+	</form> 
+</div>

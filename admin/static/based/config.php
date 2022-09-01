@@ -1,6 +1,8 @@
 <?php
 	//Estabelece conexão com o banco de dados em uma variavel
 	$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
+	//Descobre icones em uma variavel
+	$dir = new DirectoryIterator("C:/xampp/htdocs/admin/static/img/simbolos");
 	//Pega todos os tipos de eventos do banco de dados
 	$events_sql = mysqli_query($con, "select id_leg, tipo_evento from legenda ORDER BY id_leg ASC") or die(mysqli_error());
 	//Pega todos as instituições do banco de dados

@@ -13,7 +13,7 @@ $ids = array();
 		$ids[] = $row['id_calendario'];
 	}
 
-	if($_GET['page'] == "lista_eve"){echo "<option value='none'>Todos</option>";}
+	echo "<option value='none'>".(($_GET['page'] == "lista_eve")?"Todos":"--------")."</option>";
 	for($i = 0; $i < count($ids); $i++)
 	{
 		
@@ -26,7 +26,7 @@ $ids = array();
 //simbolo
 
 elseif($_GET['page'] == "addleg"){
-	echo '<i class="fa '.$_GET['value'].'" style="font-size:190%;display:flex; justify-content:center;"></i>
+	echo '<img src="/admin/static/img/simbolos/'.$_GET['value'].'" class="simbico" alt="">
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
 		Mudar
 	</button>';

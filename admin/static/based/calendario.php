@@ -50,7 +50,8 @@
 			<div class="form-group col-md-6">
 				Filtrar por calendário:
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
-				<?php 
+				<option value="none">--------</option>
+                <?php 
 				for($i = 0; $i < count($ids); $i++)
 				{
 					
@@ -92,24 +93,24 @@ while($row = mysqli_fetch_array($daysql)){
         if ($d_ini <= $d_fim && $m_ini == $m_fim) {
             for ($d_ini; $d_ini < $d_fim; $d_ini++) { 
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
             }
         }
         else{
             if ($d_ini >= $d_fim && $m_ini < $m_fim) {
             if ($d_ini <= 32) {
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
                 $d_ini++;
                 // se o mes inicial for menor ou igual ao mes final e o dia final for 32(máximo), reinicia o valor do dia inicial para um, voltando ao loop acima, e aumenta em um o valor do mes inicial, até satisfazer o mes inicial
                 
                 for ($d_fim; $d_fim >= 1; $d_fim--) { 
                         $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                        $simb[$m_fim][$d_fim] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+                        $simb[$m_fim][$d_fim] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
                     }
                 } else {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
-                    $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+                    $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
 
 
             }
@@ -117,7 +118,7 @@ while($row = mysqli_fetch_array($daysql)){
         }
             for ($d_ini; $d_ini < 32; $d_ini++) { 
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
 
             }
 
@@ -126,7 +127,7 @@ while($row = mysqli_fetch_array($daysql)){
 
 
         $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-        $simb[$m_fim][$d_fim] = "<i class='fa ".$leg['simbolo_leg']."'></i>";
+        $simb[$m_fim][$d_fim] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
     }
 
     while($row = mysqli_fetch_array($invday)){
@@ -219,7 +220,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         if($i==20){$i=0;}
         if($i==0){ $html .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
         $html .= "<tr data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' style='line-height: 25px;min-height: 25px;height: 1px ;'>";
-        $html .= "<td class='mis cal-content' style='background-color:".$row['cor'].";'><i style='font-family:fontawesome;' class='fa ".$row['simbolo']."'></i>".$row['sigla']."</td>";
+        $html .= "<td class='mis cal-content' style='background-color:".$row['cor'].";'><img src='".$row["simbolo"]."' class='simbico' alt=''>".$row['sigla']."</td>";
         $html .= "<td class='mis cal-content'>".$row['tipo']."</td>";
 
         $html .= "</tr>";

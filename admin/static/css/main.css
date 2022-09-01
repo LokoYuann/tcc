@@ -80,3 +80,9 @@ select[readonly] {
   pointer-events: none !important;
   touch-action: none !important;
 }
+
+
+/* simbolos */
+.simbico{
+  max-width: 35px;
+}

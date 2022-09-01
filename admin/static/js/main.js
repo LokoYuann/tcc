@@ -18,6 +18,6 @@ function formreact(a,b) {
     xhttp.onload = function() {
     document.getElementById("reactive").innerHTML = this.responseText;
     }
-    xhttp.open("GET", "contents/evento/reactive.php?value=" +a+ "&page=" +b+"");
+    xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"");
     xhttp.send();
 }

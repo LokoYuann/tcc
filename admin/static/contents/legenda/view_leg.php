@@ -26,7 +26,7 @@
 	<div class="row">
 	<div class="form-group col-md-4">
 			<label for="simbolo_leg">Símbolo</label><br>
-			<i class='fa <?php echo $row["simbolo_leg"];?>'></i>
+			<img src="<?php echo $row["simbolo_leg"];?>" class="simbico" alt="">
 		</div>
 		<div class="form-group col-md-4">
 			<label for="sigla_leg">Sigla</label><br>

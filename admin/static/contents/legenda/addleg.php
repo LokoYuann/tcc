@@ -32,7 +32,7 @@
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
-			<div class="form-group col-md-2 d-flex row " id="reactive" >
+			<div class="form-group col-md-2 d-flex flex-column align-items-center simbico" id="reactive" >
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
   					Escolher Símbolo
 				</button>
@@ -50,48 +50,65 @@
 						</div>
 						<div class="modal-body">
 						<div class="container-fluid">
-						<div class="row" style="display:flex; justify-content:space-between">
-						<label class="switch">
-							<input  type="radio" name="simbolo_leg" value="fa-home">
-							<span class="slider round"><i class="fa fa-home" style="font-size:190%;display:flex; justify-content:center;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-glass" >
-							<span class="slider round"><i class="fa fa-glass" style="font-size:160%;display:flex; justify-content:center;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
-						</label>
-						<label class="switch" >
-							<input  type="radio" name="simbolo_leg" value="fa-book" >
-							<span class="slider round"><i class="fa fa-book" style="font-size:160%;display:flex; justify-content:center;"></i></span>
-						</label>
+						<div class="row d-flex justify-content-center ">
+						<?php 
+							foreach ($dir as $fileinfo) {
+								if (!$fileinfo->isDot()) {
+									echo '<label class="switch">
+										<input  type="radio" name="simbolo_leg" value="'.$fileinfo.'">
+										<span class="slider round"><img src="/admin/static/img/simbolos/'.$fileinfo.'" class="simbico" alt=""></span>
+									</label>';
+								}
+							}
+						?>
 						</div>
 					</div>
-						<div class="modal-footer">
+						<div class="modal-footer d-flex justify-content-between">
+						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal2">
+  							Novo Símbolo
+						</button>
 						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="formreact(document.querySelector('input[name=simbolo_leg]:checked').value,'addleg')">Selecionar</button>
 						</div>	
 					</div>
 				</div>
 			</div>
-				<!-- Modal -->
-			
-			
 		</div>
+				<!-- Modal -->
+				<!-- Modal Arquivo-->
+				<div class="modal fade" id="modal2" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+				<div class="modal-dialog modal-dialog-centered" role="document">
+					<div class="modal-content">
+						<div class="modal-body">
+						<div class="container-fluid">
+						<div class="form-group">
+							<label for="tit_simb">Nome do Símbolo</label>
+							<input type="text" class="form-control" name="tit_simb" placeholder="Deixe em branco para manter nome original">
+						</div>
+						<div class="row d-flex">
+							<div class="form-group ">
+								<label for="local_simb">Escolher Arquivo</label>
+								<input type="file" class="form-control " name="local_simb">
+							</div>
+						</div>
+					</div>
+						<div class="modal-footer d-flex justify-content-between">
+						<button type="button" class="btn btn-danger" data-dismiss="modal" >Cancelar</button>
+						<button type="submit" class="btn btn-primary">Salvar</button>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>
+							<!-- Modal Arquivo-->
+
+			
+		
 		<hr />
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>
-				<a href="?page=lista_leg" class="btn btn-danger">Cancelar</a>
+				<a href="?page=lista_leg" class="btn btn-secondary">Cancelar</a>
+				
 			</div>
 		</div>
 	</form> 
