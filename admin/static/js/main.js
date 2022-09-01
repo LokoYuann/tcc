@@ -21,3 +21,8 @@ function formreact(a,b) {
     xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"");
     xhttp.send();
 }
+
+function sla(a){
+    var filename = a.replace(/^.*[\\\/]/, '');   
+    document.getElementsByName('tit_simb')[0].placeholder=filename;
+}

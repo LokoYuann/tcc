@@ -89,12 +89,13 @@
 						<div class="modal-body">
 						<div class="container-fluid">
 						<div class="form-group">
-							<label for="tit_doc">Nome do Símbolo</label>
-							<input type="text" class="form-control" name="tit_simb" placeholder="Deixe em branco para manter nome original">
+							<label for="tit_simb">Nome do Símbolo</label>
+							<input type="text" class="form-control" name="tit_simb" placeholder="">
 						</div>
 						<div class="row d-flex">
 							<div class="form-group ">
-								<input type="file" class="form-control" name="local_simb">
+								<label for="local_simb">Escolher Arquivo</label>
+								<input type="file" class="form-control " name="local_simb" onchange="sla(this.value)">
 							</div>
 						</div>
 					</div>

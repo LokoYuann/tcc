@@ -82,12 +82,12 @@
 						<div class="container-fluid">
 						<div class="form-group">
 							<label for="tit_simb">Nome do Símbolo</label>
-							<input type="text" class="form-control" name="tit_simb" placeholder="Deixe em branco para manter nome original">
+							<input type="text" class="form-control" name="tit_simb" placeholder="">
 						</div>
 						<div class="row d-flex">
 							<div class="form-group ">
 								<label for="local_simb">Escolher Arquivo</label>
-								<input type="file" class="form-control " name="local_simb">
+								<input type="file" class="form-control " name="local_simb" onchange="sla(this.value)">
 							</div>
 						</div>
 					</div>
