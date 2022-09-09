@@ -159,6 +159,10 @@
                 include "contents/perfil.php";
                 break;
 
+            case 'insere_perfil':
+                include "contents/insere_perfil.php";
+                break;
+    
             case 'home':
                 include "contents/home.php";
                 break;
