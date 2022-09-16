@@ -1,3 +1,10 @@
+<?php
+$lista_func = "SELECT * FROM usuarios A RIGHT JOIN funcionario B ON A.id_func = B.id_func WHERE A.id_func IS NULL";
+
+$lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B ON A.id_func = B.id_func WHERE A.id_func IS NULL");
+?>
+
+
 <div id="main" class="container-fluid">
  	<div id="top" class="row">
 		<div class="col-md-11">
@@ -9,8 +16,14 @@
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
 			<div class="form-group col-md-4">
-				<label for="id_func">ID do Funcionário</label>
-				<input type="text" class="form-control" name="id_func" readonly>
+				<label for="id_func">Funcionário</label>
+				<select name="id_func" id="" class="form-control">
+					<?php
+					while($row = mysqli_fetch_array($lf_sql)){
+						echo "<option value='".$row[5]."'>".$row[8]."</option>";
+					}
+					?>
+				</select>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="usuario">Nome do Usuário</label>
@@ -30,7 +43,7 @@
 				<input  type="radio" name="nivel" value="1">Supervisão
 				</label>
 				<label class="radio-inline">
-				<input  type="radio" name="nivel" value="2">Admnistraddor
+				<input  type="radio" name="nivel" value="2">Admnistrador
 				</label>
 			</div>
 		</div>

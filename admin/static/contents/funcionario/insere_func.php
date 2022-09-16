@@ -13,7 +13,6 @@
    $sql = "insert into funcionario values ";
     $sql .= "('0','$mat_func','$funcao_func','$nome_func','$nasc_func','$sexo_func','$tel_func','$cpf_func','$cep','$id_ue');";
     
-    
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 
     if($resultado){

@@ -53,25 +53,51 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   KEY `FK_eventos_legenda` (`id_leg`),
   CONSTRAINT `FK_eventos_calendario` FOREIGN KEY (`id_calendario`) REFERENCES `calendario` (`id_calendario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_eventos_legenda` FOREIGN KEY (`id_leg`) REFERENCES `legenda` (`id_leg`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=606 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela dailyevent.eventos: ~8 rows (aproximadamente)
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(1, '2022-04-03', '2022-04-15', 1, 1);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(2, '2022-03-01', '2022-03-03', 1, 2);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(3, '2022-08-15', '2022-08-15', 1, 4);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(4, '2022-05-19', '2022-05-19', 1, 3);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(5, '2022-01-06', '2022-01-06', 1, 5);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(7, '2022-11-07', '2022-11-07', 3, 6);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(9, '2022-01-05', '2022-01-05', 3, 7);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(10, '2022-11-15', '2022-11-15', 2, 8);
+-- Copiando dados para a tabela dailyevent.eventos: ~40 rows (aproximadamente)
+DELETE FROM `eventos`;
+INSERT INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(1, '2022-05-02', '2022-05-07', 2, 1),
+	(2, '2022-05-25', '2022-05-26', 2, 2),
+	(3, '2022-04-28', '2022-04-28', 2, 3),
+	(4, '2022-08-05', '2022-08-05', 2, 4),
+	(5, '2022-05-09', '2022-05-14', 2, 5),
+	(6, '2022-03-16', '2022-03-16', 2, 6),
+	(7, '2022-10-26', '2022-10-28', 2, 7),
+	(8, '2022-07-18', '2022-07-30', 2, 8),
+	(9, '2022-03-01', '2022-03-01', 2, 9),
+	(10, '2022-02-14', '2022-02-14', 2, 10),
+	(11, '2022-10-16', '2022-10-16', 2, 11),
+	(12, '2022-02-02', '2022-02-02', 2, 12),
+	(13, '2022-01-01', '2022-02-01', 2, 13),
+	(14, '2022-02-15', '2022-02-19', 2, 14),
+	(15, '2022-05-18', '2022-05-18', 2, 15),
+	(16, '2022-12-21', '2022-12-21', 2, 16),
+	(18, '2022-05-28', '2022-05-28', 2, 18),
+	(19, '2022-09-03', '2022-09-03', 2, 19),
+	(20, '2022-11-26', '2022-11-26', 2, 20),
+	(21, '2022-12-19', '2022-12-20', 2, 21),
+	(22, '2022-11-28', '2022-12-17', 2, 22),
+	(51, '2022-08-16', '2022-08-20', 2, 5),
+	(52, '2022-11-16', '2022-11-19', 2, 5),
+	(53, '2022-11-14', '2022-11-14', 2, 5),
+	(91, '2022-04-15', '2022-04-15', 2, 9),
+	(92, '2022-11-02', '2022-11-02', 2, 9),
+	(93, '2022-09-07', '2022-09-07', 2, 9),
+	(94, '2022-10-12', '2022-10-12', 2, 9),
+	(95, '2022-11-15', '2022-11-15', 2, 9),
+	(96, '2022-06-16', '2022-06-16', 2, 9),
+	(97, '2022-04-21', '2022-04-21', 2, 9),
+	(101, '2022-08-08', '2022-08-13', 2, 1),
+	(102, '2022-11-07', '2022-11-12', 2, 1),
+	(151, '2022-08-26', '2022-08-26', 2, 15),
+	(152, '2022-11-21', '2022-11-21', 2, 15),
+	(201, '2022-11-23', '2022-11-24', 2, 2),
+	(202, '2022-08-01', '2022-08-02', 2, 2),
+	(601, '2022-06-11', '2022-06-11', 2, 6),
+	(602, '2022-09-17', '2022-09-17', 2, 6),
+	(603, '2022-02-03', '2022-02-12', 2, 23);
 
 -- Copiando estrutura para tabela dailyevent.funcionario
 DROP TABLE IF EXISTS `funcionario`;

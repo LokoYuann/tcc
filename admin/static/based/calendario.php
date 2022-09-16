@@ -34,7 +34,6 @@
 			<div class="form-group col-md-6">
 				Filtrar por Instituição:
 				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"calendario")';>
-				<option value="none">Todas</option>
 				<?php 
 				for($i = 0; $i < count($inst); $i++)
 				{
@@ -50,8 +49,7 @@
 			<div class="form-group col-md-6">
 				Filtrar por calendário:
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
-				<option value="none">--------</option>
-                <?php 
+				<?php 
 				for($i = 0; $i < count($ids); $i++)
 				{
 					

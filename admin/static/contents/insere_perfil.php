@@ -1,6 +1,6 @@
 <?php
     $origem = $_FILES["foto"]['tmp_name'];
-    $nomedoc = "C:/Users/samu/Documents/xamp/htdocs/admin/static/img/".$_FILES["foto"]["name"].".jpg";
+    $nomedoc = "C:/xampp/htdocs/admin/static/img/".$_FILES["foto"]["name"].".jpg";
     copy($origem, $nomedoc);
     $sql = "update usuarios set ";
     $sql .= "foto='".$_FILES["foto"]["name"]."' where id_func = '".$_SESSION['UsuarioID']."';";

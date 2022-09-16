@@ -35,29 +35,21 @@
 
 					echo "<table class='table table-striped ' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td class='centro'><strong>ID do funcionário</strong></td>"; 
-					echo "<td class='centro'><strong>Matricula do funcionário</strong></td>"; 
-					echo "<td class='centro'><strong>Função do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>Nome do funcionário</strong></td>";
-					echo "<td class='centro'><strong>Data de Nascimento do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>Sexo do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>Telefone do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>CPF do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>Cep do Funcionário</strong></td>";
-					echo "<td class='centro'><strong>Unidade de Ensino do Funcionário</strong></td>";
+					echo "<td class='centro'><strong>ID</strong></td>"; 
+					echo "<td class='centro'><strong>Matricula</strong></td>"; 
+					echo "<td class='centro'><strong>Nome</strong></td>";
+					echo "<td class='centro'><strong>Telefone</strong></td>";
+					echo "<td class='centro'><strong>CPF</strong></td>";
+					echo "<td class='centro'><strong>Unidade de Ensino</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
 						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['mat_func']."</td>";
-						echo "<td class='centro'>".$info['funcao_func']." </td>";
 						echo "<td class='centro'>".$info['nome_func']." </td>";
-						echo "<td class='centro'>".$info['nasc_func']." </td>";
-						echo "<td class='centro'>".(($info['sexo_func']=='m')? "Masculino":"feminino")." </td>";
-						echo "<td class='centro'>".$info['tel_func']." </td>";
-						echo "<td class='centro'>".$info['cpf_func']." </td>";
-						echo "<td class='centro'>".$info['cep']." </td>";
+						echo "<td class='centro' id='tel'>".$info['tel_func']." </td>";
+						echo "<td class='centro cpf' id='cpf'> ".$info['cpf_func']." </td>";
 						echo "<td class='centro'>".$info['id_ue']." </td>";
 
 

@@ -52,7 +52,11 @@ if (!isset($_SESSION)) session_start();
 <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
 <script src="https://unpkg.com/feather-icons"></script>
 <script src="js/main.js"></script>	
-
+<script src="js/jquery-3.3.1.min.js" type="text/javascript" ></script>
+		<script src="js/bootstrap.min.js" type="text/javascript"></script>
+		<script src="js/jquery.inputmask.bundle.js" type="text/javascript"></script>
+		<script src="js/jquery_maskmoney.js" type="text/javascript"></script>
+		<script src="js/script_mask.js" type="text/javascript"></script>
 </body>
 
 </html>

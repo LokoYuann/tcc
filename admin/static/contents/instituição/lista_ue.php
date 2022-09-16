@@ -30,23 +30,17 @@
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
 					echo "<td><strong>ID</strong></td>"; 
-					echo "<td><strong>Logo</strong></td>"; 
-					echo "<td><strong>Nome</strong></td>"; 
 					echo "<td><strong>Sigla</strong></td>";
+					echo "<td><strong>Nome</strong></td>"; 
 					echo "<td><strong>Email</strong></td>";
-					echo "<td><strong>Telefone</strong></td>";
-					echo "<td><strong>CEP</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
 						echo "<td>".$info['id_ue']."</td>";
-						echo "<td>".$info['logo_ue']."</td>";
-						echo "<td>".$info['nome_ue']." </td>";
 						echo "<td>".$info['sigla_ue']." </td>";
+						echo "<td>".$info['nome_ue']." </td>";
 						echo "<td>".$info['email_ue']." </td>";
-						echo "<td>".$info['tel_ue']." </td>";
-						echo "<td>".$info['cep']." </td>";
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_ue&id_ue=".$info['id_ue']."> Visualizar </a>";

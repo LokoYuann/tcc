@@ -9,11 +9,11 @@
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
 			<div class="form-group col-md-2">
-				<label for="id_func">ID do Funcionário</label>
+				<label for="id_func">ID</label>
 				<input type="text" class="form-control" name="id_func" readonly>
 			</div>
 			<div class="form-group col-md-2">
-				<label for="mat_func">Matricula do Funcionário</label>
+				<label for="mat_func">Matricula</label>
 				<input type="text" class="form-control" name="mat_func" >
 			</div>
 			<div class="form-group col-md-4">
@@ -58,7 +58,13 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="id_ue">Instituição do Funcionário</label>
-				<input type="text" class="form-control" name="id_ue" id="id_ue">
+				<select name="id_ue" id="" class="form-control">
+					<?php
+					for($i = 0;$i<sizeof($id_ue);$i++){
+						echo "<option value='".$id_ue[$i]."'>".$inst[$i]."</option>";
+					}
+					?>
+				</select>
 			</div>
 			
 		</div>

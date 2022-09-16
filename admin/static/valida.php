@@ -4,7 +4,7 @@ if (!empty($_POST) and (empty($_POST['usuario']) or empty($_POST['senha']))) {
 	header("Location: index.php"); exit;
 }
 // Tenta se conectar ao servidor MySQL e ao DB
-$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
+$con = mysqli_connect('localhost:3307', 'root', '', 'dailyevent');
 
 $usuario = mysqli_real_escape_string($con, $_POST['usuario']);
 $senha = mysqli_real_escape_string($con, $_POST['senha']);
