@@ -72,14 +72,15 @@ $sql = mysqli_query($con, "select * from eventos ;");
 if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
 // cria outra conexão com o banco de dados, onde ele chama os dados com nomes mais fáceis para fazer o X e o Y da tabela
 $daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim from eventos where id_calendario = '".$_POST['calendario']."' order by dt_ini_ev ;");}
-else{$daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim from eventos where id_calendario = '".$func_cal[0]."' order by dt_ini_ev ;");}
-// armazena dias invalidos
 
+else if(!empty($func_cal[0])){$daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim from eventos where id_calendario = '".$func_cal[0]."' order by dt_ini_ev ;");}
+// armazena dias invalidos
 $invday = mysqli_query($con, "with recursive date_ranges AS (SELECT '".date("Y")."-01-01' dt UNION ALL SELECT dt + INTERVAL 1 DAY FROM date_ranges WHERE dt + INTERVAL 1 DAY <= '".date("Y")."-12-31') SELECT  EXTRACT(DAY FROM dt) AS d_eve_inv, EXTRACT(MONTH FROM dt) AS m_eve_inv, EXTRACT(DAY FROM LAST_DAY(dt)) AS fim_mes FROM date_ranges WHERE DAYNAME(dt) = 'Sunday';");
 
 $simb = array();
 $eve = array();
 $leg_use = array();
+if(!empty($daysql)){
 while($row = mysqli_fetch_array($daysql)){
         $m_ini = $row['m_ini'];
         $d_ini = $row['d_ini'];
@@ -127,7 +128,7 @@ while($row = mysqli_fetch_array($daysql)){
         $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
         $simb[$m_fim][$d_fim] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
     }
-
+}
     while($row = mysqli_fetch_array($invday)){
         $domingo_d = $row[0];
         $domingo_m = $row[1];

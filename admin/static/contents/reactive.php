@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect('localhost:3307', 'root', '', 'dailyevent');
+$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 
 //Eventos
 if($_GET['page'] == "lista_eve" || $_GET['page'] == "calendario"){

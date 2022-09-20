@@ -37,3 +37,8 @@ function get_endereco($cep){
     $xml = simplexml_load_file($url);
     return $xml;
   }
+
+$(document).ready(function(){
+	$('.cpf').inputmask("999.999.999-99");
+    $('.tel-num').inputmask("(99) 99999-9999");
+});

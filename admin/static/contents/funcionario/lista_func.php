@@ -40,17 +40,18 @@
 					echo "<td class='centro'><strong>Nome</strong></td>";
 					echo "<td class='centro'><strong>Telefone</strong></td>";
 					echo "<td class='centro'><strong>CPF</strong></td>";
-					echo "<td class='centro'><strong>Unidade de Ensino</strong></td>";
+					echo "<td class='centro'><strong>UE</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
-					while($info = mysqli_fetch_array($data)){ 
+					while($info = mysqli_fetch_array($data)){
+						$inst = mysqli_query($con, "select sigla_ue from ue where id_ue = ".$info['id_ue'].";");
 						echo "<tr>";
 						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['mat_func']."</td>";
 						echo "<td class='centro'>".$info['nome_func']." </td>";
-						echo "<td class='centro' id='tel'>".$info['tel_func']." </td>";
+						echo "<td class='centro tel-num' id='tel'>".$info['tel_func']." </td>";
 						echo "<td class='centro cpf' id='cpf'> ".$info['cpf_func']." </td>";
-						echo "<td class='centro'>".$info['id_ue']." </td>";
+						echo "<td class='centro'>".mysqli_fetch_array($inst)[0]." </td>";
 
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";

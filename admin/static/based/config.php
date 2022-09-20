@@ -1,6 +1,6 @@
 <?php
 	//Estabelece conexão com o banco de dados em uma variavel
-	$con = mysqli_connect('localhost:3307', 'root', '', 'dailyevent');
+	$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 	//Descobre icones em uma variavel
 	$dir = new DirectoryIterator("C:/xampp/htdocs/admin/static/img/simbolos");
 	//funcionarios

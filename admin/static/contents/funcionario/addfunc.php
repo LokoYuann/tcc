@@ -43,14 +43,14 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="tel_func">Telefone do Funcionário</label>
-				<input type="text" name="tel_func" class="form-control" id="tel_func">
+				<input type="text" name="tel_func" class="form-control" id="tel_func" placeholder="(00) 00000-0000">
 			</div>
 		</div>
 		<!-- 3º linha -->
 		<div class="row"> 
 			<div class="form-group col-md-4">
 				<label for="cpf_func">CPF do Funcionário</label>
-				<input type="text" class="form-control" name="cpf_func" id="cpf__func">
+				<input type="text" class="form-control" name="cpf_func" id="cpf__func" placeholder="000.000.000-00">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="cep">CEP do Funcionário</label>
