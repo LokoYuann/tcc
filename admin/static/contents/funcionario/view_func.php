@@ -4,6 +4,7 @@
 	
 	$sql = mysqli_query($con, "select * from funcionario where id_func = '".$id_func."';");
 	$row = mysqli_fetch_array($sql);
+	$inst = mysqli_query($con, "select sigla_ue from ue where id_ue = ".$row["id_ue"].";");
 ?>
 <div id="main" class="container-fluid">
 	<br><h3 class="page-header">Vizualizar registro de Funcionário : <?php echo $id_func;?></h3>
@@ -46,14 +47,14 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="tel_func">Telefone do Funcionário</label>
-				<input type="text" name="tel_func" class="form-control" id="tel_func" value="<?php echo $row["tel_func"];?>" readonly>
+				<input type="text" name="tel_func" class="form-control tel" id="tel_func" value="<?php echo $row["tel_func"];?>" readonly>
 			</div>
 		</div>
 		<!-- 3º linha -->
 		<div class="row"> 
 			<div class="form-group col-md-4">
 				<label for="cpf_func">CPF do Funcionário</label>
-				<input type="text" class="form-control" name="cpf_func" id="cpf__func" value="<?php echo $row["cpf_func"];?>" readonly>
+				<input type="text" class="form-control cpf" name="cpf_func" id="cpf__func" value="<?php echo $row["cpf_func"];?>" readonly>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="cep">CEP do Funcionário</label>
@@ -61,7 +62,7 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="id_ue">Instituição do Funcionário</label>
-				<input type="text" class="form-control" name="id_ue" id="id_ue" value="<?php echo $row["id_ue"];?>" readonly>
+				<input type="text" class="form-control" name="id_ue" id="id_ue" value="<?php echo mysqli_fetch_array($inst)[0]?>" readonly>
 			</div>
 			
 		</div>

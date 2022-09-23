@@ -56,7 +56,7 @@
 								if (!$fileinfo->isDot()) {
 									echo '<label class="switch">
 										<input  type="radio" name="simbolo_leg" value="'.$fileinfo.'">
-										<span class="slider round"><img src="/admin/static/img/simbolos/'.$fileinfo.'" class="simbico" alt=""></span>
+										<span class="slider round" "><img src="/admin/static/img/simbolos/'.$fileinfo.'" class="simbico" alt=""></span>
 									</label>';
 								}
 							}

@@ -20,7 +20,7 @@ $lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B 
 				<select name="id_func" id="" class="form-control">
 					<?php
 					while($row = mysqli_fetch_array($lf_sql)){
-						echo "<option value='".$row[5]."'>".$row[8]."</option>";
+						echo "<option value='".$row['id_func']."'>".$row['nome_func']."</option>";
 					}
 					?>
 				</select>

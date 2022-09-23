@@ -49,14 +49,14 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="tel_func">Telefone do Funcionário</label>
-				<input type="text" name="tel_func" class="form-control" id="tel_func" value="<?php echo $row["tel_func"];?>">
+				<input type="text" name="tel_func" class="form-control tel" id="tel_func" value="<?php echo $row["tel_func"];?>">
 			</div>
 		</div>
 		<!-- 3º linha -->
 		<div class="row"> 
 			<div class="form-group col-md-4">
 				<label for="cpf_func">CPF do Funcionário</label>
-				<input type="text" class="form-control" name="cpf_func" id="cpf__func" value="<?php echo $row["cpf_func"];?>">
+				<input type="text" class="form-control cpf" name="cpf_func" id="cpf_func" value="<?php echo $row["cpf_func"];?>">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="cep">CEP do Funcionário</label>
@@ -64,7 +64,15 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="id_ue">Instituição do Funcionário</label>
-				<input type="text" class="form-control" name="id_ue" id="id_ue" value="<?php echo $row["id_ue"];?>">
+				
+				
+				<select name="id_ue" id="" class="form-control">
+					<?php
+					for($i = 0;$i<sizeof($id_ue);$i++){
+						echo "<option value='".$id_ue[$i]."'".(($id_ue[$i] == $row['id_ue'])?"selected":"").">".$inst[$i]."</option>";
+					}
+					?>
+				</select>
 			</div>
 			
 		</div>

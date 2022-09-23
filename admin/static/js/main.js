@@ -40,5 +40,5 @@ function get_endereco($cep){
 
 $(document).ready(function(){
 	$('.cpf').inputmask("999.999.999-99");
-    $('.tel-num').inputmask("(99) 99999-9999");
+    $('.tel').inputmask("(99) 99999-9999");
 });

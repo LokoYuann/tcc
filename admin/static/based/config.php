@@ -1,8 +1,8 @@
 <?php
 	//Estabelece conexão com o banco de dados em uma variavel
-	$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
+	$con = mysqli_connect('localhost:3307', 'root', '', 'dailyevent');
 	//Descobre icones em uma variavel
-	$dir = new DirectoryIterator("C:/xampp/htdocs/admin/static/img/simbolos");
+	$dir = new DirectoryIterator("C:/wamp64/www/admin/static/img/simbolos");
 	//funcionarios
 	$func_sql = mysqli_query($con, "select id_func, nome_func from funcionario ORDER BY id_func ASC") or die(mysqli_error());
 	//Pega todos os tipos de eventos do banco de dados

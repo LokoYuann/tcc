@@ -13,9 +13,10 @@ function botina() {
 <nav id="sidebar" class="sidebar js-sidebar" >
 			<div class="sidebar-content js-simplebar">
 				<ul class="sidebar-nav">
-					<a class="sidebar-brand" href="?page=home">
-					  <span class="align-middle">Faetec</span>
-				</a>
+					<a class="sidebar-brand" href="?page=home" style="text-decoration: none;">
+						<img src="img/logo1.png" alt="" width="40" id="faetec" >
+						<img src="img/faetec.png" alt="" width="80" id="faetec" style="margin-left:7px;">
+					</a>
 					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'home')echo "active";?>">
 						<a class="sidebar-link" href="?page=home">
               			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendário</span>

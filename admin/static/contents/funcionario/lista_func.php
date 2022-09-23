@@ -49,7 +49,7 @@
 						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['mat_func']."</td>";
 						echo "<td class='centro'>".$info['nome_func']." </td>";
-						echo "<td class='centro tel-num' id='tel'>".$info['tel_func']." </td>";
+						echo "<td class='centro tel' id='tel'>".$info['tel_func']." </td>";
 						echo "<td class='centro cpf' id='cpf'> ".$info['cpf_func']." </td>";
 						echo "<td class='centro'>".mysqli_fetch_array($inst)[0]." </td>";
 

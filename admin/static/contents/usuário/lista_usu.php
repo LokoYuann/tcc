@@ -45,7 +45,7 @@
 						echo "<td class='centro'>".$info['id_func']."</td>";
 						echo "<td class='centro'>".$info['usuario']."</td>";
 						echo "<td class='centro'>".$info['senha']." </td>";
-						echo "<td class='centro'>".$info['nivel']." </td>";
+						echo "<td class='centro'>".(($info['nivel'] == 1)?"SUP":"ADMIN")." </td>";
 
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."> Visualizar </a>";

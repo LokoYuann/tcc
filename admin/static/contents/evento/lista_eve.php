@@ -83,7 +83,7 @@
 					}
 					else{
 						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
-						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
+						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") /* or die(mysqli_error()) */;}
 					}
 					
 					
@@ -96,6 +96,7 @@
 					echo "<td><strong>Data de Fim</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
+				if(!empty($info)){
 					while($info = mysqli_fetch_array($eventos)){ 
 						echo "<tr>";
 						echo "<td>".$info['id_evento']."</td>";
@@ -108,6 +109,10 @@
 						echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."> Editar </a>"; 
 						echo "<a href=?page=excluir_eve&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'> Excluir </a></td>";
 					}
+				}
+				else{
+					echo "Este calendário não possui eventos";
+				}
 				echo "</tr></tbody></table>";
 			?>				
 		</div><!-- Div Table -->
