@@ -1,8 +1,8 @@
 <?php
-$con = mysqli_connect('localhost:3307', 'root', '', 'dailyevent');
+$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 
 //Eventos
-if($_GET['page'] == "lista_eve" || $_GET['page'] == "calendario"){
+if($_GET['page'] == "lista_eve" || $_GET['page'] == "calendario"|| $_GET['page'] == "addeve"){
 if($_GET['value'] == "none"){
 $id_cal = mysqli_query($con, "select id_calendario from calendario ORDER BY id_calendario ASC") or die(mysqli_error());}
 else{

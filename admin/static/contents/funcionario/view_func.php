@@ -5,6 +5,8 @@
 	$sql = mysqli_query($con, "select * from funcionario where id_func = '".$id_func."';");
 	$row = mysqli_fetch_array($sql);
 	$inst = mysqli_query($con, "select sigla_ue from ue where id_ue = ".$row["id_ue"].";");
+	$num = mysqli_query($con, "select numero from localidade where cep = ".$row["cep"].";");
+
 ?>
 <div id="main" class="container-fluid">
 	<br><h3 class="page-header">Vizualizar registro de Funcionário : <?php echo $id_func;?></h3>
@@ -59,6 +61,10 @@
 			<div class="form-group col-md-4">
 				<label for="cep">CEP do Funcionário</label>
 				<input type="text" name="cep" class="form-control" id="cep" value="<?php echo $row["cep"];?>" readonly>
+			</div>
+			<div class="form-group col-md-4">
+				<label for="num">Número do Funcionário</label>
+				<input type="text" name="num" class="form-control" id="num" value="<?php echo mysqli_fetch_array($num)[0];?>" readonly>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="id_ue">Instituição do Funcionário</label>

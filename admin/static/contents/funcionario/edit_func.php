@@ -4,6 +4,8 @@
 	
 	$sql = mysqli_query($con, "select * from funcionario where id_func = '".$id_func."';");
 	$row = mysqli_fetch_array($sql);
+	$num = mysqli_query($con, "select numero from localidade where cep = ".$row["cep"].";");
+
 ?>
 <div id="main" class="container-fluid">
 	<br><h3 class="page-header">Editar registro de Funcionário : <?php echo $id_func;?></h3>
@@ -58,13 +60,17 @@
 				<label for="cpf_func">CPF do Funcionário</label>
 				<input type="text" class="form-control cpf" name="cpf_func" id="cpf_func" value="<?php echo $row["cpf_func"];?>">
 			</div>
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-2">
 				<label for="cep">CEP do Funcionário</label>
+				<input type="hidden" name="cep_old" class="form-control" id="cep_old" value="<?php echo $row["cep"];?>" readonly>
 				<input type="text" name="cep" class="form-control" id="cep" value="<?php echo $row["cep"];?>">
+			</div>
+			<div class="form-group col-md-2">
+				<label for="numero">Número do Funcionário</label>
+				<input type="text" name="numero" class="form-control" id="numero" value="<?php echo mysqli_fetch_array($num)[0];?>">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="id_ue">Instituição do Funcionário</label>
-				
 				
 				<select name="id_ue" id="" class="form-control">
 					<?php

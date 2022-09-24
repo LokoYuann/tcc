@@ -83,7 +83,7 @@
 					}
 					else{
 						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
-						else{$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") /* or die(mysqli_error()) */;}
+						else if(!empty($ids)){$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") /* or die(mysqli_error()) */;}
 					}
 					
 					
@@ -96,12 +96,13 @@
 					echo "<td><strong>Data de Fim</strong></td>";
 					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
-				if(!empty($info)){
+				if(!empty($eventos)){
 					while($info = mysqli_fetch_array($eventos)){ 
+						$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
 						echo "<tr>";
 						echo "<td>".$info['id_evento']."</td>";
 						echo "<td>".$info['id_calendario']."</td>";
-						echo "<td>".$info['id_leg']." </td>";
+						echo "<td>".mysqli_fetch_array($tipo_evento)[0]." </td>";
 						echo "<td>".date('d/m/Y',strtotime($info['dt_ini_ev']))."</td>"; //Funções para converter formato da data do MySQL
 						echo "<td>".date('d/m/Y',strtotime($info['dt_fim_ev']))."</td>"; //Funções para converter formato da data do MySQL
 						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";

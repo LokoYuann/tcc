@@ -1,3 +1,17 @@
+<?php
+	if($_SESSION['UsuarioNivel'] == 2){
+		$id_cal = mysqli_query($con, "select id_calendario from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+	else{
+		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+	
+
+
+	$ids = array();
+	while($row = mysqli_fetch_array($id_cal))
+	{
+		$ids[] = $row['id_calendario'];
+	}
+?>
 <div id="main" class="container-fluid">
  	<div id="top" class="row">
 		<div class="col-md-11">
@@ -12,35 +26,47 @@
 				<label for="id_evento">ID Evento</label>
 				<input type="text" class="form-control" name="id_evento" readonly>
 			</div>
+			
 			<div class="form-group col-md-2">
-				<label for="id_calendario">Calendário</label>
+				<label for="id_calendario">UE</label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
-					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."';");
-					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
-					echo '<input type="text" class="form-control readonly" name="'.$cal_tmp[0].'" value="'.$func_inst_sigla[0].'" readonly>';
-
+					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func_inst[0].'" readonly>';
+					echo '<input type="text" class="form-control readonly" name="" value="'.$func_inst_sigla[0].'" readonly>';
 				}
 				else{
 				?>
 				
-			<select class="form-control " id="id_calendario" name="id_calendario" >
-				<option> --------- </option>
-					<?php
-					
-					for($i = 0; $i < count($inst); $i++)
-					{
-					$cal_tmp_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$id_ue[$i]."';");
-					$cal_tmp = mysqli_fetch_array($cal_tmp_sql);
-					echo '<option value="'.$cal_tmp[0].'" '.((!(strcmp($func_inst[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
-						
-					}
-															
-					?>	
+					<select class="form-control " id="" name="" onchange='formreact(this.value,"addeve")'>
+							<?php
+							echo "<option value='none'>Todas</option>";
+							for($i = 0; $i < count($inst); $i++)
+							{
+							echo '<option value="'.$id_ue[$i].'" '.((!(strcmp($func_inst[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
+								
+							}
+																	
+							?>	
 
-			</select>
-			<?php } ?>
+					</select>
+				<?php } ?>
 			</div>
+			
+			<div class="form-group col-md-2">
+				<label for="id_calendario">Calendário</label>
+				<select class="form-control " id="reactive" name="id_calendario" >
+				<?php 
+					for($i = 0; $i < count($ids); $i++)
+					{
+						
+						echo '<option value="'.$ids[$i].'">'.$ids[$i].'</option>';
+						
+
+					}
+				?>
+				</select>
+			</div>
+
 			<div class="form-group col-md-2">
 				<label for="id_leg">Tipo Evento</label>
 			<select class="form-control" id="id_leg" name="id_leg">
