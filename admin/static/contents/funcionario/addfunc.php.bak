@@ -6,7 +6,7 @@
 
 	</div>
 	<form enctype="multipart/form-data" action="?page=insere_func" method="post">
-	<hr>
+<hr>
 	<br>
 		<!-- 1ª LINHA -->	
 		<div class="row"> 

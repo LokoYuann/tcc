@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
-			<h2>Instituições</h2>
+			<h2 style="font-family: 'Roboto', sans-serif;">Instituições</h2>
 		</div>
 		<div class="col-md-1">
 			<a href="?page=addue" class="btn btn-primary pull-right h2">Nova Instituição</a> 
@@ -16,7 +16,7 @@
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
-			<div class="table-responsive col-md-12">
+			<div class="table-all table-responsive col-md-12">
 				<?php
 					$quantidade = 5;
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
@@ -29,11 +29,11 @@
 
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td><strong>ID</strong></td>"; 
-					echo "<td><strong>Sigla</strong></td>";
-					echo "<td><strong>Nome</strong></td>"; 
-					echo "<td><strong>Email</strong></td>";
-					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
+					echo "<td class='td-indicador'><strong>ID</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Sigla</strong></td>";
+					echo "<td class='td-indicador'><strong>Nome</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Email</strong></td>";
+					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
@@ -42,7 +42,7 @@
 						echo "<td>".$info['nome_ue']." </td>";
 						echo "<td>".$info['email_ue']." </td>";
 
-						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
+						echo "<td class='actions btn-group-sm d-flex height='10px' justify-content-flex-start'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_ue&id_ue=".$info['id_ue']."> Visualizar </a>";
 						echo "<a class='btn btn-warning btn-xs' href=?page=edit_ue&id_ue=".$info['id_ue']."> Editar </a>"; 
 						echo "<a href=?page=excluir_ue&id_ue=".$info['id_ue']." class='btn btn-danger btn-xs'> Excluir </a></td>";
@@ -52,6 +52,7 @@
 		</div><!-- Div Table -->
 	</div><!--list-->
 
+	<br>
 	
 	<!-- PAGINAÇÃO -->
 	<div id="bottom" class="row">

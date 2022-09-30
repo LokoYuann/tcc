@@ -5,6 +5,19 @@ require_once __DIR__ . '/vendor/autoload.php';
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
 
+$cabecalho ="<div style='margin-bottom:20px;width: 100%';>";
+$cabecalho .= "<img src='/admin/static/img/faeteclogo.png' align='left' style='width:70px;float: left;'/>";
+$cabecalho .= "<div align='center' style='float: center;font-size:12px'>";
+$cabecalho .= "GOVERNO DO ESTADO DO RIO DE JANEIRO<br>";
+$cabecalho .= "SECRETARIA DE ESTADO DE CIÊNCIA,TECNOLOGIA E INOVAÇÃO<br>";
+$cabecalho .= "FUNDAÇÃO DE APOIO À ESCOLA TÉCNICA<br>";
+$cabecalho .= mb_strtoupper($_SESSION['ue'])."<br><br>";
+$cabecalho .= "<strong>CALENDÁRIO ESCOLAR - ".$_SESSION['ano']."<br>";
+$cabecalho .= "EDUCAÇAO PROFISSIONAL TÉCNICA DE NÍVEL MÉDIO INTEGRADO</strong>";
+$cabecalho .= "</div>";
+
+$cabecalho .= "</div>";
+
 $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
 $fontData = $defaultFontConfig['fontdata'];
 $stylesheet = file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css');
@@ -14,20 +27,20 @@ $stylesheet .= file_get_contents('css/main.css');
 $stylesheet .= file_get_contents('maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
 $stylesheet .= file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
 $mpdf = new \Mpdf\Mpdf([
-    'fontDir' => array_merge($fontDirs, [
-        __DIR__ . '/../../resources/fonts',
-    ]),
-    'fontdata' => $fontData + [
-        'fontawesome' => [
-            'R' => 'fa-solid-900.ttf'
-        ],
-    ],
+    'margin_top' => 4,
+    'margin_bottom' => 4,
+    'margin_right' => 4,
+    'margin_left' => 4,
     'format' => 'A4',
     'orientation' => 'L'
 ]);
 $mpdf->SetDisplayMode('fullwidth');
+
+
 $mpdf->WriteHTML($stylesheet,1);
-$mpdf->WriteHTML($_SESSION['html'],2);
+$mpdf->WriteHTML($cabecalho,2);
+$mpdf->WriteHTML($_SESSION['calendario'],2);
+$mpdf->WriteHTML($_SESSION['legenda'],2);
 $mpdf->Output();
 ?>
 <body>

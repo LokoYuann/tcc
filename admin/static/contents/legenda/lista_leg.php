@@ -1,7 +1,7 @@
 ﻿<div class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
-			<h2>Legendas</h2>
+			<h2 class="legendas">Legendas</h2>
 		</div>
 		<div class="col-md-1">
 			<a href="?page=addleg" class="btn btn-primary pull-right h2">Nova Legenda</a> 
@@ -15,8 +15,8 @@
 	
 	
 	?>
-	<div id="bloco-list-pag">
-		<div id="list" class="row">
+	<div id="list">
+		<div id="list" class="table-all row">
 			<div class="table-responsive col-md-12">
 				<?php
 					$quantidade = 5;
@@ -30,25 +30,25 @@
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td><strong>ID</strong></td>"; 
-					echo "<td><strong>Tipo</strong></td>"; 
-					echo "<td><strong>Descrição</strong></td>";
-					echo "<td><strong>Sigla</strong></td>";
-					echo "<td><strong>Cor</strong></td>";
-					echo "<td><strong>Símbolo</strong></td>";
-					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
+					echo "<td class='td-indicador'><strong>ID</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Tipo</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Descrição</strong></td>";
+					echo "<td class='td-indicador'><strong>Sigla</strong></td>";
+					echo "<td class='td-indicador'><strong>Cor</strong></td>";
+					echo "<td class='td-indicador'><strong>Símbolo</strong></td>";
+					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";
-						echo "<td>".$info['id_leg']."</td>";
-						echo "<td>".$info['tipo_evento']."</td>";
-						echo "<td>".$info['desc_leg']." </td>";
-						echo "<td>".$info['sigla_leg']." </td>";
+						echo "<td class='td-info'>".$info['id_leg']."</td>";
+						echo "<td class='td-info'>".$info['tipo_evento']."</td>";
+						echo "<td class='td-info'>".$info['desc_leg']." </td>";
+						echo "<td class='td-center'>".$info['sigla_leg']." </td>";
 						echo "<td width='10px'><div style='background-color:".$info['cor_leg'].";border-radius:100%'>&nbsp</div></td>";
-						echo "<td><img src='".$info["simbolo_leg"]."' class='simbico' alt=''></td>";
-
-
-						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
+						echo "<td class='simbolo'><img src='".$info["simbolo_leg"]."' class='simbico_leg' alt=''></td>";
+					
+					
+						echo "<td class='btn-group-sm d-flex td-center'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_leg&id_leg=".$info['id_leg']."> Visualizar </a>";
 						echo "<a class='btn btn-warning btn-xs' href=?page=edit_leg&id_leg=".$info['id_leg']."> Editar </a>"; 
 						echo "<a href=?page=excluir_leg&id_leg=".$info['id_leg']." class='btn btn-danger btn-xs'> Excluir </a></td>";

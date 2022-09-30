@@ -7,10 +7,6 @@ $fontDirs = $defaultConfig['fontDir'];
 
 $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
 $fontData = $defaultFontConfig['fontdata'];
-$stylesheet = file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css');
-$stylesheet .= file_get_contents('../static/fontawesome-pro/css/all.css');
-$stylesheet .= file_get_contents('//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
-$stylesheet .= file_get_contents('css/main.css');
 $mpdf = new \Mpdf\Mpdf([
     'fontDir' => array_merge($fontDirs, [
         __DIR__ . '/../../resources/fonts',
@@ -20,10 +16,21 @@ $mpdf = new \Mpdf\Mpdf([
             'R' => 'fa-solid-900.ttf'
         ],
     ],
-    'format' => 'A4',
-    'orientation' => 'L'
+    'format' => 'A3',
+    'orientation' => 'L',
+    'margin_left' => 0, 
+    'margin_right' => 0, 
+    'margin_top' => 0, 
+    'margin_bottom' => 0, 
+    'margin_header' => 0, 
+    'margin_footer' => 0,
 ]);
 $mpdf->SetDisplayMode('fullwidth');
+
+$doc = new DOMDocument();
+$doc->loadHTML(mb_convert_encoding($html, 'HTML-ENTITIES', 'UTF-8'));
+$html= $this->checkLargeTables($doc);
+
 $mpdf->WriteHTML($stylesheet,1);
 $mpdf->WriteHTML($_SESSION['html'],2);
 $mpdf->Output();

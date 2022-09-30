@@ -13,7 +13,7 @@ $ids = array();
 		$ids[] = $row['id_calendario'];
 	}
 
-	echo "<option value='none'>".(($_GET['page'] == "lista_eve")?"Todos":"--------")."</option>";
+	echo "<option value='none'>".(($_GET['page'] == "lista_eve")?"Todos":"----------------")."</option>";
 	for($i = 0; $i < count($ids); $i++)
 	{
 		

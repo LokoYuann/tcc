@@ -42,3 +42,4 @@ $(document).ready(function(){
 	$('.cpf').inputmask("999.999.999-99");
     $('.tel').inputmask("(99) 99999-9999");
 });
+

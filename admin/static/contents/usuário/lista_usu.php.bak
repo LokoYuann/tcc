@@ -7,7 +7,7 @@
 <div class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
-			<h2 style="font-family: 'Roboto', sans-serif;">Usuários</h2>
+			<h2>Usuários</h2>
 		</div>
 		<div class="col-md-1">
 			<a href="?page=addusu" class="btn btn-primary pull-right h2">Novo Usuário</a> 
@@ -56,7 +56,7 @@
 				echo "</tr></tbody></table>";
 			?>				
 		</div><!-- Div Table -->
-	</div><!--list-->
+	</div ><!--list-->
 
 	
 	<!-- PAGINAÇÃO -->

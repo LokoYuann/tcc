@@ -1,38 +1,40 @@
-<div id="main" class="container-fluid">
+
+<div id="main" class="titulo container-fluid">
  	<div id="top" class="row">
 		<div class="col-md-11">
-			<h2>Adicionar Legenda</h2>
+			<h2 class="td-titulo">Adicionar Legenda</h2>
 		</div>
 
 	</div>
+	<hr>
 	<form enctype="multipart/form-data" action="?page=insere_leg" method="post">
 		<!-- 1ª LINHA -->	
 		<div class="row"> 
 			<div class="form-group col-md-2">
-				<label for="id_leg">ID Legenda</label>
+				<label class="font-info" for="id_leg">ID Legenda</label>
 				<input type="text" class="form-control" name="id_leg" readonly>
 			</div>
 			<div class="form-group col-md-2">
-				<label for="id_calendario">Tipo Evento</label>
+				<label class="font-info" for="id_calendario">Tipo Evento</label>
 				<input type="text" name="tipo_evento" class="form-control" id="tipo_evento">
 			</div>
-			<div class="form-group col-md-6">
-				<label for="desc_leg">Descrição evento</label>
+			<div class="form-group col-md-4">
+				<label class="font-info" for="desc_leg">Descrição evento</label>
 				<input type="textbox" name="desc_leg" class="form-control" id="desc_leg">
 			</div>
 			<div class="form-group col-md-2">
-				<label for="sigla_leg">Sigla</label><br>
+				<label class="font-info" for="sigla_leg">Sigla</label><br>
 				<input type="text" name="sigla_leg" class="form-control" id="sigla_leg">
 			</div>
 		</div>
 		<!-- 2ª LINHA -->
 		<div class="row">
-			<div class="form-group col-md-3 ">
-				<label for="cor_leg">Cor</label><br>
+			<div class="form-group col-md-2 ">
+				<label class="cor-leg" for="cor_leg">Cor</label><br>
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
-			<div class="form-group col-md-2 d-flex flex-column align-items-center simbico" id="reactive" >
+			<div class="botao-leg form-group col-md-4 simbico" id="reactive" >
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
   					Escolher Símbolo
 				</button>
@@ -44,7 +46,7 @@
 					<div class="modal-content">
 						<div class="modal-header">
 							<h5 class="modal-title" id="exampleModalLongTitle">Símbolos</h5>
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close" >
+							<button type="button" class="close text-align-center" data-dismiss="modal" aria-label="Close" >
 							<span aria-hidden="true">&times;</span>
 							</button>
 						</div>
@@ -99,16 +101,11 @@
 				</div>
 			</div>
 		</div>
-							<!-- Modal Arquivo-->
-
-			
-		
-		<hr />
+				
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>
-				<a href="?page=lista_leg" class="btn btn-secondary">Cancelar</a>
-				
+				<a href="?page=lista_leg" class="btn btn-danger">Cancelar</a>
 			</div>
 		</div>
 	</form> 

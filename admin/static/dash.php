@@ -12,14 +12,16 @@ if (!isset($_SESSION)) session_start();
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+	<title>DailyEvents</title>
 
+
+	<link rel="stylesheet" href="css/cadastro.css">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icone.ico" />
 	<link rel="stylesheet" href="fontawesome-pro/css/all.css">
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
-
-	<title>DailyEvents</title>
-	
+	<link rel="stylesheet" href="css/crud.css">
+	<link rel="stylesheet" href="css/content.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
 	<link href="css/app.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">

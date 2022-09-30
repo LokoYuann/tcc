@@ -17,10 +17,10 @@
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 
     if($resultado){
-        header('Location: dash.php?page=lista_leg&msg=2');
+        header('Location: dash.php?page=lista_ue&msg=2');
         mysqli_close($con);
     }else{
-        header('Location: dash.php?page=lista_leg&msg=4');
+        header('Location: dash.php?page=lista_ue&msg=4');
         mysqli_close($con);
     }
 ?>

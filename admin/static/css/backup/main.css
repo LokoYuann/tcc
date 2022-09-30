@@ -22,7 +22,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #c1d2d4a8;
+    background-color: #b1d0ff;
     -webkit-transition: .4s;
     transition: .4s;
   }
@@ -84,17 +84,9 @@ select[readonly] {
 
 /* simbolos */
 .simbico{
-  max-width: 15px;
-}
-.simbico_leg{
   max-width: 20px;
 }
 
-.simbico_leg_edit{
-  max-width: 10%;
-}
-
-/* legenda */
 #leg_table{
   height:30vh !important; 
   width:50% !important; 

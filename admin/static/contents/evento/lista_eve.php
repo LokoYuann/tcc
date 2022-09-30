@@ -1,7 +1,9 @@
-﻿<div id="main" class="container-fluid">
+﻿<link rel="stylesheet" href="../static/css/content.css">
+<link rel="stylesheet" href="../static/css/crud.css">
+<div id="main" class="container-fluid">
 	<div id="top" class="row">
 		<div class="col-md-11">
-			<h2>Eventos</h2>
+			<h2 class="evento">Eventos</h2>
 		
 		</div>
 		<div class="col-md-1">
@@ -48,7 +50,7 @@
 				</div>";}
 				?> 
 			
-			<div class="form-group col-md-6">
+			<div class="td-indicador form-group col-md-6">
 				Filtrar por calendário:
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
 				<option value="none">Todos</option>
@@ -68,7 +70,7 @@
 	echo "</form>";
 	?>
 	<div id="bloco-list-pag">
-		<div id="list" class="row">
+		<div class="table-all    row">
 			<div class="table-responsive col-md-12">
 				<?php
 					$quantidade = 5;
@@ -85,27 +87,27 @@
 						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
 						else if(!empty($ids)){$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") /* or die(mysqli_error()) */;}
 					}
-					
-					
+				
+
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td><strong>ID</strong></td>"; 
-					echo "<td><strong>Calendário</strong></td>"; 
-					echo "<td><strong>Tipo</strong></td>";
-					echo "<td><strong>Data de Início</strong></td>";
-					echo "<td><strong>Data de Fim</strong></td>";
-					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
+					echo "<td class='td-indicador'><strong>ID</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Calendário</strong></td>"; 
+					echo "<td class='td-indicador'><strong>Tipo</strong></td>";
+					echo "<td class='td-indicador'><strong>Data de Início</strong></td>";
+					echo "<td class='td-indicador'><strong>Data de Fim</strong></td>";
+					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 				if(!empty($eventos)){
 					while($info = mysqli_fetch_array($eventos)){ 
 						$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
 						echo "<tr>";
 						echo "<td>".$info['id_evento']."</td>";
-						echo "<td>".$info['id_calendario']."</td>";
-						echo "<td>".mysqli_fetch_array($tipo_evento)[0]." </td>";
+						echo "<td class='teste'>".$info['id_calendario']."</td>";
+						echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
 						echo "<td>".date('d/m/Y',strtotime($info['dt_ini_ev']))."</td>"; //Funções para converter formato da data do MySQL
 						echo "<td>".date('d/m/Y',strtotime($info['dt_fim_ev']))."</td>"; //Funções para converter formato da data do MySQL
-						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
+						echo "<td class='actions btn-group-sm td-center'>";
 						echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."> Visualizar </a>";
 						echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."> Editar </a>"; 
 						echo "<a href=?page=excluir_eve&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'> Excluir </a></td>";
@@ -119,7 +121,8 @@
 		</div><!-- Div Table -->
 	</div><!--list-->
 
-	
+	<br>
+
 	<!-- PAGINAÇÃO -->
 	<div id="bottom" class="row">
 			<div class="col-md-12">
