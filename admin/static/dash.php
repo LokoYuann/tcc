@@ -60,6 +60,7 @@ if (!isset($_SESSION)) session_start();
 		<script src="js/jquery.inputmask.bundle.js" type="text/javascript"></script>
 		<script src="js/jquery_maskmoney.js" type="text/javascript"></script>
 		<script src="js/script_mask.js" type="text/javascript"></script>
+		
 </body>
 
 </html>

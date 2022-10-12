@@ -88,19 +88,19 @@
 		<!-- 2ª LINHA -->
 		<div class="row">
 			<div class="form-group col-md-3">
-				<label class="font-info" for="dt_nasc">Data Início</label>
+				<label class="font-info" for="dt_ini_ev">Data Início</label>
 				<input type="date" class="form-control" name="dt_ini_ev" required>
 			</div>
 			
 			<div class="form-group col-md-3">
-				<label class="font-info" for="dt_nasc">Data Fim</label>
+				<label class="font-info" for="dt_fim_ev">Data Fim</label>
 				<input type="date" class="form-control" name="dt_fim_ev" required>
 			</div>
 		</div>
 	<br>
 
 		<div id="actions" class="row">
-			<div class="botao-cad col-md-12">
+			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>
 				<a href="?page=lista_eve" class="btn btn-danger">Cancelar</a>
 			</div>

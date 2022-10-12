@@ -12,7 +12,9 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
-	
+	if($_SESSION['UsuarioNivel'] == 1){
+		header('Location: ?page=home');
+	}
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">

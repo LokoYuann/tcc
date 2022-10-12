@@ -157,7 +157,7 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   CONSTRAINT `FK_funcionario_ue` FOREIGN KEY (`id_ue`) REFERENCES `ue` (`id_ue`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.funcionario: ~20 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.funcionario: ~21 rows (aproximadamente)
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(1, 1, 'jk', 'asd', '2022-07-10', 'f', '2353245', '3423', 20231020, 1);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
@@ -211,53 +211,57 @@ CREATE TABLE IF NOT EXISTS `legenda` (
   `sigla_leg` varchar(4) DEFAULT NULL,
   `cor_leg` varchar(9) DEFAULT NULL,
   PRIMARY KEY (`id_leg`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela dailyevent.legenda: ~22 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.legenda: ~24 rows (aproximadamente)
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(1, 'AvaliaÃ§Ã£o', 'Teste de aceitabilidade do que foi aprendido.', '/admin/static/img/simbolos/paste-solid.png', 'AV', '#46adfb');
+	(1, 'Avaliação', 'Teste de aceitabilidade do que foi aprendido.', '/admin/static/img/simbolos/paste-solid.png', 'AV', '#46adfb');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(2, 'Conselho de Classe', 'Colegiado escolar.', '/admin/static/img/simbolos/people-group-solid.ico', 'Coc', '#fc03c6');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(3, 'FLOT', 'Projeto literÃ¡rio elaborado pelo GEOT e docentes.', '/admin/static/img/simbolos/book-fill.png', 'FLOT', '#ee3f3f');
+	(3, 'FLOT', 'Projeto literá¡rio elaborado pelo GEOT e docentes.', '/admin/static/img/simbolos/book-fill.png', 'FLOT', '#ee3f3f');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(4, 'Feira de CiÃªncia', 'Evento que costuma durar um dia.', '/admin/static/img/simbolos/florin-sign-solid.png', 'FC', '#650372');
+	(4, 'Feira de Ciência', 'Evento que costuma durar um dia.', '/admin/static/img/simbolos/florin-sign-solid.png', 'FC', '#650372');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(5, 'RecuperaÃ§Ã£o', 'Programa de aulas extras para recuperaÃ§Ã£o de notas.', '/admin/static/img/simbolos/graph-down.png', 'R', '#f3721b');
+	(5, 'Recuperação', 'Programa de aulas extras para recuperação de notas.', '/admin/static/img/simbolos/graph-down.png', 'R', '#f3721b');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(6, 'ReuniÃ£o com ResponsÃ¡veis', 'ReuniÃ£o que aborda pautas coletivas sobre as turmas.', '/admin/static/img/simbolos/people-fill.png', 'RR', '#bf1d1f');
+	(6, 'Reunião com Responsáveis', 'Reunião que aborda pautas coletivas sobre as turmas.', '/admin/static/img/simbolos/people-fill.png', 'RR', '#bf1d1f');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(7, 'Feira TÃ©cnica', 'Projeto anual organizado pela escola.', '/admin/static/img/simbolos/award-solid.png', 'FT', '#0228c0');
+	(7, 'Feira Técnica', 'Projeto anual organizado pela escola.', '/admin/static/img/simbolos/award-solid.png', 'FT', '#0228c0');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(8, 'Recesso Escolar', 'Pausa de reorganizaÃ§Ã£o para as atividades letivas.', '/admin/static/img/simbolos/sun.png', 'RE', '#ece4e4');
+	(8, 'Recesso Escolar', 'Pausa de reorganização para as atividades letivas.', '/admin/static/img/simbolos/sun.png', 'RE', '#ece4e4');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(9, 'Feriados', 'Dias nÃ£o Ãºteis determinados pelas autoridades.', '/admin/static/img/simbolos/sunglasses.png', 'F', '#0da054');
+	(9, 'Feriados', 'Dias não úteis determinados pelas autoridades.', '/admin/static/img/simbolos/sunglasses.png', 'F', '#0da054');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(10, 'inÃ­cio do ano letivo', 'PerÃ­odo em que as aulas comeÃ§am oficialmente.', '/admin/static/img/simbolos/circle-solid.png', 'IAL', '#1e7a8a');
+	(10, 'início do ano letivo', 'Período em que as aulas começam oficialmente.', '/admin/static/img/simbolos/circle-solid.png', 'IAL', '#1e7a8a');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(11, 'Dia do professor', 'Data comemorativa que homenageia esses profissionais.', '/admin/static/img/simbolos/suit-heart-fill.png', '', '#f9aeae');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(12, 'Retorno do professor', 'Retorno dos professores Ã¡s unidades escolares.', '/admin/static/img/simbolos/hand-index-thumb-fill.png', '', '#f278d1');
+	(12, 'Retorno do professor', 'Retorno dos professores às unidades escolares.', '/admin/static/img/simbolos/hand-index-thumb-fill.png', '', '#f278d1');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(13, 'FÃ©rias', 'PerÃ­odo de descanso para estudantes e funcionÃ¡rios.', '/admin/static/img/simbolos/sunrise.png', '', '#e1ff00');
+	(13, 'Férias', 'Período de descanso para estudantes e funcionários.', '/admin/static/img/simbolos/sunrise.png', '', '#e1ff00');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(14, 'Acolhimento dos discentes', 'Acolhimento dos alunos que estÃ£o iniciando o ano.', '/admin/static/img/simbolos/people-roof-solid.png', '', '#eccb55');
+	(14, 'Acolhimento dos discentes', 'Acolhimento dos alunos que estão iniciando o ano.', '/admin/static/img/simbolos/people-roof-solid.png', '', '#eccb55');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(15, 'LanÃ§amento de notas', 'Registro dos resultados das avaliaÃ§Ãµes. ', '/admin/static/img/simbolos/pen-to-square-solid.png', '', '#02f72b');
+	(15, 'Lançamento de notas', 'Registro dos resultados das avaliações. ', '/admin/static/img/simbolos/pen-to-square-solid.png', '', '#02f72b');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(16, 'Resultado final', 'Documento que registra o resultado final de todos os alunos.', '/admin/static/img/simbolos/r-solid.png', '', '#ee4983');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(18, 'TÃ©rmino da 1Âº etapa', 'Encerramento da primeira etapa.', '/admin/static/img/simbolos/1-solid.png', '', '#fc0303');
+	(18, 'Término da 1º etapa', 'Encerramento da primeira etapa.', '/admin/static/img/simbolos/1-solid.png', '', '#fc0303');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(19, 'TÃ©rmino da 2Âº etapa', 'Encerramento da segunda etapa.', '/admin/static/img/simbolos/2-solid.png', '', '#fc0303');
+	(19, 'Término da 2º etapa', 'Encerramento da segunda etapa.', '/admin/static/img/simbolos/2-solid.png', '', '#fc0303');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(20, 'TÃ©rmino da 3Âº etapa', 'Encerramento da terceira etapa.', '/admin/static/img/simbolos/3-solid.png', '', '#fc0303');
+	(20, 'Término da 3º etapa', 'Encerramento da terceira etapa.', '/admin/static/img/simbolos/3-solid.png', '', '#fc0303');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(21, 'Conselho de Classe Final', 'AvaliaÃ§Ã£o de fim de ano.', '/admin/static/img/simbolos/people-group-solid.ico', 'CoC', '#d92083');
+	(21, 'Conselho de Classe Final', 'Avaliações de fim de ano.', '/admin/static/img/simbolos/people-group-solid.ico', 'CoC', '#d92083');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(22, 'RecuperaÃ§Ã£o Final', 'Ãºltima avaliaÃ§Ã£o para os alunos com notas baixas.', '/admin/static/img/simbolos/people-group-solid.png', '', '#a59797');
+	(22, 'Recuperação Final', 'Última avaliação para os alunos com notas baixas.', '/admin/static/img/simbolos/people-group-solid.png', '', '#a59797');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(23, 'Planejamento', 'planejamento da semana de acolhimento', '/admin/static/img/simbolos/gear-fill.png', 'P', '#d27474');
+REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
+	(24, '', '', '', '', '#000000');
+REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
+	(25, '', '', '', '', '#000000');
 
 -- Copiando estrutura para tabela dailyevent.localidade
 DROP TABLE IF EXISTS `localidade`;
@@ -329,7 +333,7 @@ CREATE TABLE IF NOT EXISTS `ue` (
   CONSTRAINT `FK_ue_localidade` FOREIGN KEY (`cep`) REFERENCES `localidade` (`cep`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.ue: ~20 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.ue: ~21 rows (aproximadamente)
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(1, '2123324085', 'Escola Técnica Estadual República', 'ETER', 'caq@faetec.rj.gov.br', NULL, 20231020);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES

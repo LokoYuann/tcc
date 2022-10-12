@@ -6,16 +6,10 @@
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-
 <!-- Include the above in your HEAD tag -->
 
 <link rel="stylesheet" href="css/style.css">
-<script src="js/app.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 
-<script src="js/bootstrap.bundle.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-<script src="js/main.js"></script>	
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <div class="main">
     <div class="container">
@@ -31,7 +25,7 @@
             <p><span class="fa fa-lock"></span><input type="password"  Placeholder="Senha" name="senha" id="txSenha"></p> <!-- JS because of IE support; better: placeholder="Password" -->
             
              <div>
-                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#" data-toggle='tooltip' data-placement='top' title='entre em contato com um administrador.'>esqueceu a senha?</a></span>
+                                <span style="width:48%; text-align:left;  display: inline-block;"><a class="small-text" href="#">esqueceu a senha?</a></span>
                                 <span style="width:50%; text-align:right;  display: inline-block;"><input type="submit" value="Entrar"></span>
                             </div>
 
@@ -42,7 +36,7 @@
         <div class="clearfix"></div>
 
       </div> <!-- end login -->
-      <div class="logo"><img src="img/faetec.png" width="450" height="150" alt="">
+      <div class="logo" style="padding:20px;"><img src="img/faetec.png" width="450" height="150" alt="">
           
           <div class="clearfix"></div>
       </div>

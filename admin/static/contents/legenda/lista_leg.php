@@ -57,7 +57,7 @@
 			?>				
 		</div><!-- Div Table -->
 	</div><!--list-->
-
+			<br>
 	
 	<!-- PAGINAÇÃO -->
 	<div id="bottom" class="row">

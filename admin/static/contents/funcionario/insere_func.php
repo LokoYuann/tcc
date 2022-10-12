@@ -1,8 +1,8 @@
 <?php
 //insere informações da localidade do funcionário
-    $cep_tmp = str_replace("-", "", $_POST["cep"]);
+    $cep = str_replace("-", "", $_POST["cep"]);
   
-    $json = file_get_contents('https://viacep.com.br/ws/'. $cep_tmp . '/json/');
+    $json = file_get_contents('https://viacep.com.br/ws/'. $cep . '/json/');
 
     $jsonToArray = json_decode($json);
     $uf = $jsonToArray->uf;
@@ -11,7 +11,6 @@
     $log = $jsonToArray->logradouro;
     $comp = $jsonToArray->complemento;
     
-    $cep            = str_replace("-", "", $_POST["cep"]);
     $num = $_POST['numero'];
 
     $sql = "insert into localidade values ";
@@ -26,8 +25,8 @@
     $nome_func     = $_POST["nome_func"];
     $nasc_func     = $_POST["nasc_func"];
     $sexo_func     = $_POST["sexo_func"];
-    $tel_func      = $_POST["tel_func"];
-    $cpf_func      = $_POST["cpf_func"];
+    $tel_func      = str_replace([" ","(",")","-"], "", $_POST["tel_func"]);
+    $cpf_func      = str_replace(["-","."], "", $_POST["cpf_func"]);
     
     $id_ue         = $_POST["id_ue"];
 

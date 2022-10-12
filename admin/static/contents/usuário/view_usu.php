@@ -1,5 +1,7 @@
 ﻿<?php
-	//include "base\conexao.php";
+	if($_SESSION['UsuarioNivel'] == 1){
+		header('Location: ?page=home');
+	}
 	$id_func = (int) $_GET['id_func'];
 	
 	$sql = mysqli_query($con, "select * from usuarios where id_func = '".$id_func."';");

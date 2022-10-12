@@ -100,24 +100,24 @@ while($row = mysqli_fetch_array($daysql)){
         if ($d_ini <= $d_fim && $m_ini == $m_fim) {
             for ($d_ini; $d_ini < $d_fim; $d_ini++) { 
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+                $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
             }
         }
         else{
             if ($d_ini >= $d_fim && $m_ini < $m_fim) {
             if ($d_ini <= 32) {
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+                $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                 $d_ini++;
                 // se o mes inicial for menor ou igual ao mes final e o dia final for 32(máximo), reinicia o valor do dia inicial para um, voltando ao loop acima, e aumenta em um o valor do mes inicial, até satisfazer o mes inicial
                 
                 for ($d_fim; $d_fim >= 1; $d_fim--) { 
                         $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                        $simb[$m_fim][$d_fim] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+                        $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                     }
                 } else {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
-                    $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
 
 
             }
@@ -125,7 +125,7 @@ while($row = mysqli_fetch_array($daysql)){
         }
             for ($d_ini; $d_ini < 32; $d_ini++) { 
                 $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                $simb[$m_ini][$d_ini] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+                $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
 
             }
 
@@ -134,7 +134,7 @@ while($row = mysqli_fetch_array($daysql)){
 
 
         $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-        $simb[$m_fim][$d_fim] = "<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>";
+        $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
     }
 }
     while($row = mysqli_fetch_array($invday)){
@@ -149,7 +149,7 @@ while($row = mysqli_fetch_array($daysql)){
        $eve[$domingo_m][$domingo_d] = "";
        $simb[$domingo_m][$domingo_d] = "<a>D</a>";
     }
-$calendario = "<div style='text-align: -webkit-center;'>";
+$calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
     // começo do calendário
     $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style=''>";
     $calendario .= "<tr class=''>";
@@ -220,15 +220,17 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         $sla[] = $kkk[0];
     }
     echo "Legenda:";
-    $legenda = "Legenda:";
+    
     $so = sizeof($sla);
     $i=0;
     $o=0;
+    $n=0;
     echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
-    $legenda = "<div class= 'd-flex flex-row justify-content-center mt-4' style='width:50%;'>";
-    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
+    $legenda = "<div class= 'd-flex flex-column justify-content-center mt-4' style='width:50%;'>";
+    $legenda .= "Legenda:";
+    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;float:left;'>";
     //$legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
-    $legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='justify-content: center !important; overflow:wrap;'>";
+    $legenda .= "<table class='table table-bordered  border border-2  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: separate;border-radius:11px'>";
     while($row = mysqli_fetch_array($leg_sql)){
         //if($i==10){$i=0;}
         //if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
@@ -246,13 +248,16 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         
         
 
-        
-        $legenda .= "<tr style='line-height: 25px;min-height: 25px;height: 1px ;width:100%'>";
-        $legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";'><img src='".$row["simbolo"]."' class='simbico' alt=''>".$row['sigla']."</td>";
+        if($n==2){$n=0;};
+        if($n==0){$legenda .= "<tr style='line-height: 25px;min-height: 25px;height: 1px ;'>";}
+        $legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";margin-left:10px'>
+        ".((empty($row["simbolo"]))?"":"<img src='".$row["simbolo"]."' class='simbico' alt=''>")."
+        ".$row['sigla']."</td>";
         $legenda .= "<td class='mis cal-content'>".$row['tipo']."</td>";
 
-        $legenda .= "</tr>";
+        if($n==1||$o==$so){$legenda .= "</tr>";}
         
+        $n++;
     }
     echo "</table>";
     $legenda .= "</table>";
@@ -261,13 +266,11 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $legenda .= "</div>";
 }
 
-echo "<a href='mpdf.php' style='display:flex; justify-content:center;'><button class='btn btn-primary'>Gerar PDF</button></a>";
-echo "</div>";
 
 
 
 
-echo $legenda;
+
 
 if(!empty($ano_sql)){
 while($row = mysqli_fetch_array($ano_sql))
@@ -275,13 +278,25 @@ while($row = mysqli_fetch_array($ano_sql))
 		$ano = $row[0];
         $ue = $row[1];
 	}
-$nome_ue_sql = mysqli_query($con, "select nome_ue from ue where id_ue = '".$ue."';");
+$ue_sql = mysqli_query($con, "select nome_ue, logo_ue from ue where id_ue = '".$ue."';");
+while($row = mysqli_fetch_array($ue_sql))
+	{
+		$nome_ue = $row[0];
+        $logo_ue = $row[1];
+	}
 
-
-
+unset($_SESSION['calendario']);
+unset($_SESSION['ano']);
+unset($_SESSION['ue']);
+unset($_SESSION['logo_ue']);
+unset($_SESSION['legenda']);
 $_SESSION['calendario'] = $calendario;
 $_SESSION['ano'] = $ano;
-$_SESSION['ue'] = mysqli_fetch_array($nome_ue_sql)[0];
+$_SESSION['ue'] = $nome_ue;
+$_SESSION['logo_ue'] = $logo_ue;
+
+echo "<a href='mpdf.php' style='display:flex; justify-content:center;'><button class='btn btn-primary'>Gerar PDF</button></a>";
+echo "</div>";
 }
 if(($leg_use) != null){
 $_SESSION['legenda'] = $legenda;}

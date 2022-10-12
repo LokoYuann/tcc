@@ -1,14 +1,36 @@
 <?php
+    //insere informações da localidade da ue
+    $cep = str_replace("-", "", $_POST["cep"]);
+  
+    $json = file_get_contents('https://viacep.com.br/ws/'. $cep . '/json/');
 
-    $tel_ue      = $_POST["tel_ue"];
+    $jsonToArray = json_decode($json);
+    $uf = $jsonToArray->uf;
+    $cidade = $jsonToArray->localidade;
+    $bairro = $jsonToArray->bairro;
+    $log = $jsonToArray->logradouro;
+    $comp = $jsonToArray->complemento;
+    
+    $num = $_POST['numero'];
+
+    $sql = "insert into localidade values ";
+    $sql .= "('$cep','$uf','$cidade','$bairro','$log','$num','$comp');";
+    $resultado_loc = mysqli_query($con, $sql)or die(mysqli_error());
+
+    
+    //insere informações da ue
+    $tel_ue      = str_replace([" ","(",")","-"], "", $_POST["tel_ue"]);
     $nome_ue      = $_POST["nome_ue"];
     $sigla_ue   = $_POST["sigla_ue"];
     $email_ue   = $_POST["email_ue"];
-    $logo_ue   = $_POST["logo_ue"];
-    $cep   = $_POST["cep"];
 
-   $sql = "insert into legenda values ";
-    $sql .= "('0','$tel_ue','$nome_ue','$sigla_ue','$email_ue','$logo_ue','$cep');";
+    $ext = pathinfo($_FILES["logo_ue"]["name"], PATHINFO_EXTENSION);
+    $origem = $_FILES["logo_ue"]["tmp_name"];
+    $nomedoc = "C:/xampp/htdocs/admin/static/img/logo_ue/".$sigla_ue.".".$ext;
+    copy($origem, $nomedoc);
+
+    $sql = "insert into ue values ";
+    $sql .= "('0','$tel_ue','$nome_ue','$sigla_ue','$email_ue','$nomedoc','$cep');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());

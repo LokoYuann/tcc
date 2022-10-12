@@ -18,7 +18,9 @@
 	<!--top - Lista dos Campos-->
 	<hr/>
 	<?php
-	
+		if($_SESSION['UsuarioNivel'] == 1){
+			header('Location: ?page=home');
+		}
 	?>
 	<div id="bloco-list-pag">
 		<div id="list" class="row">
@@ -57,7 +59,7 @@
 			?>				
 		</div><!-- Div Table -->
 	</div><!--list-->
-
+	<br>			
 	
 	<!-- PAGINAÇÃO -->
 	<div id="bottom" class="row">

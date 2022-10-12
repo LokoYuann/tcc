@@ -1,5 +1,7 @@
 <?php
-	//include "base\conexao.php";
+	if($_SESSION['UsuarioNivel'] == 1){
+		header('Location: ?page=home');
+	}
 	$id_func = (int) $_GET['id_func'];
 	
 	$sql = mysqli_query($con, "select * from usuarios where id_func = '".$id_func."';");
@@ -26,11 +28,11 @@
 		</div>
 		<div class="form-group col-md-4">
 			<label class="font-info" for="usuario">Nome do Usuário</label>
-			<input type="text" name="usuario" class="form-control" id="usuario" value="<?php echo $row["usuario"];?>">
+			<input type="text" name="usuario" class="form-control" id="usuario" value="<?php echo $row["usuario"];?>" required>
 		</div>
 		<div class="form-group col-md-4">
 			<label class="font-info" for="senha">Senha do Usuário</label>
-			<input type="password" class="form-control" name="senha" value="<?php echo $row["senha"];?>">
+			<input type="password" class="form-control" name="senha" value="<?php echo $row["senha"];?>" required>
 		</div>
 	</div>
 
@@ -39,10 +41,10 @@
 			<div class="form-group col-md-4">
 				<label class="font-info" for="nivel">Nível do usuário</label><br>
 				<label class="font-info" class="radio-inline">
-				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  >Supervisão
+				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  required>Supervisão
 				</label>
 				<label class="font-info" class="radio-inline">
-				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==2){echo "checked";}else{}?>  >Admnistraddor
+				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==2){echo "checked";}else{}?>  required>Admnistraddor
 				</label>
 			</div>
 		</div>

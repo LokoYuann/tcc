@@ -1,8 +1,8 @@
 ﻿<?php
 //Atualiza informações da localidade do funcionário
-    $cep_tmp = str_replace("-", "", $_POST["cep"]);
+    $cep = str_replace("-", "", $_POST["cep"]);
     
-    $json = file_get_contents('https://viacep.com.br/ws/'. $cep_tmp . '/json/');
+    $json = file_get_contents('https://viacep.com.br/ws/'. $cep . '/json/');
 
     $jsonToArray = json_decode($json);
     $uf = $jsonToArray->uf;
@@ -11,7 +11,6 @@
     $log = $jsonToArray->logradouro;
     $comp = $jsonToArray->complemento;
     
-    $cep            = str_replace("-", "", $_POST["cep"]);
     $num = $_POST['numero'];
     
     $sql = "update localidade set ";
@@ -25,15 +24,14 @@ $funcao_func   = $_POST["funcao_func"];
 $nome_func     = $_POST["nome_func"];
 $nasc_func     = $_POST["nasc_func"];
 $sexo_func     = $_POST["sexo_func"];
-$tel_func      = $_POST["tel_func"];
-$cpf_func      = $_POST["cpf_func"];
-$cep      = $_POST["cep"];
+$tel_func      = str_replace([" ","(",")","-"], "", $_POST["tel_func"]);
+$cpf_func      = str_replace(["-","."], "", $_POST["cpf_func"]);
 $id_ue         = $_POST["id_ue"];
 
     
     $sql = "update funcionario set ";
     $sql .= "id_func ='".$id_func."', mat_func ='".$mat_func ."', funcao_func='".$funcao_func."', nome_func='".$nome_func."', nasc_func='".$nasc_func."', sexo_func='".$sexo_func."',";
-    $sql .= "tel_func='".$tel_func."', cpf_func='".$cpf_func."', id_ue='".$id_ue."'";
+    $sql .= "tel_func='".$tel_func."', cpf_func='".$cpf_func."', cep_func='".$cep."', id_ue='".$id_ue."'";
     $sql .= " where id_func = '".$id_func."';";
 
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
