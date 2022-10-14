@@ -5,6 +5,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
 
+$versao = 1;
+
 $cabecalho = "<div style='float: left;;width:70px;'>";
 $cabecalho .= "<img src='/admin/static/img/faeteclogo.png' style='width:70px;'/>";
 $cabecalho .= "</div>";
@@ -25,11 +27,10 @@ $cabecalho .= "</div>";
 $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
 $fontData = $defaultFontConfig['fontdata'];
 $stylesheet = file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css');
-$stylesheet .= file_get_contents('/fontawesome-pro/css/all.css');
+$stylesheet .= file_get_contents('C:/xampp/htdocs/admin/static/fontawesome-pro/css/all.css');
 $stylesheet .= file_get_contents('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 $stylesheet .= file_get_contents('css/main.css');
 $stylesheet .= file_get_contents('css/mpdf.css');
-$stylesheet .= file_get_contents('maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css');
 $stylesheet .= file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
 $mpdf = new \Mpdf\Mpdf([
     'margin_top' => 4,
@@ -48,6 +49,17 @@ $mpdf->WriteHTML($_SESSION['calendario'],2);
 if(!empty($_SESSION['legenda'])){
 $mpdf->WriteHTML($_SESSION['legenda'],2);}
 $mpdf->Output();
+
+
+//Código para criar backup
+
+//$versao = 1;
+//mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']);
+//mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']."/".$_SESSION['ano']."");
+//$mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$versao.'.pdf', 'F');
+//header('Location: dash.php?page=home');
+
+
 ?>
 <body>
 <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js' integrity='sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2' crossorigin='anonymous'></script>

@@ -6,8 +6,8 @@ $id_calendario   = $_POST["id_calendario"];
 $id_leg          = $_POST["id_leg"];
 
     // $fdt_nasc 	= implode("-", array_reverse(explode("/", $dt_nasc)));
-    $sql = "insert into eventos values ";
-    $sql .= "('0','$dt_ini_ev','$dt_fim_ev','$id_calendario','$id_leg');";
+    $sql = "insert into tmp_eve values ";
+    $sql .= "('$dt_ini_ev','$dt_fim_ev','$id_calendario','$id_leg','add','');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
