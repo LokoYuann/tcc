@@ -98,15 +98,15 @@
 
             <div class="form-group col-md-4">
                     Versão:
-                    <select name="versao" class="form-control " action="post" onchange='formreact(this.value,"calendario")';>
+                    <select name="versao" class="form-control " action="post" onchange='formreact(this.value,"versao")';>
                     <?php 
-                    for($i = 1; $i <= $versao; $i++)
+                    for($i = 1; $i < $versao; $i++)
                     {
-                        
-                        echo '<option value="'.$i.'" '.(($i == $versao)?'selected="selected"':"").'>'.$i.'</option>';
-    
-                    }
-    
+                            
+                            echo '<option value="'.$i.'" '.(($i == $versao)?'selected="selected"':"").'>'.$i.'</option>';
+        
+                        }
+                    echo '<option value="recent_ver" selected>'.$versao.'</option>';
                     echo "</select>
                 </div>";
 
@@ -125,7 +125,6 @@ $eve = array();
 $leg_use = array();
 
 if(!empty($daysql)){
-//while(((is_null($daytmp_sql))?($row = mysqli_fetch_array($daysql)) && ($row_tmp = mysqli_fetch_array($daytmp_sql)):($row = mysqli_fetch_array($daysql)))){
 while(($row = mysqli_fetch_array($daysql)) || ($row_tmp = mysqli_fetch_array($daytmp_sql))){
     //adiciona eventos
     if(!empty($row) && !in_array($row['id_evento'], $edits)){
@@ -245,7 +244,7 @@ while(($row = mysqli_fetch_array($daysql)) || ($row_tmp = mysqli_fetch_array($da
     }
 $calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
     // começo do calendário
-    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style=''>";
+    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style='border-collapse: collapse;'>";
     $calendario .= "<tr class=''>";
     $calendario .= "<td  rowspan='2' class='cal-content'>Meses</td>";
     $calendario .= "<td colspan='31' class='cal-content'>Dias</td>";
@@ -313,7 +312,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     while ($kkk = mysqli_fetch_array($sla_sql)) {
         $sla[] = $kkk[0];
     }
-    echo "<a href='mpdf.php' style='display:flex; justify-content:right;text-decoration:none'><button class='btn btn-info'>Gerar PDF</button></a>";
+    echo "<button class='btn btn-info' style='float: right;' onclick=\"formreact(".$versao.",'versao')\">PDF</button><br>";
     echo "Legenda:";
     
     $so = sizeof($sla);
@@ -325,7 +324,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $legenda .= "Legenda:";
     echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;float:left;'>";
     //$legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
-    $legenda .= "<table class='table table-bordered  border border-2  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: separate;border-radius:11px'>";
+    $legenda .= "<table class='table table-bordered  border border-2  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: separate;border-radius:11px;'>";
     while($row = mysqli_fetch_array($leg_sql)){
         //if($i==10){$i=0;}
         //if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
@@ -382,7 +381,7 @@ $_SESSION['ano'] = $ano;
 $_SESSION['ue'] = $nome_ue;
 $_SESSION['logo_ue'] = $logo_ue;
 $_SESSION['sigla_ue'] = $sigla_ue;
-
+$_SESSION['versao_ue'] = $versao;
 
 if(!empty($edits) || !empty($nv_ver)){
     echo "<div style='display:flex; justify-content:space-between;text-decoration:none'>";
@@ -396,6 +395,9 @@ if(!empty($edits) || !empty($nv_ver)){
     echo "</div>";}
 }
 echo "</div>";
+echo "<div id='pdf_versao' style='text-align: -webkit-center;'>";
+echo "</div>";
+echo "<button class='btn btn-info' style='float: right;display:none' onclick=\"formreact('recent_ver','versao')\" id='recent_button'>Voltar para o calendário</button><br>";
 if(($leg_use) != null){
 $_SESSION['legenda'] = $legenda;}
 ?>

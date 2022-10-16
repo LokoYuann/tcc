@@ -5,7 +5,6 @@ require_once __DIR__ . '/vendor/autoload.php';
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
 
-$versao = 1;
 
 $cabecalho = "<div style='float: left;;width:70px;'>";
 $cabecalho .= "<img src='/admin/static/img/faeteclogo.png' style='width:70px;'/>";
@@ -48,17 +47,21 @@ $mpdf->WriteHTML($cabecalho,2);
 $mpdf->WriteHTML($_SESSION['calendario'],2);
 if(!empty($_SESSION['legenda'])){
 $mpdf->WriteHTML($_SESSION['legenda'],2);}
-$mpdf->Output();
+
 
 
 //Código para criar backup
 
-//$versao = 1;
-//mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']);
-//mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']."/".$_SESSION['ano']."");
-//$mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$versao.'.pdf', 'F');
-//header('Location: dash.php?page=home');
 
+
+if($_GET['value'] == 'nova_versao'){
+    mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']);
+    mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']."/".$_SESSION['ano']."");
+    $mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].'.pdf', 'F');
+    header('Location: dash.php?page=home');}
+else{
+    $mpdf->Output();
+}
 
 ?>
 <body>

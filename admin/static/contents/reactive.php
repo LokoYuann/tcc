@@ -31,4 +31,9 @@ elseif($_GET['page'] == "addleg"){
 		Mudar
 	</button>';
 }
+elseif($_GET['page'] == "versao"){
+	if(!isset($_SESSION)) session_start();
+	echo '<embed src="/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['value'].'.pdf" width="1000px" height="770px"  />';
+
+}
 ?>

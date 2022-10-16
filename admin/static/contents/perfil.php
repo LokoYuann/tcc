@@ -27,7 +27,9 @@
                     </header>
                 <img src="/admin/static/img/<?php if(!empty($fotow["foto"])){echo $fotow["foto"].".jpg";}else{echo "profile.webp";} ?> " alt="" style="max-width: 700px; max-height:500px;">
                 <form action="?page=insere_perfil" method="post" enctype="multipart/form-data"><br>
+                    <div class="form-group col-md-9">
                     <input type="file" name="foto" action="post" class="form-control" onchange='this.form.submit()';>
+                        </div>
                 </form>
                 </div>
                 <div class="form-group col-md-6">

@@ -81,6 +81,10 @@ select[readonly] {
   touch-action: none !important;
 }
 
+#calendario table, th, td {
+  border: 1px solid;
+}
+
 
 /* simbolos */
 .simbico{
@@ -97,7 +101,7 @@ select[readonly] {
 /* legenda */
 #leg_table{
   height:30vh !important; 
-  width:50% !important; 
+  width:70% !important; 
   justify-content: center !important; 
   overflow:wrap;
 }

@@ -16,7 +16,19 @@ $(function () {
 function formreact(a,b) {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function() {
-    document.getElementById("reactive").innerHTML = this.responseText;
+    if(b == 'versao'){
+        if(a == 'recent_ver'){
+            document.getElementById( 'pdf_versao' ).style.display = 'none';
+            document.getElementById( 'recent_button' ).style.display = 'none';
+            document.getElementById("calendario").style.display = "block";
+        }else{
+            document.getElementById( 'calendario' ).style.display = 'none';
+            document.getElementById("pdf_versao").style.display = "block";
+            document.getElementById("recent_button").style.display = "block";
+            document.getElementById("pdf_versao").innerHTML = this.responseText;}
+        }
+    else{
+        document.getElementById("reactive").innerHTML = this.responseText;}
     }
     xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"");
     xhttp.send();
