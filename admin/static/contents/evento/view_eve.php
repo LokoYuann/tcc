@@ -5,7 +5,8 @@
 	$row = mysqli_fetch_array($sql);
 	$a_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row["id_calendario"]."';");
 	$inst_cal_sql =mysqli_query($con, "select sigla_ue from ue where id_ue = '".mysqli_fetch_array($a_sql)[0]."';");
-
+	$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$row['id_leg']."';");
+	
 
 ?>
 <div id="main" class="titulo container-fluid">
@@ -30,7 +31,7 @@
 		</div>
 		<div class="form-group col-md-2">
 			<label class="font-info" for="id_leg">Tipo de Evento</label>
-			<input type="text" class="form-control" name="id_leg" value="<?php echo $row["id_leg"];?>" readonly>
+			<input type="text" class="form-control" name="id_leg" value="<?php echo mysqli_fetch_array($tipo_evento)[0];?>" readonly>
 		</div>
 	</div>
 	<div class="row">

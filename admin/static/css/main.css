@@ -71,7 +71,7 @@
 
 
   table.table.table-bordered.border.border-warning.stripped {
-  border-color: rgb(12, 7, 57) !important;
+  border-color: rgb(216, 214, 231) !important;
 }
 /* calendário */
 
@@ -83,6 +83,10 @@ select[readonly] {
 
 #calendario table, th, td {
   border: 1px solid;
+   
+}
+.table{
+  width:30%px !important; 
 }
 
 
@@ -101,7 +105,7 @@ select[readonly] {
 /* legenda */
 #leg_table{
   height:30vh !important; 
-  width:70% !important; 
+  width:10% !important; 
   justify-content: center !important; 
   overflow:wrap;
 }
@@ -111,4 +115,8 @@ select[readonly] {
   width:30% !important; 
   justify-content: center !important; 
   overflow:wrap;
+}
+
+.badge-warning {
+  background-color: #ffdf80!important;
 }

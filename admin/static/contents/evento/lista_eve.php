@@ -125,12 +125,15 @@
 						if(!empty($info)){
 							$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
 							echo "<tr>";
-							echo "<td>".$info['id_evento']." ";
+							echo "<td>".$info['id_evento']." <span style='float:right;' class='badge badge-pill badge-";
 							if(!empty($del[$info['id_evento']])){
-								echo "Marcado para exclusão";
+								echo "danger'>Exclusão</span>";
 							}else if(!empty($edits[$info['id_evento']])){
-								echo "Editado";
+								echo "warning'>Edição</span>";
+							} else {
+								echo "'></span>";
 							}
+							
 							echo "</td>";
 							echo "<td class='teste'>".$info['id_calendario']."</td>";
 							echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
@@ -160,7 +163,7 @@
 						while($info_tmp = mysqli_fetch_array($eventos_tmp)){
 							$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info_tmp['id_leg']."';");
 							echo "<tr>";
-							echo "<td>Marcado para Adição</td>";
+							echo "<td><span style='float:right;' class='badge badge-pill badge-info'>Adição</span></td>";
 							echo "<td class='teste'>".$info_tmp['id_calendario']."</td>";
 							echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
 							echo "<td>".date('d/m/Y',strtotime($info_tmp[1]))."</td>"; //Funções para converter formato da data do MySQL

@@ -36,4 +36,27 @@ elseif($_GET['page'] == "versao"){
 	echo '<embed src="/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['value'].'.pdf" width="1000px" height="770px"  />';
 
 }
+
+elseif($_GET['page'] == "cal_mes"){
+	$mes = $_GET['value'];
+	$count = 0;
+	$o = 0;
+	$sla_sql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento from eventos where id_calendario = '".$_GET['calendario']."' and EXTRACT(MONTH FROM dt_ini_ev) = '".$mes."' order by dt_ini_ev ;");
+	
+$sla = mysqli_fetch_array($sla_sql);
+	$so = sizeof($sla);
+
+	echo $so;
+	exit;
+	for ($i=0; $i <= 31; $i++) { 
+		if($count==7){$count=0;}
+        if($count==0){ echo "<tr  style='line-height: 25px;min-height: 25px;' >";}
+
+		if($count==7||$o==$so){echo "</tr>";}
+		
+		$count++;
+		$o++;
+	}
+}
+
 ?>

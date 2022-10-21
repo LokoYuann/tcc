@@ -8,7 +8,14 @@
     height:10%;
 }
 
+
 </style>
+
+<script>
+    function size(mes) {
+
+    }
+</script>
 <?php
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
@@ -37,12 +44,14 @@
         $ano_sql = mysqli_query($con, "select ano_letivo, id_ue, versao_cal from calendario where id_calendario = '".$_POST['calendario']."';");
         $daytmp_sql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_tmp) AS d_ini, EXTRACT(DAY FROM dt_fim_tmp) AS d_fim, EXTRACT(MONTH FROM dt_ini_tmp) AS m_ini, EXTRACT(MONTH FROM dt_fim_tmp) AS m_fim, act_tmp as action, id_evento from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'add' or act_tmp = 'edit') order by dt_ini_tmp ;");
         $edits_sql = mysqli_query($con, "select act_tmp as action, id_evento from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'del' or act_tmp = 'edit') order by dt_ini_tmp ;");
+        $calendario_usado = $_POST['calendario'];
         }
 
         else if(!empty($func_cal[0])){$daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento from eventos where id_calendario = '".$func_cal[0]."' order by dt_ini_ev ;");
         $ano_sql = mysqli_query($con, "select ano_letivo, id_ue, versao_cal from calendario where id_calendario = '".$func_cal[0]."';");
         $daytmp_sql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_tmp) AS d_ini, EXTRACT(DAY FROM dt_fim_tmp) AS d_fim, EXTRACT(MONTH FROM dt_ini_tmp) AS m_ini, EXTRACT(MONTH FROM dt_fim_tmp) AS m_fim from tmp_eve where id_calendario = '".$func_cal[0]."' and (act_tmp = 'add' or act_tmp = 'edit') order by dt_ini_tmp ;");
         $edits_sql = mysqli_query($con, "select act_tmp as action, id_evento from tmp_eve where id_calendario = '".$func_cal[0]."' and (act_tmp = 'del' or act_tmp = 'edit') order by dt_ini_tmp ;");
+        $calendario_usado = $func_cal[0];
         }
         $edits = array();
         while($row = mysqli_fetch_array($edits_sql))
@@ -244,7 +253,7 @@ while(($row = mysqli_fetch_array($daysql)) || ($row_tmp = mysqli_fetch_array($da
     }
 $calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
     // começo do calendário
-    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style='border-collapse: collapse;'>";
+    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style='border-collapse: collapse;width:10% !important;overflow:wrap;' id='core'>";
     $calendario .= "<tr class=''>";
     $calendario .= "<td  rowspan='2' class='cal-content'>Meses</td>";
     $calendario .= "<td colspan='31' class='cal-content'>Dias</td>";
@@ -258,9 +267,9 @@ $calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
 // começa a criar colunas de meses
 for ($i=1; $i < 13; $i++) {
     // abre a linha dos meses
-    $calendario .= "<tr class='cils' style=''>";
+    $calendario .= "<tr class='cils' style='display:revert;' id='".$i."' onclick='formreact(".$i.",\"cal_mes\",".$calendario_usado.")'>";
     // abre a coluna dos meses
-    $calendario .= "<td class='mis cal-content' style=''>";
+    $calendario .= "<td class='mis cal-content' style='' >";
 
     // cria um array para armazenar os meses, o primeiro fica vazio pois dá erro na criação do calendário
     $meses = array("","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
@@ -322,7 +331,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
     $legenda = "<div class= 'd-flex flex-column justify-content-center mt-4' style='width:50%;'>";
     $legenda .= "Legenda:";
-    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;float:left;'>";
+    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style=' overflow:wrap;float:left;'>";
     //$legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
     $legenda .= "<table class='table table-bordered  border border-2  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: separate;border-radius:11px;'>";
     while($row = mysqli_fetch_array($leg_sql)){
@@ -330,9 +339,9 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         //if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
         if($i==4){$i=0;}
         if($i==0){ echo "<tr  style='line-height: 25px;min-height: 25px;' >";}
-        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
+        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content' style='vertical-align: middle;background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;text-align:center!important;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
         //$legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
-        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content'>".$row['tipo']."</td>";
+        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content' style='text-align: left'>".$row['tipo']."</td>";
         //$legenda .= "<td class='mis cal-content'>".$row['descricao']."</td>";
         if($i==4||$o==$so){echo "</tr>";}
         //$legenda .= "</tr>";} 

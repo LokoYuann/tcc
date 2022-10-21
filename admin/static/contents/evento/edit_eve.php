@@ -34,7 +34,7 @@
 
 	<!-- 1ª LINHA -->	
 	<div class="row"> 
-		<input type="hidden" name="status" class="form-control" value="<?php echo $_GET['id_evento'];?>" readonly>
+		<input type="hidden" name="status" class="form-control" value="<?php echo $_GET['status'];?>" readonly>
 		<div class="form-group col-md-3">
 			<label class="font-info" for="id_evento">ID Evento</label>
 			<input type="text" class="form-control"  name="id_evento" value="<?php echo $id_evento;?>" readonly>
