@@ -71,7 +71,7 @@
 
 
   table.table.table-bordered.border.border-warning.stripped {
-  border-color: rebeccapurple !important;
+  border-color: rgb(12, 7, 57) !important;
 }
 /* calendário */
 
@@ -102,6 +102,13 @@ select[readonly] {
 #leg_table{
   height:30vh !important; 
   width:70% !important; 
+  justify-content: center !important; 
+  overflow:wrap;
+}
+
+#feriados{
+  height:30vh !important; 
+  width:30% !important; 
   justify-content: center !important; 
   overflow:wrap;
 }

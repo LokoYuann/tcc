@@ -79,16 +79,31 @@
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
 					
-					
 					if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
 						$eventos = mysqli_query($con, "select * from eventos where id_calendario ='".$_POST['calendario']."' ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
+						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario ='".$_POST['calendario']."' and (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
+						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");
 					}
 					else{
-						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());}
-						else if(!empty($ids)){$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;") /* or die(mysqli_error()) */;}
+						if($_SESSION['UsuarioNivel'] == 2){$eventos = mysqli_query($con, "select * from eventos ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
+						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
+						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");}
+
+						else if(!empty($ids)){$eventos = mysqli_query($con, "select * from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") ORDER BY id_calendario asc limit $inicio, $quantidade;");
+						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") and (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;");
+						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") and (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");}
+					}
+					$edits = array();
+					$del= array();
+					while($row = mysqli_fetch_array($edits_sql))
+					{
+						if($row['action'] == "edit"){
+							$edits[$row['id_evento']] = $row['id_tmp'];}
+						else{ 
+							$del[$row['id_evento']] = $row['id_tmp'];
+						}
 					}
 				
-
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
 					echo "<td class='td-indicador'><strong>ID</strong></td>"; 
@@ -99,24 +114,68 @@
 					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 				if(!empty($eventos)){
-					while($info = mysqli_fetch_array($eventos)){ 
-						$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
-						echo "<tr>";
-						echo "<td>".$info['id_evento']."</td>";
-						echo "<td class='teste'>".$info['id_calendario']."</td>";
-						echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
-						echo "<td>".date('d/m/Y',strtotime($info['dt_ini_ev']))."</td>"; //Funções para converter formato da data do MySQL
-						echo "<td>".date('d/m/Y',strtotime($info['dt_fim_ev']))."</td>"; //Funções para converter formato da data do MySQL
-						echo "<td class='actions btn-group-sm td-center'>";
-						echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."> Visualizar </a>";
-						echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."> Editar </a>"; 
-						echo "<a href=?page=excluir_eve&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'> Excluir </a></td>";
+					$count = 0;
+					while(($info = mysqli_fetch_array($eventos))){
+						if(!empty($cal_atual) && $cal_atual != $info['id_calendario']){$count = 0;}
+						$cal_atual= $info['id_calendario'];
+						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario = '".$info['id_calendario']."' and (act_tmp = 'add');");
+						if(!empty($edits[$info['id_evento']])){
+							$sla = mysqli_query($con, "select * from tmp_eve where id_evento = '".$info['id_evento']."'");
+							$info = mysqli_fetch_array($sla);}
+						if(!empty($info)){
+							$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
+							echo "<tr>";
+							echo "<td>".$info['id_evento']." ";
+							if(!empty($del[$info['id_evento']])){
+								echo "Marcado para exclusão";
+							}else if(!empty($edits[$info['id_evento']])){
+								echo "Editado";
+							}
+							echo "</td>";
+							echo "<td class='teste'>".$info['id_calendario']."</td>";
+							echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
+							echo "<td>".date('d/m/Y',strtotime($info[1]))."</td>"; //Funções para converter formato da data do MySQL
+							echo "<td>".date('d/m/Y',strtotime($info[2]))."</td>"; //Funções para converter formato da data do MySQL
+							echo "<td class='actions btn-group-sm td-center'>";
+							
+							
+							if(!empty($edits[$info['id_evento']])){
+								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=edit> Visualizar </a>";
+								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=edit> Editar </a>"; 
+								echo "<a href=?page=excluir_eve&id_evento=".$edits[$info['id_evento']]."&status=edit class='btn btn-danger btn-xs'>Cancelar Edição</a></td></tr>";
+							}
+
+							elseif(!empty($del[$info['id_evento']])){
+								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=del> Visualizar </a>";
+								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=del> Editar </a>"; 
+								echo "<a href=?page=excluir_eve&id_evento=".$del[$info['id_evento']]."&status=del class='btn btn-danger btn-xs'>Cancelar Edição</a></td></tr>";
+							}
+							
+							else{
+								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=active> Visualizar </a>";
+								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=active> Editar </a>"; 
+							echo "<a href=?page=excluir_eve&id_evento=".$info['id_evento']."&status=active class='btn btn-danger btn-xs'> Excluir </a></td></tr>";}}
+
+					if($count == 0 && $inicio==0){
+						while($info_tmp = mysqli_fetch_array($eventos_tmp)){
+							$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info_tmp['id_leg']."';");
+							echo "<tr>";
+							echo "<td>Marcado para Adição</td>";
+							echo "<td class='teste'>".$info_tmp['id_calendario']."</td>";
+							echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
+							echo "<td>".date('d/m/Y',strtotime($info_tmp[1]))."</td>"; //Funções para converter formato da data do MySQL
+							echo "<td>".date('d/m/Y',strtotime($info_tmp[2]))."</td>"; //Funções para converter formato da data do MySQL
+							echo "<td class='actions btn-group-sm td-center'>";
+							echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info_tmp['id_evento']."> Visualizar </a>";
+							echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info_tmp['id_evento']."> Editar </a>"; 
+							echo "<a href=?page=excluir_eve&id_evento=".$info_tmp['id_tmp']."&status=tmp class='btn btn-danger btn-xs'> Excluir </a></td></tr>";}}
+							$count++;
 					}
 				}
 				else{
 					echo "Este calendário não possui eventos";
 				}
-				echo "</tr></tbody></table>";
+				echo "</tbody></table>";
 			?>				
 		</div><!-- Div Table -->
 	</div><!--list-->

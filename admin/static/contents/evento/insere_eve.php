@@ -7,7 +7,7 @@ $id_leg          = $_POST["id_leg"];
 
     // $fdt_nasc 	= implode("-", array_reverse(explode("/", $dt_nasc)));
     $sql = "insert into tmp_eve values ";
-    $sql .= "('$dt_ini_ev','$dt_fim_ev','$id_calendario','$id_leg','add','');";
+    $sql .= "('','$dt_ini_ev','$dt_fim_ev','$id_calendario','$id_leg','add','0');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
