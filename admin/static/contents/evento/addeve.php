@@ -16,8 +16,8 @@
  	<div id="top" class="row">
 		<div class="td-titulo col-md-11">
 			<h2>Adicionar Evento</h2>
+			<hr>
 			</div>
-	<hr>
 	<br>
 
 	</div>
@@ -30,7 +30,7 @@
 			</div>
 			
 			<div class="form-group col-md-2">
-				<label for="id_calendario">UE</label>
+				<label for="id_calendario"><strong>UE</strong></label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
 					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func_inst[0].'" readonly>';
@@ -55,7 +55,7 @@
 			</div>
 			
 			<div class="form-group col-md-2">
-				<label for="id_calendario">Calendário</label>
+				<label for="id_calendario"><strong>Calendário</strong></label>
 				<select class="form-control " id="reactive" name="id_calendario" required>
 				<?php 
 					for($i = 0; $i < count($ids); $i++)
@@ -70,7 +70,7 @@
 			</div>
 
 			<div class="form-group col-md-2">
-				<label for="id_leg">Tipo Evento</label>
+				<label for="id_leg"><strong>Tipo Evento</strong></label>
 			<select class="form-control" id="id_leg" name="id_leg" required>
 				<option> --------- </option>
 					<?php
@@ -89,15 +89,15 @@
 		<!-- 2ª LINHA -->
 		<div class="row">
 			<div class="form-group col-md-3">
-				<label for="dt_nasc">Data Início</label>
+				<label for="dt_nasc"><strong>Data Início</strong></label>
 				<input type="date" class="form-control" name="dt_ini_ev" required>
 			</div>
 			<div class="form-group col-md-3">
-				<label for="dt_nasc">Data Fim</label>
+				<label for="dt_nasc"><strong>Data Fim</strong></label>
 				<input type="date" class="form-control" name="dt_fim_ev" required>
 			</div>
 		</div>
-		<hr />
+		<br>
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>

@@ -24,7 +24,7 @@
 			<input type="text" class="form-control"  name="id_evento" value="<?php echo $row["id_evento"];?>" >
 		</div>
 		<div class="form-group col-md-2">
-			<label for="id_evento">Calendário</label>
+			<label for="id_evento"><strong>Calendário</strong></label>
 			<select class="form-control " id="id_calendario" name="id_calendario" <?php if ($_SESSION['UsuarioNivel'] == 1)echo 'readonly="readonly" tabindex="-1" aria-disabled="true"' ?>>
 				<option> --------- </option>
 					<?php
@@ -42,7 +42,7 @@
 			</select>
 		</div>
 		<div class="form-group col-md-2">
-			<label for="id_leg">Tipo de Evento</label>
+			<label for="id_leg"><strong>Tipo de Evento</strong></label>
 			<select class="form-control" id="id_leg" name="id_leg">
 				<option> --------- </option>
 					<?php
@@ -62,12 +62,12 @@
 	<!-- 2ª LINHA -->
 	<div class="row"> 
 		<div class="form-group col-md-3">
-			<label for="dt_ini_ev"> Data de Início </label>
+			<label for="dt_ini_ev"><strong> Data de Início </strong></label>
 			<input type="date" class="form-control" name="dt_ini_ev" value="<?php echo $row["dt_ini_ev"]; ?>">
 		</div>
 
 		<div class="form-group col-md-3">
-			<label for="dt_fim_ev"> Data de Fim </label>
+			<label for="dt_fim_ev"><strong> Data de Fim </strong></label>
 			<input type="date" class="form-control" name="dt_fim_ev" value="<?php echo $row["dt_fim_ev"]; ?>">
 		</div>
 	</div>

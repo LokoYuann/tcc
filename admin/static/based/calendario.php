@@ -8,56 +8,61 @@
     height:10%;
 }
 
-
 </style>
-
-<script>
-    function size(mes) {
-
-    }
-</script>
 <?php
+if(!empty($_GET['calendario'])){
+
+    $_POST['calendario'] = $_GET['calendario'];
+    $_POST['ue'] = $_GET['ue'];
+}
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 		else if(isset($_POST['ue']) && $_POST['ue'] == 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
         else{
-            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());
+            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());
         }
         }
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
         $ids = array();
+        $ano_sel = array();
+        $sig = array();
         while($row = mysqli_fetch_array($id_cal))
         {
             $ids[] = $row['id_calendario'];
+            $ano_sel[] = $row['ano_letivo'];
+            $sig_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$row['id_ue']."' ") or die(mysqli_error());
+            $sig[] = mysqli_fetch_array($sig_sql)[0]; 
         }
 
 
 
         // armazena os dados da conexão numa variável
         $sql = mysqli_query($con, "select * from eventos ;");
+        unset($_SESSION['cal_atual']);
         if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
         // cria outra conexão com o banco de dados, onde ele chama os dados com nomes mais fáceis para fazer o X e o Y da tabela
         $daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento from eventos where id_calendario = '".$_POST['calendario']."' order by dt_ini_ev ;");
         $ano_sql = mysqli_query($con, "select ano_letivo, id_ue, versao_cal from calendario where id_calendario = '".$_POST['calendario']."';");
         $daytmp_sql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_tmp) AS d_ini, EXTRACT(DAY FROM dt_fim_tmp) AS d_fim, EXTRACT(MONTH FROM dt_ini_tmp) AS m_ini, EXTRACT(MONTH FROM dt_fim_tmp) AS m_fim, act_tmp as action, id_evento from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'add' or act_tmp = 'edit') order by dt_ini_tmp ;");
         $edits_sql = mysqli_query($con, "select act_tmp as action, id_evento from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'del' or act_tmp = 'edit') order by dt_ini_tmp ;");
-        $calendario_usado = $_POST['calendario'];
+        $_SESSION['cal_atual'] = $_POST['calendario'];
         }
 
         else if(!empty($func_cal[0])){$daysql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento from eventos where id_calendario = '".$func_cal[0]."' order by dt_ini_ev ;");
         $ano_sql = mysqli_query($con, "select ano_letivo, id_ue, versao_cal from calendario where id_calendario = '".$func_cal[0]."';");
         $daytmp_sql = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_tmp) AS d_ini, EXTRACT(DAY FROM dt_fim_tmp) AS d_fim, EXTRACT(MONTH FROM dt_ini_tmp) AS m_ini, EXTRACT(MONTH FROM dt_fim_tmp) AS m_fim from tmp_eve where id_calendario = '".$func_cal[0]."' and (act_tmp = 'add' or act_tmp = 'edit') order by dt_ini_tmp ;");
         $edits_sql = mysqli_query($con, "select act_tmp as action, id_evento from tmp_eve where id_calendario = '".$func_cal[0]."' and (act_tmp = 'del' or act_tmp = 'edit') order by dt_ini_tmp ;");
-        $calendario_usado = $func_cal[0];
+        $_SESSION['cal_atual'] = $func_cal[0];
         }
         $edits = array();
+        if(!empty($edits_sql)){
         while($row = mysqli_fetch_array($edits_sql))
         {
             $edits[] = $row['id_evento'];
-        }
+        }}
 
         
         if(!empty($ano_sql)){
@@ -66,11 +71,33 @@
                     $ano = $row[0];
                     $ue = $row[1];
                     $versao = $row[2];
-                }}
+                }
+            
+                $ue_sql = mysqli_query($con, "select nome_ue, logo_ue, sigla_ue from ue where id_ue = '".$ue."';");
+                while($row = mysqli_fetch_array($ue_sql))
+                    {
+                        $nome_ue = $row[0];
+                        $logo_ue = $row[1];
+                        $sigla_ue = $row[2];
+                    }
+                
+                
+                unset($_SESSION['ano']);
+                unset($_SESSION['ue']);
+                unset($_SESSION['logo_ue']);
+                unset($_SESSION['sigla_ue']);
+                unset($_SESSION['legenda']);
+                
+                $_SESSION['ano'] = $ano;
+                $_SESSION['ue'] = $nome_ue;
+                $_SESSION['logo_ue'] = $logo_ue;
+                $_SESSION['sigla_ue'] = $sigla_ue;
+                $_SESSION['versao_ue'] = $versao;
+            }
 ?>
 
 <form action="?page=home" method="post" >
-		<div class="d-flex row justify-content-between" > 
+		<div class="d-flex row justify-content-left" > 
         <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-4">
 				Filtrar por Instituição:
@@ -95,7 +122,7 @@
 				for($i = 0; $i < count($ids); $i++)
 				{
 					
-					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected="selected"':"").'>'.$ids[$i].'</option>';
+					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func_cal[0] && !isset($_POST['calendario']))?'selected':"").'>'.$ano_sel[$i].'</option>';
 					
 
 				}
@@ -107,8 +134,9 @@
 
             <div class="form-group col-md-4">
                     Versão:
-                    <select name="versao" class="form-control " action="post" onchange='formreact(this.value,"versao")';>
                     <?php 
+                    $arroz = '/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v';
+                    echo "<select name='versao' class='form-control ' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.")'>";
                     for($i = 1; $i < $versao; $i++)
                     {
                             
@@ -251,15 +279,18 @@ while(($row = mysqli_fetch_array($daysql)) || ($row_tmp = mysqli_fetch_array($da
        $eve[$domingo_m][$domingo_d] = "";
        $simb[$domingo_m][$domingo_d] = "<a>D</a>";
     }
+
+
+// começo do calendário
 $calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
-    // começo do calendário
-    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style='border-collapse: collapse;width:10% !important;overflow:wrap;' id='core'>";
+if($ano == date("Y")){
+    $calendario .= "<table class='table table-bordered border border-4 border-warning stripped ' style='border-collapse: collapse;'>";
     $calendario .= "<tr class=''>";
-    $calendario .= "<td  rowspan='2' class='cal-content'>Meses</td>";
+    $calendario .= "<td  rowspan='2' class='cal-content cal-cab'>Meses</td>";
     $calendario .= "<td colspan='31' class='cal-content'>Dias</td>";
     $calendario .= "<tr>";
     for ($ç=1; $ç < 32; $ç++) { 
-        $calendario .= "<td colspan='ç' class='cal-content'>$ç</td>";
+        $calendario .= "<td colspan='ç' class='cal-content cal-cab'>$ç</td>";
     }
     $calendario .= "</tr>";
     $calendario .= "</tr>";
@@ -267,9 +298,9 @@ $calendario = "<div style='text-align: -webkit-center;' id='calendario'>";
 // começa a criar colunas de meses
 for ($i=1; $i < 13; $i++) {
     // abre a linha dos meses
-    $calendario .= "<tr class='cils' style='display:revert;' id='".$i."' onclick='formreact(".$i.",\"cal_mes\",".$calendario_usado.")'>";
+    $calendario .= "<tr class='cils' style=''>";
     // abre a coluna dos meses
-    $calendario .= "<td class='mis cal-content' style='' >";
+    $calendario .= "<td class='mis cal-content meses' >";
 
     // cria um array para armazenar os meses, o primeiro fica vazio pois dá erro na criação do calendário
     $meses = array("","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
@@ -321,7 +352,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     while ($kkk = mysqli_fetch_array($sla_sql)) {
         $sla[] = $kkk[0];
     }
-    echo "<button class='btn btn-info' style='float: right;' onclick=\"formreact(".$versao.",'versao')\">PDF</button><br>";
+
     echo "Legenda:";
     
     $so = sizeof($sla);
@@ -329,19 +360,19 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $o=0;
     $n=0;
     echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
-    $legenda = "<div class= 'd-flex flex-column justify-content-center mt-4' style='width:50%;'>";
+    $legenda = "<div class= 'd-flex flex-column justify-content-center mt-4' style='width:50%;' id='leg_table'>";
     $legenda .= "Legenda:";
-    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style=' overflow:wrap;float:left;'>";
+    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;float:left;'>";
     //$legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
-    $legenda .= "<table class='table table-bordered  border border-2  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: separate;border-radius:11px;'>";
+    $legenda .= "<table class='table table-bordered  border border-1  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: collapse;border-radius:11px;'>";
     while($row = mysqli_fetch_array($leg_sql)){
         //if($i==10){$i=0;}
         //if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
         if($i==4){$i=0;}
         if($i==0){ echo "<tr  style='line-height: 25px;min-height: 25px;' >";}
-        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content' style='vertical-align: middle;background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;text-align:center!important;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
+        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis ' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' >".$row['sigla'];
         //$legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
-        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis cal-content' style='text-align: left'>".$row['tipo']."</td>";
+        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis ' >".$row['tipo']."</td>";
         //$legenda .= "<td class='mis cal-content'>".$row['descricao']."</td>";
         if($i==4||$o==$so){echo "</tr>";}
         //$legenda .= "</tr>";} 
@@ -352,11 +383,11 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         
 
         if($n==2){$n=0;};
-        if($n==0){$legenda .= "<tr style='line-height: 25px;min-height: 25px;height: 1px ;'>";}
-        $legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";margin-left:10px'>
+        if($n==0){$legenda .= "<tr style='line-height: 25px;min-height: 25px;height: 1px ;border-bottom: 1px solid;'>";}
+        $legenda .= "<td class='mis ' style='text-align:center;background-color:".$row['cor'].";margin-left:10px'>
         ".((empty($row["simbolo"]))?"":"<img src='".$row["simbolo"]."' class='simbico' alt=''>")."
         ".$row['sigla']."</td>";
-        $legenda .= "<td class='mis cal-content'>".$row['tipo']."</td>";
+        $legenda .= "<td class='mis ' id='leg'>".$row['tipo']."</td>";
 
         if($n==1||$o==$so){$legenda .= "</tr>";}
         
@@ -367,46 +398,49 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
 
     echo "</div>";
     $legenda .= "</div>";
-}
+}}
 
 if(!empty($ano_sql)){
 
-$ue_sql = mysqli_query($con, "select nome_ue, logo_ue, sigla_ue from ue where id_ue = '".$ue."';");
-while($row = mysqli_fetch_array($ue_sql))
-	{
-		$nome_ue = $row[0];
-        $logo_ue = $row[1];
-        $sigla_ue = $row[2];
-	}
-
-unset($_SESSION['calendario']);
-unset($_SESSION['ano']);
-unset($_SESSION['ue']);
-unset($_SESSION['logo_ue']);
-unset($_SESSION['sigla_ue']);
-unset($_SESSION['legenda']);
-$_SESSION['calendario'] = $calendario;
-$_SESSION['ano'] = $ano;
-$_SESSION['ue'] = $nome_ue;
-$_SESSION['logo_ue'] = $logo_ue;
-$_SESSION['sigla_ue'] = $sigla_ue;
-$_SESSION['versao_ue'] = $versao;
-
-if(!empty($edits) || !empty($nv_ver)){
-    echo "<div style='display:flex; justify-content:space-between;text-decoration:none'>";
-    if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
-    echo "<a href='based/cancel.php?cal=".$_POST['calendario']."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
-    echo "<a href='based/salvar.php?cal=".$_POST['calendario']."''><button class='btn btn-primary'>Publicar nova versão</button></a>";}
-    else if(!empty($func_cal[0])){
-        echo "<a href='based/cancel.php?cal=".$func_cal[0]."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
-        echo "<a href='based/salvar.php?cal=".$func_cal[0]."''><button class='btn btn-primary'>Publicar nova versão</button></a>";
-    }
-    echo "</div>";}
+    if(!empty($edits) || !empty($nv_ver)){
+        echo "<div style='display:flex;flex-direction:column;text-decoration:none;margin-right:auto'>";
+        if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
+        echo "<a href='based/salvar.php?cal=".$_POST['calendario']."' style='margin-bottom:10px'><button class='btn btn-primary'>Publicar nova versão</button></a>";
+        echo "<a href='based/cancel.php?cal=".$_POST['calendario']."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
+        }
+        else if(!empty($func_cal[0])){
+            echo "<a href='based/salvar.php?cal=".$func_cal[0]."' style='margin-bottom:10px'><button class='btn btn-primary'>Publicar nova versão</button></a>";
+            echo "<a href='based/cancel.php?cal=".$func_cal[0]."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
+        }
+        echo "</div>";}
+}
+if($ano < date("Y")){
+    echo "<div style='text-align: -webkit-center;' id='calendario'>";
+    echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.'.pdf" width="1000px" height="770px" ></embed>';
 }
 echo "</div>";
-echo "<div id='pdf_versao' style='text-align: -webkit-center;'>";
+echo "<div id='pdf_versao_esc' style='text-align: -webkit-center; display:none'>";
+echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" width="1000px" height="770px" ></embed>';
 echo "</div>";
-echo "<button class='btn btn-info' style='float: right;display:none' onclick=\"formreact('recent_ver','versao')\" id='recent_button'>Voltar para o calendário</button><br>";
-if(($leg_use) != null){
-$_SESSION['legenda'] = $legenda;}
+echo "<div id='pdf_versao_acad' style='text-align: -webkit-center; display:none'>";
+echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" width="1000px" height="770px" ></embed>';
+echo "</div>";
+echo "<div id='cal_tipo' style='text-align: -webkit-center; display:none'>";
+include "based/cal_list.php";
+echo $calendario_lis;
+echo "</div>";
+echo "<div style='display:flex;flex-direction:column;text-decoration:none'>";
+echo "<button class='btn btn-info' style='margin-bottom:10px;width:10vw' onclick=\"tipoCal()\">Mudar</button><br>";
+echo "<button class='btn btn-info' style='width:10vw' onclick=\"showPdf(".$versao.",'versao')\" id='button_pdf'>PDF</button><br>";
+echo "<button class='btn btn-info' style='display:none;width:10vw' onclick=\"voltarCal('recent_ver','versao')\" id='recent_button'>Voltar para o calendário</button><br>";
+echo "</div>";
+
+unset($_SESSION['calendario_lis']);
+unset($_SESSION['legenda']);
+if($calendario_lis != null){
+    $_SESSION['calendario_lis'] = $calendario_lis;}
+if(($leg_use) != null && !empty($legenda)){
+    $_SESSION['legenda'] = $legenda;}
+unset($_SESSION['calendario']);
+$_SESSION['calendario'] = $calendario;
 ?>

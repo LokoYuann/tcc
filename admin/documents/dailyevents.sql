@@ -35,11 +35,11 @@ CREATE TABLE IF NOT EXISTS `calendario` (
 
 -- Copiando dados para a tabela dailyevent.calendario: ~3 rows (aproximadamente)
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `data_pb`, `versao_cal`) VALUES
-	(1, '2022', 21, NULL, 3);
+	(1, '2022', 21, NULL, 8);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `data_pb`, `versao_cal`) VALUES
-	(2, '2022', 2, NULL, 3);
+	(2, '2022', 2, NULL, 5);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `data_pb`, `versao_cal`) VALUES
-	(3, NULL, 2, NULL, 1);
+	(3, '2022', 2, NULL, 4);
 
 -- Copiando estrutura para tabela dailyevent.eventos
 DROP TABLE IF EXISTS `eventos`;
@@ -54,11 +54,9 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   KEY `FK_eventos_legenda` (`id_leg`),
   CONSTRAINT `FK_eventos_calendario` FOREIGN KEY (`id_calendario`) REFERENCES `calendario` (`id_calendario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_eventos_legenda` FOREIGN KEY (`id_leg`) REFERENCES `legenda` (`id_leg`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
 
 -- Copiando dados para a tabela dailyevent.eventos: ~40 rows (aproximadamente)
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(2, '2022-05-25', '2022-05-26', 2, 2);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(3, '2022-04-28', '2022-04-28', 2, 3);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
@@ -137,6 +135,8 @@ REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, 
 	(41, '2022-02-03', '2022-02-12', 2, 23);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(48, '2022-01-06', '2022-02-01', 1, 1);
+REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(50, '2022-10-20', '2022-11-03', 1, 7);
 
 -- Copiando estrutura para tabela dailyevent.funcionario
 DROP TABLE IF EXISTS `funcionario`;
@@ -226,7 +226,7 @@ REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sig
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(2, 'Conselho de Classe', 'Colegiado escolar.', '/admin/static/img/simbolos/people-group-solid.png', 'CoC', '#fc03c6');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
-	(3, 'FLOT', 'Projeto literá¡rio elaborado pelo GEOT e docentes.', '/admin/static/img/simbolos/book-fill.png', 'FLOT', '#ee3f3f');
+	(3, 'FLOT', 'Projeto literário elaborado pelo GEOT e docentes.', '/admin/static/img/simbolos/book-fill.png', 'FLOT', '#ee3f3f');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(4, 'Feira de Ciência', 'Evento que costuma durar um dia.', '/admin/static/img/simbolos/florin-sign-solid.png', 'FC', '#650372');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
@@ -334,17 +334,27 @@ REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numer
 -- Copiando estrutura para tabela dailyevent.tmp_eve
 DROP TABLE IF EXISTS `tmp_eve`;
 CREATE TABLE IF NOT EXISTS `tmp_eve` (
+  `id_evento` int(11) DEFAULT NULL,
   `dt_ini_tmp` date DEFAULT NULL,
   `dt_fim_tmp` date DEFAULT NULL,
   `id_calendario` int(11) DEFAULT NULL,
   `id_leg` int(11) DEFAULT NULL,
   `act_tmp` varchar(50) DEFAULT NULL,
-  `id_evento` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `id_tmp` int(11) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id_tmp`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.tmp_eve: ~1 rows (aproximadamente)
-REPLACE INTO `tmp_eve` (`dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_evento`) VALUES
-	(NULL, NULL, 2, NULL, NULL, NULL);
+-- Copiando dados para a tabela dailyevent.tmp_eve: ~5 rows (aproximadamente)
+REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
+	(0, '2022-10-18', '2022-10-21', 1, 3, 'add', 22);
+REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
+	(48, '2022-01-06', '2022-02-01', 1, 1, 'edit', 26);
+REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
+	(48, '2022-01-06', '2022-02-01', 1, 1, 'edit', 27);
+REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
+	(48, '2022-01-06', '2022-02-01', 1, 1, 'edit', 28);
+REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
+	(48, '2022-01-06', '2022-02-01', 1, 1, 'edit', 29);
 
 -- Copiando estrutura para tabela dailyevent.ue
 DROP TABLE IF EXISTS `ue`;

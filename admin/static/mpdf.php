@@ -4,12 +4,12 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 $defaultConfig = (new Mpdf\Config\ConfigVariables())->getDefaults();
 $fontDirs = $defaultConfig['fontDir'];
+$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 
-
-$cabecalho = "<div style='float: left;;width:70px;'>";
+$cabecalho = "<div style='float: left;width:70px;'>";
 $cabecalho .= "<img src='/admin/static/img/faeteclogo.png' style='width:70px;'/>";
 $cabecalho .= "</div>";
-$cabecalho .= "<div style='font-size:12px;position: absolute; left:35%;float: left;text-align: center;'>";
+$cabecalho .= "<div style='font-size:12px;float: left;text-align: center;margin-right:auto;margin-left:auto;width: 90%;'>";
 $cabecalho .= "GOVERNO DO ESTADO DO RIO DE JANEIRO<br>";
 $cabecalho .= "SECRETARIA DE ESTADO DE CIÊNCIA,TECNOLOGIA E INOVAÇÃO<br>";
 $cabecalho .= "FUNDAÇÃO DE APOIO À ESCOLA TÉCNICA<br>";
@@ -19,7 +19,7 @@ $cabecalho .= "EDUCAÇAO PROFISSIONAL TÉCNICA DE NÍVEL MÉDIO INTEGRADO</stron
 $cabecalho .= "</div>";
 $cabecalho .= "<div style='text-align: right; float: left;position: absolute; right:0%;'>";
 if($_SESSION['logo_ue']){
-$cabecalho .= "<img src='".$_SESSION['logo_ue']."' style='width:80px;'/>";}
+$cabecalho .= "<img src='".$_SESSION['logo_ue']."' style='width:90px;'/>";}
 $cabecalho .= "</div>";
 
 
@@ -31,9 +31,12 @@ $stylesheet .= file_get_contents('https://maxcdn.bootstrapcdn.com/font-awesome/4
 $stylesheet .= file_get_contents('css/main.css');
 $stylesheet .= file_get_contents('css/mpdf.css');
 $stylesheet .= file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css');
+
+$ue = mysqli_query($con , 'select id_ue from calendario where id_calendario ="'.$_SESSION['cal_atual'].'";');
+//escolar
 $mpdf = new \Mpdf\Mpdf([
     'margin_top' => 4,
-    'margin_bottom' => 4,
+    'margin_bottom' => 0,
     'margin_right' => 4,
     'margin_left' => 4,
     'format' => 'A4',
@@ -49,6 +52,26 @@ if(!empty($_SESSION['legenda'])){
 $mpdf->WriteHTML($_SESSION['legenda'],2);}
 
 
+//acadêmico
+$mpdf_acad = new \Mpdf\Mpdf([
+    'margin_top' => 4,
+    'margin_bottom' => 4,
+    'margin_right' => 4,
+    'margin_left' => 4,
+    'format' => 'A4',
+    'orientation' => 'P'
+]);
+$mpdf_acad->SetDisplayMode('fullwidth');
+
+
+$mpdf_acad->WriteHTML($stylesheet,1);
+$mpdf_acad->WriteHTML($cabecalho,2);
+$mpdf_acad->WriteHTML($_SESSION['calendario_lis'],2);
+
+
+
+
+
 
 //Código para criar backup
 
@@ -57,10 +80,12 @@ $mpdf->WriteHTML($_SESSION['legenda'],2);}
 if($_GET['value'] == 'nova_versao'){
     mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']);
     mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']."/".$_SESSION['ano']."");
-    $mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].'.pdf', 'F');
-    header('Location: dash.php?page=home');}
+    $mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].' - esc.pdf', 'F');
+    $mpdf_acad->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].' - acad.pdf', 'F');
+    header('Location: dash.php?page=home&calendario='.$_SESSION['cal_atual'].'&ue='.mysqli_fetch_array($ue)[0]);}
 else{
     $mpdf->Output();
+    $mpdf_acad->Output();
 }
 
 ?>

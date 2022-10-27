@@ -76,8 +76,6 @@
 					$quantidade = 5;
 					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
 					$inicio = ($quantidade * $pagina) - $quantidade;
-					$pagina = (isset($_GET['pagina'])) ? (int)$_GET['pagina'] : 1;
-					$inicio = ($quantidade * $pagina) - $quantidade;
 					
 					if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
 						$eventos = mysqli_query($con, "select * from eventos where id_calendario ='".$_POST['calendario']."' ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
@@ -95,6 +93,7 @@
 					}
 					$edits = array();
 					$del= array();
+					if(!empty($edits_sql)){
 					while($row = mysqli_fetch_array($edits_sql))
 					{
 						if($row['action'] == "edit"){
@@ -102,7 +101,7 @@
 						else{ 
 							$del[$row['id_evento']] = $row['id_tmp'];
 						}
-					}
+					}}
 				
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
@@ -143,15 +142,15 @@
 							
 							
 							if(!empty($edits[$info['id_evento']])){
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=edit> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=edit> Editar </a>"; 
-								echo "<a href=?page=excluir_eve&id_evento=".$edits[$info['id_evento']]."&status=edit class='btn btn-danger btn-xs'>Cancelar Edição</a></td></tr>";
+								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']."> Visualizar </a>";
+								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']."> Editar </a>"; 
+								echo "<a href=?page=excluir_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'>Cancelar</a></td></tr>";
 							}
 
 							elseif(!empty($del[$info['id_evento']])){
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=del> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=del> Editar </a>"; 
-								echo "<a href=?page=excluir_eve&id_evento=".$del[$info['id_evento']]."&status=del class='btn btn-danger btn-xs'>Cancelar Edição</a></td></tr>";
+								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']."> Visualizar </a>";
+								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']."> Editar </a>"; 
+								echo "<a href=?page=excluir_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'>Cancelar</a></td></tr>";
 							}
 							
 							else{
@@ -169,9 +168,9 @@
 							echo "<td>".date('d/m/Y',strtotime($info_tmp[1]))."</td>"; //Funções para converter formato da data do MySQL
 							echo "<td>".date('d/m/Y',strtotime($info_tmp[2]))."</td>"; //Funções para converter formato da data do MySQL
 							echo "<td class='actions btn-group-sm td-center'>";
-							echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info_tmp['id_evento']."> Visualizar </a>";
-							echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info_tmp['id_evento']."> Editar </a>"; 
-							echo "<a href=?page=excluir_eve&id_evento=".$info_tmp['id_tmp']."&status=tmp class='btn btn-danger btn-xs'> Excluir </a></td></tr>";}}
+							echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$info_tmp['id_tmp']."&status=add> Visualizar </a>";
+							echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$info_tmp['id_tmp']."&status=add> Editar </a>"; 
+							echo "<a href=?page=excluir_eve&id_tmp=".$info_tmp['id_tmp']."&status=add class='btn btn-danger btn-xs'> Excluir </a></td></tr>";}}
 							$count++;
 					}
 				}
@@ -218,5 +217,3 @@
 	</div>
 	<?php mysqli_close($con); ?>
 </div><!--main-->
-
-

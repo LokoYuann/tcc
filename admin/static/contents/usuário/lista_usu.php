@@ -41,7 +41,7 @@
 					echo "<td class='centro'><strong>Usuário</strong></td>"; 
 					echo "<td class='centro'><strong>Senha</strong></td>"; 
 					echo "<td class='centro'><strong>Nível</strong></td>";
-					echo "<td class='actions d-flex justify-content-center'><strong>Ações</strong></td>"; 
+					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
 						echo "<tr>";

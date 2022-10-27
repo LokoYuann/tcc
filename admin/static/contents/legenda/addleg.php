@@ -3,34 +3,35 @@
  	<div id="top" class="row">
 		<div class="col-md-11">
 			<h2 class="td-titulo">Adicionar Legenda</h2>
-		</div>
-
+</div>
 	</div>
 	<hr>
 	<form enctype="multipart/form-data" action="?page=insere_leg" method="post">
 		<!-- 1ª LINHA -->	
+		
 		<div class="row"> 
 			<div class="form-group col-md-2">
 				<label class="font-info" for="id_leg">ID Legenda</label>
 				<input type="text" class="form-control" name="id_leg" readonly>
 			</div>
 			<div class="form-group col-md-2">
-				<label class="font-info" for="id_calendario">Tipo Evento</label>
+				<label class="font-info" for="id_calendario"><strong>Tipo Evento</strong></label>
 				<input type="text" name="tipo_evento" class="form-control" id="tipo_evento">
 			</div>
 			<div class="form-group col-md-4">
-				<label class="font-info" for="desc_leg">Descrição evento</label>
+				<label class="font-info" for="desc_leg"><strong>Descrição evento</strong></label>
 				<input type="textbox" name="desc_leg" class="form-control" id="desc_leg">
 			</div>
 			<div class="form-group col-md-2">
-				<label class="font-info" for="sigla_leg">Sigla</label><br>
+				<label class="font-info" for="sigla_leg"><strong>Sigla</strong></label><br>
 				<input type="text" name="sigla_leg" class="form-control" id="sigla_leg">
 			</div>
 		</div>
+	
 		<!-- 2ª LINHA -->
 		<div class="row">
 			<div class="form-group col-md-2 ">
-				<label class="cor-leg" for="cor_leg">Cor</label><br>
+				<label class="cor-leg" for="cor_leg"><strong>Cor</strong></label><br>
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
@@ -101,7 +102,7 @@
 				</div>
 			</div>
 		</div>
-				
+		
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>

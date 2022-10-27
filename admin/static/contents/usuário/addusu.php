@@ -15,10 +15,11 @@ $lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B 
 		</div>
 	</div>
 	<hr>
-	<br>
+
 
 	<form enctype="multipart/form-data" action="?page=insere_usu" method="post">
 		<!-- 1ª LINHA -->	
+		<strong>
 		<div class="row"> 
 			<div class="form-group col-md-4">
 				<label class="font-info" for="id_func">Funcionário</label>
@@ -40,10 +41,12 @@ $lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B 
 			</div>
 			
 		</div>
+				</strong>
 		<!-- 2ª LINHA -->
+		
 		<div class="row">
 			<div class="form-group col-md-4">
-				<label class="font-info" for="nivel">Nível do usuário</label><br>
+				<label class="font-info" for="nivel"><strong>Nível do usuário</strong></label><br>
 				<label class="font-info" class="radio-inline">
 				<input  type="radio" name="nivel" value="1" required>Supervisão
 				</label>
@@ -52,7 +55,9 @@ $lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B 
 				</label>
 			</div>
 		</div>
-		<hr />
+					
+		<br>
+
 		<div id="actions" class="row">
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-primary">Salvar</button>

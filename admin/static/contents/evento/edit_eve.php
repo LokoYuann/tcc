@@ -1,8 +1,12 @@
 <?php
 	//include "base\conexao.php";
-	$id_evento = (int) $_GET['id_evento'];
-	
-	$sql = mysqli_query($con, "select * from ".(($_GET['status'] != 'edit')? 'eventos':'tmp_eve')." where id_evento = '".$id_evento."';");
+	if(!empty($_GET['id_evento'])){
+		$id_evento = (int) $_GET['id_evento'];
+	}
+	if(!empty($_GET['id_tmp'])){
+		$id_tmp = (int) $_GET['id_tmp'];
+	}
+	$sql = mysqli_query($con, "select * from ".(($_GET['status'] != 'edit' && $_GET['status'] != 'add')? 'eventos where id_evento ='.$id_evento:'tmp_eve where id_tmp ='.$id_tmp));
 	$row = mysqli_fetch_array($sql);
 	$cal_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row['id_calendario']."';");
 	$cal = mysqli_fetch_array($cal_sql);
@@ -25,23 +29,28 @@
 <div id="main" class="titulo container-fluid">
 	<div id="top" class="row">
 		<div class="titulo-pos col-md-5">
-			<br><h2 class="td-titulo">Editar registro do Evento : <?php echo $id_evento;?></h2>
+			<br><h2 class="font-info">Editar registro do Evento  <?php if($_GET['status'] != 'add'){echo ": ".$id_evento;}?></h2>
 		</div>
 	</div>
 	<hr>
 	<br>
-	<form action="?page=atualiza_eve&id_evento=<?php echo $row['id_evento']; ?>" method="post">
+	
+	<form action="?page=atualiza_eve&id_evento=<?php echo $row['id_evento']."&status=".$_GET['status']; ?>" method="post">
 
 	<!-- 1ª LINHA -->	
 	<div class="row"> 
-		<input type="hidden" name="status" class="form-control" value="<?php echo $_GET['status'];?>" readonly>
+		<?php
+		echo '<input type="hidden" name="status" class="form-control" value="'.$_GET['status'].'" readonly>';
+		if(!empty($_GET['id_tmp'])){
+		echo '<input type="hidden" name="id_tmp" class="form-control" value="'.$_GET['id_tmp'].'" readonly>';}
+		?>
 		<div class="form-group col-md-3">
 			<label class="font-info" for="id_evento">ID Evento</label>
-			<input type="text" class="form-control"  name="id_evento" value="<?php echo $id_evento;?>" readonly>
+			<input type="text" class="form-control"  name="id_evento" value="<?php if($_GET['status'] != 'add'){echo $id_evento;}?>" readonly>
 		</div>
 		
 		<div class="form-group col-md-2">
-				<label for="id_calendario">UE</label>
+				<label for="id_calendario"><strong>UE</strong></label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
 					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func_inst[0].'" readonly>';
@@ -66,7 +75,7 @@
 			</div>
 
 			<div class="form-group col-md-2">
-				<label for="id_calendario">Calendário</label>
+				<strong><label for="id_calendario">Calendário</label></strong>
 				<select class="form-control " id="reactive" name="id_calendario" >
 				<?php 
 					for($i = 0; $i < count($ids); $i++)
@@ -81,7 +90,7 @@
 			</div>
 
 		<div class="form-group col-md-2">
-			<label for="id_leg">Tipo de Evento</label>
+			<label for="id_leg"><strong>Tipo de Evento</strong></label>
 			<select class="form-control" id="id_leg" name="id_leg">
 				<option> --------- </option>
 					<?php
@@ -101,15 +110,15 @@
 	<!-- 2ª LINHA -->
 	<div class="row"> 
 		<div class="form-group col-md-3">
-			<label class="font-info" for="dt_ini_ev"> Data de Início </label>
+			<label class="font-info" for="dt_ini_ev"> <strong>Data de Início</strong> </label>
 			<input type="date" class="form-control" name="dt_ini_ev" value="<?php echo $row[1]; ?>">
 		</div>
 
 		<div class="form-group col-md-3">
-			<label class="font-info" for="dt_fim_ev"> Data de Fim </label>
+			<label class="font-info" for="dt_fim_ev"> <strong>Data de Fim</strong> </label>
 			<input type="date" class="form-control" name="dt_fim_ev" value="<?php echo $row[2]; ?>">
 		</div>
-	</div>
+	</div><br>
 
 
 		<div id="actions" class="row">

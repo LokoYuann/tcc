@@ -6,11 +6,12 @@
 ?>
 <div id="main" class=" titulo container-fluid">
  	<div id="top" class="row">
-		<div class="col-md-11">
+		<div class="col-md-12">
 	<h2 class="td-titulo">Visualizar registro da Legenda - <?php echo $id_leg; ?> </h2>
 		</div>
 	</div>
-	
+	<hr>
+	<strong>
 	<div class="row">
 	<div class="form-group col-md-2">
 			<label class="font-info" for="id_leg">ID da Legenda</label>
@@ -29,14 +30,15 @@
 			<input type="text" name="sigla_leg" class="form-control" id="sigla_leg" value="<?php echo $row["sigla_leg"];?>" readonly>
 		</div>
 	</div>
-
+	</strong>
+		<!--2° LINHA-->
 	<div class="row">
 		<div class="form-group col-md-2">
-			<label class="font-info" for="cor_leg">Cor</label><br>
+			<label class="font-info" for="cor_leg"><strong>Cor</strong></label><br>
 			<input type="color" name="cor_leg" id="cor_leg" style="width:100%" value="<?php echo $row["cor_leg"];?>" readonly>
 		</div>
 		<div class="form-group col-md-4">
-			<label class="font-info" for="simbolo_leg">Símbolo</label><br>
+			<label class="font-info" for="simbolo_leg"><strong>Símbolo</strong></label><br>
 			<img src="<?php echo $row["simbolo_leg"];?>" class="simbico_leg_edit" alt="">
 		</div>
 	</div>

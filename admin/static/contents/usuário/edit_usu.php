@@ -10,7 +10,7 @@
 <div id="main" class="titulo container-fluid">
  	<div id="top" class="row">
 		<div class="td-titulo col-md-11">
-			<h2 class="page-header">Editar registro de Usuário : <?php echo $id_func;?></h2>
+			<h2 class="font-info page-header">Editar registro de Usuário : <?php echo $id_func;?></h2>
 		</div>
 	</div>
 	<hr>
@@ -27,11 +27,11 @@
 			<input type="text" class="form-control" name="id_func" value="<?php echo $row["id_func"];?>" readonly>
 		</div>
 		<div class="form-group col-md-4">
-			<label class="font-info" for="usuario">Nome do Usuário</label>
+			<label class="font-info" for="usuario"><strong>Nome do Usuário</strong></label>
 			<input type="text" name="usuario" class="form-control" id="usuario" value="<?php echo $row["usuario"];?>" required>
 		</div>
 		<div class="form-group col-md-4">
-			<label class="font-info" for="senha">Senha do Usuário</label>
+			<label class="font-info" for="senha"><strong>Senha do Usuário</strong></label>
 			<input type="password" class="form-control" name="senha" value="<?php echo $row["senha"];?>" required>
 		</div>
 	</div>
@@ -39,7 +39,7 @@
 	<!-- 2ª LINHA  -->
 		<div class="row">
 			<div class="form-group col-md-4">
-				<label class="font-info" for="nivel">Nível do usuário</label><br>
+				<label class="font-info" for="nivel"><strong>Nível do usuário</strong></label><br>
 				<label class="font-info" class="radio-inline">
 				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  required>Supervisão
 				</label>
@@ -49,7 +49,7 @@
 			</div>
 		</div>
 
-	<hr/>
+	<br>
 
 		<div id="actions" class="row">
 			<div class="col-md-12">

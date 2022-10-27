@@ -7,7 +7,8 @@
 ?>
 <div id="main" class="titulo container-fluid">
 <div id="top" class="row">
-		<div class="col-md-11">
+		<div class="col-md-12">
+			<br>
 	<h2 class="td-titulo">Editar registro da legenda : <?php echo $id_leg;?></h2>
 		</div>
 
@@ -24,15 +25,15 @@
 			<input type="text" class="form-control" name="id_leg" value="<?php echo $row["id_leg"];?>" readonly>
 		</div>
 		<div class="form-group col-md-2">
-			<label class="font-info" for="id_calendario">Tipo de Evento</label>
+			<label class="font-info" for="id_calendario"><strong>Tipo de Evento</strong></label>
 			<input type="text" name="tipo_evento" class="form-control" id="tipo_evento" value="<?php echo $row["tipo_evento"];?>">
 		</div>
 		<div class="form-group col-md-4">
-			<label class="font-info" for="desc_leg">Descrição do evento</label>
+			<label class="font-info" for="desc_leg"><strong>Descrição do evento</strong></label>
 			<input type="text" name="desc_leg" class="form-control" id="desc_leg" value="<?php echo $row["desc_leg"];?>">
 		</div>
 		<div class="form-group col-md-2">
-			<label class="font-info" for="sigla_leg">Sigla</label><br>
+			<label class="font-info" for="sigla_leg"><strong>Sigla</strong></label><br>
 			<input type="text" name="sigla_leg" class="form-control" id="sigla_leg" value="<?php echo $row["sigla_leg"];?>">
 		</div>
 	</div>
@@ -40,11 +41,11 @@
 	<!-- 2ª LINHA -->
 	<div class="row"> 
 		<div class="form-group col-md-2">
-			<label class="font-info" for="cor_leg">Cor</label><br>
+			<label class="font-info" for="cor_leg"><strong>Cor</strong></label><br>
 			<input type="color" name="cor_leg" style="width:100%" id="cor_leg" value="<?php echo $row["cor_leg"];?>">
 		</div>
-			<div class="form-group col-md-2 d-flex flex-column align-items-center" id="reactive">
-				<img src="<?php echo $row["simbolo_leg"];?>" class="simbico_leg_edit" alt="">
+			<div class="botao-leg form-group col-md-7" id="reactive">
+				<img src="<?php echo $row["simbolo_leg"];?>" class="teste-aq simbico_leg_edit" alt="">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
 					<?php echo ((!empty($row["simbolo_leg"]))?"Mudar Símbolo":"Escolher Símbolo") ?>
 				</button>
@@ -112,6 +113,7 @@
 				</div>
 			</div>
 		</div>
+		<br>
 							<!-- Modal Arquivo-->
 
 			
