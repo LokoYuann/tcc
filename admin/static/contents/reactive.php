@@ -26,7 +26,7 @@ $ids = array();
 //simbolo
 
 elseif($_GET['page'] == "addleg"){
-	echo '<img src="/admin/static/img/simbolos/'.$_GET['value'].'" class="simbico" alt="">
+	echo '<img src="/admin/static/img/simbolos/'.$_GET['value'].'" class="simbico_leg_edit" alt="">
 	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
 		Mudar
 	</button>';

@@ -41,10 +41,10 @@
 			<div class="form-group col-md-4">
 				<label class="font-info" for="nivel"><strong>Nível do usuário</strong></label><br>
 				<label class="font-info" class="radio-inline">
-				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==1){echo "checked";}else{}?>  required>Supervisão
+				<input  type="radio" name="nivel" value="1" <?php if($row["nivel"]==1){echo "checked";}else{}?>  required>Supervisão
 				</label>
 				<label class="font-info" class="radio-inline">
-				<input  type="radio" name="nivel" value="3" <?php if($row["nivel"]==2){echo "checked";}else{}?>  required>Admnistraddor
+				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==2){echo "checked";}else{}?>  required>Admnistraddor
 				</label>
 			</div>
 		</div>

@@ -84,7 +84,7 @@
 			<div class="form-group col-md-2">
 				<label class="font-info" for="cep"><strong>CEP do Funcionário</strong></label>
 				<input type="hidden" name="cep_old" class="form-control" id="cep_old" value="<?php echo $row["cep"];?>" readonly>
-				<input type="text" name="cep" class="form-control" id="cep" value="<?php echo $row["cep"];?>" required>
+				<input type="text" name="cep" class="form-control cep" id="cep" placeholder="00000-000" value="<?php echo $row["cep"];?>" required>
 			</div>
 
 			<div class="form-group col-md-3">

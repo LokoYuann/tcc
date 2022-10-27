@@ -68,7 +68,7 @@
 		
 			<div class="form-group col-md-2">
 				<label class="font-info" for="cep"><strong>CEP do Funcionário</strong></label>
-				<input type="text" name="cep" class="form-control" id="cep" value="<?php echo $row["cep"];?>" readonly>
+				<input type="text" name="cep" class="form-control cep" id="cep" value="<?php echo $row["cep"];?>" readonly>
 			</div>
 			<div class="form-group col-md-3">
 				<label class="font-info" for="num"><strong>Número Residêncial</strong></label>

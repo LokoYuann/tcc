@@ -35,7 +35,7 @@
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
-			<div class="botao-leg form-group col-md-4 simbico" id="reactive" >
+			<div class="botao-leg form-group col-md-4 simbico_leg_edit" id="reactive" >
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
   					Escolher Símbolo
 				</button>
@@ -53,7 +53,7 @@
 						</div>
 						<div class="modal-body">
 						<div class="container-fluid">
-						<div class="row d-flex justify-content-center ">
+						<div class="row d-flex justify-content-center " style="text-align:center">
 						<?php 
 							foreach ($dir as $fileinfo) {
 								if (!$fileinfo->isDot()) {
