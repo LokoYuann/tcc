@@ -370,7 +370,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
         //if($i==0){ echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' style='height:30vh !important; width:45% !important; justify-content: center !important; '>";}
         if($i==4){$i=0;}
         if($i==0){ echo "<tr  style='line-height: 25px;min-height: 25px;' >";}
-        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis ' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' >".$row['sigla'];
+        echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis ' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."text-align:center;min-width: 60px;'><img src='".$row["simbolo"]."' class='simbico' ><br>".$row['sigla'];
         //$legenda .= "<td class='mis cal-content' style='background-color:".$row['cor'].";".(($i == 0)?"margin-right:100px;":"")."'><img src='".$row["simbolo"]."' class='simbico' style='width=0%'>".$row['sigla'];
         echo "<td data-toggle='tooltip' data-placement='right' title='".$row['descricao']."' class='mis ' >".$row['tipo']."</td>";
         //$legenda .= "<td class='mis cal-content'>".$row['descricao']."</td>";
@@ -384,8 +384,8 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
 
         if($n==2){$n=0;};
         if($n==0){$legenda .= "<tr style='line-height: 25px;min-height: 25px;height: 1px ;border-bottom: 1px solid;'>";}
-        $legenda .= "<td class='mis ' style='text-align:center;background-color:".$row['cor'].";margin-left:10px'>
-        ".((empty($row["simbolo"]))?"":"<img src='".$row["simbolo"]."' class='simbico' alt=''>")."
+        $legenda .= "<td class='mis ' style='text-align:center;background-color:".$row['cor'].";margin-left:10px;text-align:center'>
+        ".((empty($row["simbolo"]))?"":"<img src='".$row["simbolo"]."' class='simbico' alt=''><br>")."
         ".$row['sigla']."</td>";
         $legenda .= "<td class='mis ' id='leg'>".$row['tipo']."</td>";
 
@@ -400,20 +400,7 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $legenda .= "</div>";
 }}
 
-if(!empty($ano_sql)){
 
-    if(!empty($edits) || !empty($nv_ver)){
-        echo "<div style='display:flex;flex-direction:column;text-decoration:none;margin-right:auto'>";
-        if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
-        echo "<a href='based/salvar.php?cal=".$_POST['calendario']."' style='margin-bottom:10px'><button class='btn btn-primary'>Publicar nova versão</button></a>";
-        echo "<a href='based/cancel.php?cal=".$_POST['calendario']."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
-        }
-        else if(!empty($func_cal[0])){
-            echo "<a href='based/salvar.php?cal=".$func_cal[0]."' style='margin-bottom:10px'><button class='btn btn-primary'>Publicar nova versão</button></a>";
-            echo "<a href='based/cancel.php?cal=".$func_cal[0]."' ><button class='btn btn-danger'>Cancelar mudanças feitas</button></a>";
-        }
-        echo "</div>";}
-}
 if($ano < date("Y")){
     echo "<div style='text-align: -webkit-center;' id='calendario'>";
     echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.'.pdf" width="1000px" height="770px" ></embed>';
@@ -429,10 +416,26 @@ echo "<div id='cal_tipo' style='text-align: -webkit-center; display:none'>";
 include "based/cal_list.php";
 echo $calendario_lis;
 echo "</div>";
-echo "<div style='display:flex;flex-direction:column;text-decoration:none'>";
-echo "<button class='btn btn-info' style='margin-bottom:10px;width:10vw' onclick=\"tipoCal()\">Mudar</button><br>";
+echo "<div style='display:flex;flex-direction:row;text-decoration:none';justify-content:space-around>";
+echo "<div style='display:flex;flex-direction:column;'>";
+echo "<button class='btn btn-info' style='margin-bottom:10px;width:10vw' onclick=\"tipoCal()\">Alternar calendário</button><br>";
 echo "<button class='btn btn-info' style='width:10vw' onclick=\"showPdf(".$versao.",'versao')\" id='button_pdf'>PDF</button><br>";
 echo "<button class='btn btn-info' style='display:none;width:10vw' onclick=\"voltarCal('recent_ver','versao')\" id='recent_button'>Voltar para o calendário</button><br>";
+echo "</div>";
+if(!empty($ano_sql)){
+
+    if(!empty($edits) || !empty($nv_ver)){
+        echo "<div style='display:flex;flex-direction:column;margin-left:1160px'>";
+        if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
+            echo "<a href='based/salvar.php?cal=".$_POST['calendario']."' style='width:10vh;margin-right:80px'><button class='btn btn-primary' style='margin-bottom:10px;width:10vh'>Publicar nova versão</button></a><br>";
+            echo "<a href='based/cancel.php?cal=".$_POST['calendario']."' style='width:10vh;margin-right:80px'><button class='btn btn-danger' style='width:10vh'>Cancelar mudanças</button></a>";
+        }
+        else if(!empty($func_cal[0])){
+            echo "<a href='based/salvar.php?cal=".$func_cal[0]."' style='width:10vh;margin-right:80px'><button class='btn btn-primary' style='margin-bottom:10px;width:10vw'>Publicar nova versão</button></a><br>";
+            echo "<a href='based/cancel.php?cal=".$func_cal[0]."' style='width:10vh;margin-right:80px'><button class='btn btn-danger' style='width:10vw'>Cancelar mudanças</button></a>";
+        }}
+        echo "</div>";
+}
 echo "</div>";
 
 unset($_SESSION['calendario_lis']);

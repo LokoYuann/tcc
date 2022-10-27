@@ -71,7 +71,7 @@
 				<input type="text" name="cep" class="form-control" id="cep" value="<?php echo $row["cep"];?>" readonly>
 			</div>
 			<div class="form-group col-md-3">
-				<label class="font-info" for="num"><strong>Número do Funcionário</strong></label>
+				<label class="font-info" for="num"><strong>Número Residêncial</strong></label>
 				<input type="text" name="num" class="form-control" id="num" value="<?php echo mysqli_fetch_array($num)[0];?>" readonly>
 			</div>
 			

@@ -16,14 +16,7 @@
     width: 98%;
     
 }
-table tr td {
-  border-right: 1px solid ;
-  color: black
-}
 
-table tr td:last-of-type {
-  border: none;
-}
 
   table tr {
     border-bottom: 1px solid;
