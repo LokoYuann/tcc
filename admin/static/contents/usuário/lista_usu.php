@@ -6,13 +6,10 @@
 
 <div class="container-fluid">
 	<div id="top" class="row">
-		<div class="col-md-11">
+		<div class="d-flex justify-content-between">
 			<h2 style="font-family: 'Roboto', sans-serif;">Usuários</h2>
-		</div>
-		<div class="col-md-1">
 			<a href="?page=addusu" class="btn btn-primary pull-right h2">Novo Usuário</a> 
 		</div>
-	
 	</div>
 	<div> <?php include "mensagens.php"; ?> </div>
 	<!--top - Lista dos Campos-->
@@ -37,7 +34,7 @@
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td class='centro'><strong>ID do funcionário</strong></td>"; 
+					echo "<td class='centro'><strong>ID</strong></td>"; 
 					echo "<td class='centro'><strong>Usuário</strong></td>"; 
 					echo "<td class='centro'><strong>Senha</strong></td>"; 
 					echo "<td class='centro'><strong>Nível</strong></td>";
@@ -50,10 +47,15 @@
 						echo "<td class='centro'>".$info['senha']." </td>";
 						echo "<td class='centro'>".(($info['nivel'] == 1)?"SUP":"ADMIN")." </td>";
 
-						echo "<td class='actions btn-group-sm d-flex justify-content-center'>";
-						echo "<a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."> Visualizar </a>";
-						echo "<a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."> Editar </a>"; 
-						echo "<a href=?page=excluir_usu&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Excluir </a></td>";
+						echo "<td class='actions btn-group-sm td-center'>";
+						echo "<span class='d-none d-sm-inline-block'><a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."> Visualizar </a></span>";
+						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='eye'></i></a></span>";
+
+						echo "<span class='d-none d-sm-inline-block'><a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."> Editar </a></span>";
+						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='edit'></i></a></span>"; 
+
+						echo "<span class='d-none d-sm-inline-block'><a href=?page=excluir_usu&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Excluir </a></span>";
+						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-danger btn-xs' href=?page=excluir_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='edit'></i></a></span></td>"; 
 					}
 				echo "</tr></tbody></table>";
 			?>				
@@ -75,9 +77,11 @@
 					$anterior = (($pagina-1) <= 0) ? 1 : $pagina - 1;
 					$posterior = (($pagina+1) >= $totalpagina) ? $totalpagina : $pagina+1;
 
-					echo "<ul class='pagination'>";
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=1'> Primeira</a></li> "; 
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$anterior\"> Anterior</a></li> ";
+					echo "<ul class='pagination d-flex justify-content-center'>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_usu&pagina=1'> Primeira</a></li> "; 
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_usu&pagina=1'><i class='align-middle' data-feather='chevrons-left'></i></a></li>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href=\"?page=lista_usu&pagina=$anterior\"> Anterior</a></li> ";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_usu&pagina=$anterior'><i class='align-middle' data-feather='chevron-left'></i></a></li>";
 
 					echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=".$pagina."'><strong>".$pagina."</strong></a></li> ";
 
@@ -86,8 +90,10 @@
 						echo "<li class='page-item'><a class='page-link' href='?page=lista_usu&pagina=".$i."'> ".$i." </a></li> ";
 					}
 
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$posterior\"> Pr&oacute;xima</a></li> ";
-					echo "<li class='page-item'><a class='page-link' href=\"?page=lista_usu&pagina=$totalpagina\"> &Uacute;ltima</a></li></ul>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href=\"?page=lista_usu&pagina=$posterior\"> Pr&oacute;xima</a></li> ";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_usu&pagina=$posterior'><i class='align-middle' data-feather='chevron-right'></i></a></li>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href=\"?page=lista_usu&pagina=$totalpagina\"> &Uacute;ltima</a></li>";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_usu&pagina=$totalpagina'><i class='align-middle' data-feather='chevrons-right'></i></a></li></ul>";
 
 				?>	
 			</div>

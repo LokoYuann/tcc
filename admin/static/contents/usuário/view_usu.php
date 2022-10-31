@@ -52,7 +52,7 @@
 		<div id="actions" class="row">
 		<div class="col-md-12">
 			<a href="?page=lista_usu" class="btn btn-default">Voltar</a>
-				<?php echo "<a href=?page=edit_lusu&id_func=".$row['id_func']." class='btn btn-primary'>Editar</a>";?>
+				<?php echo "<a href=?page=edit_usu&id_func=".$row['id_func']." class='btn btn-primary'>Editar</a>";?>
 				<?php echo "<a href=?page=excluir_usu&id_func=".$row['id_func']." class='btn btn-danger'>Excluir</a>";?>
 		</div>
 		</div>

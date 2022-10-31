@@ -10,6 +10,14 @@ function botina() {
     }
   }
 </script>
+<?php
+$eve_pages = ['lista_eve','view_eve','addeve','edit_eve'];
+$leg_pages = ['lista_leg','view_leg','addleg','edit_leg'];
+$func_pages = ['lista_func','view_func','addfunc','edit_func'];
+$usu_pages = ['lista_usu','view_usu','addusu','edit_usu'];
+$inst_pages = ['lista_ue','view_ue','addue','edit_ue'];
+
+?>
 <nav id="sidebar" class="sidebar js-sidebar" >
 			<div class="sidebar-content js-simplebar">
 				<ul class="sidebar-nav">
@@ -26,13 +34,13 @@ function botina() {
 					
 
 					
-					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'lista_eve')echo "active";?>">
+					<li class="sidebar-item <?php if(isset($_GET['page']) && in_array($_GET['page'],$eve_pages))echo "active";?>">
 						<a class="sidebar-link" href="?page=lista_eve">
               			<i class="align-middle" data-feather="list"></i> <span class="align-middle">Eventos</span>
             			</a>
 					</li>
 
-					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'lista_leg')echo "active";?>">
+					<li class="sidebar-item <?php if(isset($_GET['page']) && in_array($_GET['page'],$leg_pages))echo "active";?>">
 						<a class="sidebar-link" href="?page=lista_leg">
               			<i class="align-middle" data-feather="list"></i> <span class="align-middle">Legenda</span>
             			</a>
@@ -40,17 +48,17 @@ function botina() {
 
 					<?php 
 					if ($_SESSION['UsuarioNivel'] == 2){ 
-						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_ue')?"active":"")."'>
+						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$inst_pages))?"active":"")."'>
 							<a class='sidebar-link' href='?page=lista_ue'>
 							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Instituição</span>
 							</a>
 						</li>";
-						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_usu')?"active":"")."'>
+						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$usu_pages))?"active":"")."'>
 							<a class='sidebar-link' href='?page=lista_usu'>
 							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Usuários</span>
 							</a>
 						</li>";
-						echo"<li class='sidebar-item ".(isset($_GET['page']) && ($_GET['page'] == 'lista_func')?"active":"")."'>
+						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$func_pages))?"active":"")."'>
 						<a class='sidebar-link' href='?page=lista_func'>
 						<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Funcionários</span>
 						</a>
@@ -68,4 +76,3 @@ function botina() {
 			</div>
 		</nav>
 		
-<?php // echo $_SESSION['UsuarioNivel'] ;?>

@@ -4,9 +4,6 @@
 	$row = mysqli_fetch_array($sql);
     $instsql = mysqli_query($con, "select * from ue where id_ue = '".$row["id_ue"]."';");
     $instrow = mysqli_fetch_array($instsql);
-
-    $fotosql = mysqli_query($con, "select * from usuarios where id_func = '".$_SESSION['UsuarioID']."';");
-    $fotow = mysqli_fetch_array($fotosql)
 ?>
 
 
@@ -19,7 +16,7 @@
                 <div class="form-group col-md-6">
                    
                     <br>
-                <img class="imagem-perfil" src="/admin/static/img/<?php if(!empty($fotow["foto"])){echo $fotow["foto"].".jpg";}else{echo "profile.webp";} ?> " alt="" style="max-width:650px; max-height:500px;">
+                <img class="imagem-perfil" src="/admin/static/img/perfil/<?php if(!empty($fotow["foto"])){echo $fotow["foto"].".jpg";}else{echo "profile.webp";} ?> " alt="" style="max-width:100%;">
                 <form action="?page=insere_perfil" method="post" enctype="multipart/form-data"><br>
                     <div class="form-group col-md-9">
                     <input type="file" name="foto" action="post" class="form-control" onchange='this.form.submit()';>

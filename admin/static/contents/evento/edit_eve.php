@@ -64,7 +64,7 @@
 							echo "<option value='none'>Todas</option>";
 							for($i = 0; $i < count($inst); $i++)
 							{
-							echo '<option value="'.$id_ue[$i].'" '.((!(strcmp($func_inst[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
+							echo '<option value="'.$id_ue[$i].'" '.(($cal[0] ==$id_ue[$i])?"SELECTED":"").'>'.$inst[$i].'</option>';
 								
 							}
 																	
@@ -81,7 +81,7 @@
 					for($i = 0; $i < count($ids); $i++)
 					{
 						
-						echo '<option value="'.$ids[$i].'">'.$ids[$i].'</option>';
+						echo '<option value="'.$ids[$i].'"'.(($row['id_calendario'] ==$ids[$i])?"SELECTED":"").'>'.$ids[$i].'</option>';
 						
 
 					}

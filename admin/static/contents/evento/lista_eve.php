@@ -2,14 +2,10 @@
 <link rel="stylesheet" href="../static/css/crud.css">
 <div id="main" class="container-fluid">
 	<div id="top" class="row">
-		<div class="col-md-11">
+		<div class="d-flex justify-content-between">
 			<h2 class="evento">Eventos</h2>
-		
-		</div>
-		<div class="col-md-1">
 			<a href="?page=addeve" class="btn btn-primary pull-right h2">Novo Evento</a> 
 		</div>
-
 	</div>
 	<div> <?php include "mensagens.php"; ?> </div>
 	<!--top - Lista dos Campos-->
@@ -40,7 +36,7 @@
 	<form action="?page=lista_eve" method="post" >
 		<div class="d-flex row justify-content-between" >
 			<?php if($_SESSION['UsuarioNivel'] == 2){ ?>
-			<div class="form-group col-md-6">
+			<div class="form-group col-md-6 col-sm">
 				Filtrar por Instituição:
 				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"lista_eve")';>
 				<option value="none">Todas</option>
@@ -84,97 +80,84 @@
 					$inicio = ($quantidade * $pagina) - $quantidade;
 					
 					if(isset($_POST['calendario']) && $_POST['calendario'] !== 'none'){
-						$eventos = mysqli_query($con, "select * FROM(SELECT *, NULL AS act_tmp, NULL AS id_tmp FROM eventos where id_calendario ='".$_POST['calendario']."' UNION ALL SELECT * from tmp_eve WHERE act_tmp = 'add' && id_calendario ='".$_POST['calendario']."') t order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
-						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario ='".$_POST['calendario']."' and (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
-						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where id_calendario = '".$_POST['calendario']."' and (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");
+						$eventos = mysqli_query($con, "select *,(SELECT act_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as act_tmp, (SELECT id_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as id_tmp FROM eventos WHERE id_calendario='".$_POST['calendario']."' && id_evento not in (SELECT id_evento  FROM tmp_eve WHERE not act_tmp = 'del') union all SELECT * FROM tmp_eve wHERE id_calendario ='".$_POST['calendario']."' && NOT act_tmp = 'del' order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
 						$sqlTotal 		= "select id_evento from eventos where id_calendario = '".$_POST['calendario']."';";
 					}
 					else{
 						if($_SESSION['UsuarioNivel'] == 2){
-						$eventos = mysqli_query($con, "select * FROM(SELECT *, NULL AS act_tmp, NULL AS id_tmp FROM eventos UNION ALL SELECT * from tmp_eve WHERE act_tmp = 'add') t order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
-						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;") or die(mysqli_error());
-						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");
-						$sqlTotal 		= "select id_evento from eventos;";}
+							$eventos = mysqli_query($con, "select *,(SELECT act_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as act_tmp, (SELECT id_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as id_tmp FROM eventos WHERE id_evento not in (SELECT id_evento  FROM tmp_eve WHERE not act_tmp = 'del') union all SELECT * FROM tmp_eve wHERE NOT act_tmp = 'del' order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
+							$sqlTotal 		= "select id_evento from eventos;";
+						}
 
 						else if(!empty($ids)){
-							$eventos = mysqli_query($con, "select * FROM(SELECT *, NULL AS act_tmp, NULL AS id_tmp FROM eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") UNION ALL SELECT * from tmp_eve WHERE act_tmp = 'add' && id_calendario IN (" . implode(",", array_map('intval', $ids)) . ")) t order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
-						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") and (act_tmp = 'add' or act_tmp = 'edit') ORDER BY id_calendario asc limit $inicio, $quantidade;");
-						$edits_sql = mysqli_query($con, "select act_tmp as action, id_evento, id_tmp from tmp_eve where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") and (act_tmp = 'del' or act_tmp = 'edit') order by id_calendario ;");
-						$sqlTotal 		= "select id_evento from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ")";}
-					}
-					$edits = array();
-					$del= array();
-					if(!empty($edits_sql)){
-					while($row = mysqli_fetch_array($edits_sql))
-					{
-						if($row['action'] == "edit"){
-							$edits[$row['id_evento']] = $row['id_tmp'];}
-						else{ 
-							$del[$row['id_evento']] = $row['id_tmp'];
+							$eventos = mysqli_query($con, "select *,(SELECT act_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as act_tmp, (SELECT id_tmp FROM tmp_eve WHERE act_tmp='del' && tmp_eve.id_evento = eventos.id_evento) as id_tmp FROM eventos WHERE id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") && id_evento not in (SELECT id_evento  FROM tmp_eve WHERE not act_tmp = 'del') union all SELECT * FROM tmp_eve wHERE id_calendario IN (" . implode(",", array_map('intval', $ids)) . ") && NOT act_tmp = 'del' order by id_calendario ASC limit $inicio, $quantidade;") or die(mysqli_error());
+
+							$sqlTotal 		= "select id_evento from eventos where id_calendario IN (" . implode(",", array_map('intval', $ids)) . ")";
 						}
-					}}
+					}
 				
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
 					echo "<td class='td-indicador'><strong>ID</strong></td>"; 
-					echo "<td class='td-indicador'><strong>Calendário</strong></td>"; 
+					echo "<td class='td-indicador'><strong><span class='d-inline-block d-sm-none'>Cal.</span><span class='d-none d-sm-inline-block'>Calendário</span></strong></td>"; 
 					echo "<td class='td-indicador'><strong>Tipo</strong></td>";
-					echo "<td class='td-indicador'><strong>Data de Início</strong></td>";
-					echo "<td class='td-indicador'><strong>Data de Fim</strong></td>";
+					echo "<td class='td-indicador d-none d-sm-table-cell'><strong>Data de Início</strong></td>";
+					echo "<td class='td-indicador d-none d-sm-table-cell'><strong>Data de Fim</strong></td>";
+					echo "<td class='td-indicador d-table-cell d-sm-none'><strong>Período</strong></td>";
 					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 				if(!empty($eventos)){
 					while(($info = mysqli_fetch_array($eventos))){
-						$eventos_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario = '".$info['id_calendario']."' and (act_tmp = 'add');");
-						if(!empty($edits[$info['id_evento']])){
-							$sla = mysqli_query($con, "select * from tmp_eve where id_evento = '".$info['id_evento']."'");
-							$info = mysqli_fetch_array($sla);}
-						if(!empty($info)){
 							$tipo_evento = mysqli_query($con, "select tipo_evento from legenda where id_leg = '".$info['id_leg']."';");
 							echo "<tr>";
 							
-							echo "<td>".(($info['act_tmp'] == null)?$info['id_evento']:'')." <span style='float:right;' class='badge badge-pill badge-";
-							if(!empty($del[$info['id_evento']])){
+							echo "<td style=''>".(($info['act_tmp'] != 'add')?$info['id_evento']:'')." <span class='badge badge-pill badge-";
+							if($info['act_tmp'] != null){
+							if($info['act_tmp'] == 'del'){
 								echo "danger'>Exclusão</span>";
-							}else if(!empty($edits[$info['id_evento']])){
+							}else if($info['act_tmp'] == 'edit'){
 								echo "warning'>Edição</span>";
-							} else if($info['act_tmp'] != null){
+							} else if($info['act_tmp'] == 'add'){
 								echo "info'>Adição</span>";
-							}else {
+							}}
+							else {
 								echo "'></span>";
 							}
 							
 							echo "</td>";
 							echo "<td class='teste'>".$info['id_calendario']."</td>";
 							echo "<td class='td-info'>".mysqli_fetch_array($tipo_evento)[0]." </td>";
-							echo "<td>".date('d/m/Y',strtotime($info[1]))."</td>"; //Funções para converter formato da data do MySQL
-							echo "<td>".date('d/m/Y',strtotime($info[2]))."</td>"; //Funções para converter formato da data do MySQL
+							echo "<td class='d-none d-sm-table-cell'><span class='d-none d-sm-inline-block'>".date('d/m/Y',strtotime($info[1]))."</span><span class='d-inline-block d-sm-none'>".date('d/m',strtotime($info[1]))."</span></td>";  //Funções para converter formato da data do MySQL
+
+							echo "<td class='d-none d-sm-table-cell'><span class='d-none d-sm-inline-block'>".date('d/m/Y',strtotime($info[2]))."</span><span class='d-inline-block d-sm-none'>".date('d/m',strtotime($info[2]))."</span></td>"; //Funções para converter formato da data do MySQL
+
+							echo "<td class='d-table-cell d-sm-none' style='text-align:center'>".date('d/m',strtotime($info[1]))."<br>~<br>".date('d/m',strtotime($info[2]))."</td>";
+
 							echo "<td class='actions btn-group-sm td-center'>";
 							
 							
-							if(!empty($edits[$info['id_evento']])){
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']."> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']."> Editar </a>"; 
-								echo "<a href=?page=excluir_eve&id_tmp=".$edits[$info['id_evento']]."&status=edit&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'>Cancelar</a></td></tr>";
-							}
+							if($info['act_tmp'] != null){
+								echo "<a class='btn btn-success btn-xs d-none d-sm-inline-block' href=?page=view_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']."> Visualizar </a>";
+								echo "<a class='btn btn-success btn-xs d-inline-block d-sm-none' href=?page=view_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']."><i class='align-middle' data-feather='eye'></i></a>";
 
-							elseif(!empty($del[$info['id_evento']])){
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']."> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']."> Editar </a>"; 
-								echo "<a href=?page=excluir_eve&id_tmp=".$del[$info['id_evento']]."&status=del&id_evento=".$info['id_evento']." class='btn btn-danger btn-xs'>Cancelar</a></td></tr>";
-							}
-							else if($info['act_tmp'] != null){
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_tmp=".$info['id_tmp']."&status=add> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_tmp=".$info['id_tmp']."&status=add> Editar </a>"; 
-								echo "<a href=?page=excluir_eve&id_tmp=".$info['id_tmp']."&status=add class='btn btn-danger btn-xs'> Excluir </a></td></tr>";
+								echo "<a class='btn btn-warning btn-xs d-none d-sm-inline-block' href=?page=edit_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']."> Editar </a>";
+								echo "<a class='btn btn-warning btn-xs d-inline-block d-sm-none' href=?page=edit_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']."><i class='align-middle' data-feather='edit'></i></a>"; 
+
+								echo "<a class='btn btn-danger btn-xs d-none d-sm-inline-block' href=?page=excluir_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']." >Cancelar</a>";
+								echo "<a class='btn btn-danger btn-xs d-inline-block d-sm-none' href=?page=excluir_eve&id_tmp=".$info['id_tmp']."&status=".$info['act_tmp']."&id_evento=".$info['id_evento']."><i class='align-middle' data-feather='trash'></i></a></td></tr>";
 							}
 							else{
-								echo "<a class='btn btn-success btn-xs' href=?page=view_eve&id_evento=".$info['id_evento']."&status=active> Visualizar </a>";
-								echo "<a class='btn btn-warning btn-xs' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=active> Editar </a>"; 
-							echo "<a href=?page=excluir_eve&id_evento=".$info['id_evento']."&status=active class='btn btn-danger btn-xs'> Excluir </a></td></tr>";}}
+								echo "<a class='btn btn-success btn-xs d-none d-sm-inline-block' href=?page=view_eve&id_evento=".$info['id_evento']."&status=active> Visualizar </a>";
+								echo "<a class='btn btn-success btn-xs d-inline-block d-sm-none' href=?page=view_eve&id_evento=".$info['id_evento']."status=active><i class='align-middle' data-feather='eye'></i></a>";
 
-					
-					}
+								echo "<a class='btn btn-warning btn-xs d-none d-sm-inline-block' href=?page=edit_eve&id_evento=".$info['id_evento']."&status=active> Editar </a>"; 
+								echo "<a class='btn btn-warning btn-xs d-inline-block d-sm-none' href=?page=edit_eve&id_evento=".$info['id_evento']."status=active><i class='align-middle' data-feather='edit'></i></a>";
+
+								echo "<a class='btn btn-danger btn-xs d-none d-sm-inline-block' href=?page=excluir_eve&id_evento=".$info['id_evento']."&status=active> Excluir </a>";
+								echo "<a class='btn btn-danger btn-xs d-inline-block d-sm-none' href=?page=excluir_eve&&id_evento=".$info['id_evento']."&status=active><i class='align-middle' data-feather='trash'></i></a></td></tr>";
+							}
+						}
+
 				}
 				else{
 					echo "Este calendário não possui eventos";
@@ -187,7 +170,7 @@
 	<br>
 
 	<!-- PAGINAÇÃO -->
-	<div id="bottom" class="row">
+	<div id="bottom" class="row" >
 			<div class="col-md-12">
 				<?php
 					
@@ -195,24 +178,28 @@
 					$numTotal 		= mysqli_num_rows($qrTotal);
 					$totalpagina = (ceil($numTotal/$quantidade)<=0) ? 1 : ceil($numTotal/$quantidade);
 
-					$exibir = 3;
-
 					$anterior = (($pagina-1) <= 0) ? 1 : $pagina - 1;
 					$posterior = (($pagina+1) >= $totalpagina) ? $totalpagina : $pagina+1;
 
-					echo "<ul class='pagination'>";
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=1".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Primeira</a></li> "; 
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=$anterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Anterior</a></li> ";
+					echo "<ul class='pagination d-flex justify-content-center'>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_eve&pagina=1".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Primeira</a></li> ";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=1".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevrons-left'></i></a></li>"; 
+
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_eve&pagina=$anterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Anterior</a></li> ";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$anterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevron-left'></i></a></li>";
 
 					echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=".$pagina.((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><strong>".$pagina."</strong></a></li> ";
 
-					for($i = $pagina+1; $i < $pagina+$exibir; $i++){
+					for($i = $pagina+1; $i < $pagina+3; $i++){
 						if($i <= $totalpagina)
 						echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=".$i.((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> ".$i." </a></li> ";
 					}
 
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=$posterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Próxima</a></li> ";
-					echo "<li class='page-item'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> &Uacute;ltima</a></li></ul>";
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_eve&pagina=$posterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> Próxima</a></li> ";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$posterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevron-right'></i></a></li>";
+
+					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> &Uacute;ltima</a></li>";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevrons-right'></i></a></li></ul>";
 				?>	
 			</div>
 		</div><!--bottom-->

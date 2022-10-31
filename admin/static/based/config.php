@@ -1,6 +1,10 @@
 <?php
 	//Estabelece conexão com o banco de dados em uma variavel
 	$con = mysqli_connect('localhost', 'root', '', 'dailyevent');
+	// cria um array para armazenar os meses, o primeiro fica vazio pois dá erro na criação do calendário
+    $meses = array("","Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro");
+	//dias
+	$dias = ['Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 	//Descobre icones em uma variavel
 	$dir = new DirectoryIterator("C:/xampp/htdocs/admin/static/img/simbolos");
 	//funcionarios
@@ -19,6 +23,10 @@
 	//Descobre todos os calendários
 	$id_cal_sql = mysqli_query($con, "select id_calendario from calendario ORDER BY id_calendario ASC") or die(mysqli_error());
 
+	//foto func
+	$fotosql = mysqli_query($con, "select * from usuarios where id_func = '".$_SESSION['UsuarioID']."';");
+	$foto = mysqli_fetch_array($fotosql);
+	
 	//Descobre calendarios da insituição do funcionário
 	$func_cal_sql = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."'") or die(mysqli_error());
 	$func_cal = mysqli_fetch_array($func_cal_sql);
