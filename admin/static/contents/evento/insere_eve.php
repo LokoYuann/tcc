@@ -10,7 +10,7 @@ $id_leg          = $_POST["id_leg"];
     $sql .= "('','$dt_ini_ev','$dt_fim_ev','$id_calendario','$id_leg','add','0');";
     
     
-    $resultado = mysqli_query($con, $sql)or die(mysqli_error());
+    $resultado = mysqli_query($con, $sql);
     if($resultado){
         header('Location: dash.php?page=lista_eve&msg=1');
         mysqli_close($con);

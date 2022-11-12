@@ -35,7 +35,7 @@
 				<input type="color" name="cor_leg" id="cor_leg" style="width:100%"	>
 			</div>	
 
-			<div class="botao-leg form-group col-md-4 simbico_leg_edit" id="reactive" >
+			<div class="botao-leg form-group col-md-4 simbico_leg_edit" id="simb" >
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
   					Escolher Símbolo
 				</button>
@@ -70,7 +70,7 @@
 						<button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal2">
   							Novo Símbolo
 						</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="formreact(document.querySelector('input[name=simbolo_leg]:checked').value,'addleg')">Selecionar</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="simbolo(document.querySelector('input[name=simbolo_leg]:checked').value)">Selecionar</button>
 						</div>	
 					</div>
 				</div>

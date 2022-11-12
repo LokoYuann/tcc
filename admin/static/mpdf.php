@@ -7,7 +7,7 @@ $fontDirs = $defaultConfig['fontDir'];
 $con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 
 $cabecalho = "<div style='float: left;width:70px;'>";
-$cabecalho .= "<img src='/admin/static/img/faeteclogo.png' style='width:70px;'/>";
+$cabecalho .= "<img src='/admin/static/img/logo1.png' style='width:70px;'/>";
 $cabecalho .= "</div>";
 $cabecalho .= "<div style='font-size:12px;float: left;text-align: center;margin-right:auto;margin-left:auto;width: 90%;'>";
 $cabecalho .= "GOVERNO DO ESTADO DO RIO DE JANEIRO<br>";
@@ -22,11 +22,18 @@ if($_SESSION['logo_ue']){
 $cabecalho .= "<img src='".$_SESSION['logo_ue']."' style='width:90px;'/>";}
 $cabecalho .= "</div>";
 
+$lis = "<div id='cal_lis' style='text-align: -webkit-center;'>";
+$lis .= "<table class='table table-bordered table-responsive border border-4 stripped' id='list_cal' >";
+$lis .= "<tr>";
+$lis .= "<td style='text-align: center;'>Mês</td>";
+$lis .= "<td colspan='2' style='text-align: center;' class='d-none d-sm-table-cell'>Data de início</td>";
+$lis .= "<td colspan='2' style='text-align: center;' class='d-none d-sm-table-cell'>Data de fim</td>";
+$lis .= "<td style='text-align: center;'>Legenda</td>";
+
 
 $defaultFontConfig = (new Mpdf\Config\FontVariables())->getDefaults();
 $fontData = $defaultFontConfig['fontdata'];
 $stylesheet = file_get_contents('https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css');
-$stylesheet .= file_get_contents('C:/xampp/htdocs/admin/static/fontawesome-pro/css/all.css');
 $stylesheet .= file_get_contents('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css');
 $stylesheet .= file_get_contents('css/main.css');
 $stylesheet .= file_get_contents('css/mpdf.css');
@@ -66,6 +73,7 @@ $mpdf_acad->SetDisplayMode('fullwidth');
 
 $mpdf_acad->WriteHTML($stylesheet,1);
 $mpdf_acad->WriteHTML($cabecalho,2);
+$mpdf_acad->WriteHTML($lis,2);
 $mpdf_acad->WriteHTML($_SESSION['calendario_lis'],2);
 
 
@@ -77,7 +85,7 @@ $mpdf_acad->WriteHTML($_SESSION['calendario_lis'],2);
 
 
 
-if($_GET['value'] == 'nova_versao'){
+if(!empty($_GET['value']) && $_GET['value'] == 'nova_versao'){
     mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']);
     mkdir("C:/xampp/htdocs/admin/static/img/versao/".$_SESSION['sigla_ue']."/".$_SESSION['ano']."");
     $mpdf->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].' - esc.pdf', 'F');

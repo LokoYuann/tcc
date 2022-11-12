@@ -1,3 +1,9 @@
+<?php
+session_start();
+unset($_SESSION);
+session_destroy();
+?>
+
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -98,13 +104,12 @@ a {
   .col-md-7{
     width: 100%;
   }
-  }
+
+}
 
 
 
-
-
-@media (min-width: 1000px) (max-width:1200px){
+@media (min-width: 1000px) and (max-width:1200px){
   #login form input[type="text"], input[type="password"] {
 
 width: 60%;

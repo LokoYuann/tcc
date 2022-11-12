@@ -73,6 +73,9 @@
   text-align: center;
 }
 
+#cal_esc td{
+  padding:7px !important;
+}
 
 
   table.table.table-bordered.border.border-warning.stripped {
@@ -95,11 +98,24 @@ select[readonly] {
 
 #list_cal{
   height:70vh !important; 
-  width:100% !important; 
   justify-content: center !important; 
   overflow:wrap;
 }
-
+@media (max-width:600px){
+  #list_cal{
+    width:100% !important;
+  }
+}
+@media (min-width:600px) and (max-width:1200px){
+  #list_cal{
+   width:70% !important; 
+  }
+}
+@media (min-width:1200px){
+  #list_cal{
+   width:50% !important; 
+  }
+}
 
 /* simbolos */
 .simbico{
@@ -117,10 +133,27 @@ select[readonly] {
 
 /* legenda */
 #leg_table{
-  height:30vh !important; 
-  width:70% !important; 
+  height:40vh !important; 
   justify-content: center !important; 
   overflow:wrap;
+}
+#leg_table td{
+  padding:3px !important;
+}
+@media (max-width:600px){
+  #leg_table{
+    width:100% !important;
+  }
+}
+@media (min-width:600px) and (max-width:1200px){
+  #leg_table{
+   width:95% !important; 
+  }
+}
+@media (min-width:1200px){
+  #leg_table{
+   width:60% !important; 
+  }
 }
 
 #feriados{
@@ -140,7 +173,7 @@ select[readonly] {
 
 }
 .imagem-perfil{
-
+  width:25vw;
   padding-left: 15px;
 }
 .simbico_edit{

@@ -35,31 +35,31 @@
             // instituição
             
             case 'addue':
-                include "contents/instituição/addue.php";
+                include "contents/instituicao/addue.php";
                 break;
 
             case 'edit_ue':
-                include "contents/instituição/edit_ue.php";
+                include "contents/instituicao/edit_ue.php";
                 break;
 
             case 'lista_ue':
-                 include "contents/instituição/lista_ue.php";
+                 include "contents/instituicao/lista_ue.php";
                 break;
 
             case 'atualiza_ue':
-                include "contents/instituição/atualiza_ue.php";
+                include "contents/instituicao/atualiza_ue.php";
                 break;
             
             case 'excluir_ue':
-                include "contents/instituição/excluir_ue.php";
+                include "contents/instituicao/excluir_ue.php";
                 break;
 
             case 'view_ue':
-                include "contents/instituição/view_ue.php";
+                include "contents/instituicao/view_ue.php";
                 break;
 
             case 'insere_ue':
-                include "contents/instituição/insere_ue.php";
+                include "contents/instituicao/insere_ue.php";
                 break;
 
             //  legenda
@@ -95,31 +95,31 @@
             // usuários
             
             case 'addusu':
-                include "contents/usuário/addusu.php";
+                include "contents/usuario/addusu.php";
                 break;
 
             case 'edit_usu':
-                include "contents/usuário/edit_usu.php";
+                include "contents/usuario/edit_usu.php";
                 break;
 
             case 'lista_usu':
-                 include "contents/usuário/lista_usu.php";
+                 include "contents/usuario/lista_usu.php";
                 break;
 
             case 'atualiza_usu':
-                include "contents/usuário/atualiza_usu.php";
+                include "contents/usuario/atualiza_usu.php";
                 break;
             
             case 'excluir_usu':
-                include "contents/usuário/excluir_usu.php";
+                include "contents/usuario/excluir_usu.php";
                 break;
 
             case 'view_usu':
-                include "contents/usuário/view_usu.php";
+                include "contents/usuario/view_usu.php";
                 break;
 
             case 'insere_usu':
-                include "contents/usuário/insere_usu.php";
+                include "contents/usuario/insere_usu.php";
                 break;
 
                             

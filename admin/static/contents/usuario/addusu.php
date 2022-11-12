@@ -2,7 +2,6 @@
 if($_SESSION['UsuarioNivel'] == 1){
 	header('Location: ?page=home');
 }
-$lista_func = "SELECT * FROM usuarios A RIGHT JOIN funcionario B ON A.id_func = B.id_func WHERE A.id_func IS NULL";
 
 $lf_sql = mysqli_query($con, "SELECT * FROM usuarios A RIGHT JOIN funcionario B ON A.id_func = B.id_func WHERE A.id_func IS NULL");
 ?>

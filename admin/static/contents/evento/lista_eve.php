@@ -19,11 +19,11 @@
 
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 		else{
-			$id_cal = mysqli_query($con, "select id_calendario from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}}
+			$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
 
 
@@ -31,13 +31,15 @@
 	while($row = mysqli_fetch_array($id_cal))
 	{
 		$ids[] = $row['id_calendario'];
+		$ano[] = $row['ano_letivo'];
+		$sigla[] = $row['sigla'];
 	}
 	?>
 	<form action="?page=lista_eve" method="post" >
 		<div class="d-flex row justify-content-between" >
 			<?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-6 col-sm">
-				Filtrar por Instituição:
+				Instituição:
 				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"lista_eve")';>
 				<option value="none">Todas</option>
 				<?php 
@@ -53,14 +55,14 @@
 				?> 
 			
 			<div class="td-indicador form-group col-md-6">
-				Filtrar por calendário:
+				Calendário:
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
 				<option value="none">Todos</option>
 				<?php 
 				for($i = 0; $i < count($ids); $i++)
 				{
 					
-					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i])?'selected="selected"':"").'>'.$ids[$i].'</option>';
+					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i])?'selected="selected"':"").'>'.$sigla[$i].' - '.$ano[$i].'</option>';
 					
 
 				}

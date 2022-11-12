@@ -44,7 +44,7 @@
 			<label class="font-info" for="cor_leg"><strong>Cor</strong></label><br>
 			<input type="color" name="cor_leg" style="width:100%" id="cor_leg" value="<?php echo $row["cor_leg"];?>">
 		</div>
-			<div class="botao-leg form-group col-md-7" id="reactive">
+			<div class="botao-leg form-group col-md-7" id="simb">
 				<img src="<?php echo $row["simbolo_leg"];?>" class="teste-aq simbico_leg_edit" alt="">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
 					<?php echo ((!empty($row["simbolo_leg"]))?"Mudar Símbolo":"Escolher Símbolo") ?>
@@ -81,7 +81,7 @@
 						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal2">
   							Novo Símbolo
 						</button>
-						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="formreact(document.querySelector('input[name=simbolo_leg]:checked').value,'addleg')">Selecionar</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="simbolo(document.querySelector('input[name=simbolo_leg]:checked').value)">Selecionar</button>
 						</div>	
 					</div>
 				</div>

@@ -10,13 +10,11 @@
 	$row = mysqli_fetch_array($sql);
 	$cal_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row['id_calendario']."';");
 	$cal = mysqli_fetch_array($cal_sql);
-	$cal_inst_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$cal[0]."';");
-	$cal_inst = mysqli_fetch_array($cal_inst_sql);
 
 	if($_SESSION['UsuarioNivel'] == 2){
-		$id_cal = mysqli_query($con, "select id_calendario from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
 
 
@@ -24,6 +22,8 @@
 	while($row_id = mysqli_fetch_array($id_cal))
 	{
 		$ids[] = $row_id['id_calendario'];
+		$ano[] = $row_id['ano_letivo'];
+		$sigla[] = $row_id['sigla'];
 	}
 ?>
 <div id="main" class="titulo container-fluid">
@@ -81,7 +81,7 @@
 					for($i = 0; $i < count($ids); $i++)
 					{
 						
-						echo '<option value="'.$ids[$i].'"'.(($row['id_calendario'] ==$ids[$i])?"SELECTED":"").'>'.$ids[$i].'</option>';
+						echo '<option value="'.$ids[$i].'"'.(($row['id_calendario'] ==$ids[$i])?"SELECTED":"").'>'.$sigla[$i].' - '.$ano[$i].'</option>';
 						
 
 					}
