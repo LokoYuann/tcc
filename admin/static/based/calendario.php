@@ -2,7 +2,12 @@
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
-
+if(!empty($_GET['msg']) && $_GET['msg'] == 'true'){
+    echo '	<div class="alert alert-warning alert-dismissible fade show" role="alert">
+						Eventos necessários não adicionados!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+		  			</div>';
+}
 if(!empty($_GET['calendario'])){
     $_POST['calendario'] = $_GET['calendario'];
     $_POST['ue'] = $_GET['ue'];

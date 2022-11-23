@@ -13,7 +13,6 @@ $id_calendario = mysqli_fetch_array($sql_nv)[0];
 $sql_base = mysqli_query($con, "select dt_ini_ev as data_ini, dt_fim_ev as data_fim from eventos where id_calendario='0' && id_leg = '".$id_leg."'");
 $base = mysqli_fetch_array($sql_base);
 if((mysqli_num_rows($sql_base) != 0) && ($dt_ini_ev < $base['data_ini']||$dt_ini_ev > $base['data_fim']||$dt_fim_ev < $base['data_ini']||$dt_fim_ev > $base['data_fim'])){
-    echo "haha";
     header('Location: dash.php?page=addeve&msg=6');exit;
 }
     $sql = "insert into tmp_eve values ";

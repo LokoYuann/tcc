@@ -1,6 +1,12 @@
 <?php
 $con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 $sql_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario = '".$_GET['cal']."'");
+$ue = mysqli_query($con , 'select id_ue from calendario where id_calendario ="'.$_GET['cal'].'";');
+
+$base_cal = mysqli_query($con, "select id_leg FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_GET['cal']."')");
+if(mysqli_num_rows($base_cal) != 0){
+    header('Location: ../dash.php?page=home&msg=true&calendario='.$_GET['cal'].'&ue='.mysqli_fetch_array($ue)[0]);exit;
+}
 
 while($row = mysqli_fetch_array($sql_tmp)){
     if($row['act_tmp'] == 'add'){
