@@ -15,7 +15,7 @@
 	//Pega todos as instituições do banco de dados
 	$inst_sql = mysqli_query($con, "select id_ue, sigla_ue from ue ORDER BY id_ue ASC") or die(mysqli_error());
 	//Descobre info do funcionário logado
-	$func_sql = mysqli_query($con, "select id_ue, (select id_calendario from calendario where funcionario.id_ue = calendario.id_ue) as cal from funcionario where id_func = '".$_SESSION['UsuarioID']."'") or die(mysqli_error());
+	$func_sql = mysqli_query($con, "select id_ue, (select id_calendario from calendario where funcionario.id_ue = calendario.id_ue limit 0,1) as cal, (select sigla_ue from ue where funcionario.id_ue = ue.id_ue limit 0,1) as sigla_inst from funcionario where id_func = '".$_SESSION['UsuarioID']."' ") or die(mysqli_error());
 	$func = mysqli_fetch_array($func_sql);
 
 	//$func_inst_sigla_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$func_inst[0]."'") or die(mysqli_error());

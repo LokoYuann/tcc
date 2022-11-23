@@ -11,7 +11,7 @@ $usuario = mysqli_real_escape_string($con, $_POST['usuario']);
 $senha = mysqli_real_escape_string($con, $_POST['senha']);
 
 // Validação do usuário/senha digitados
-$sql  = "select id_func, usuario, nivel from usuarios where (usuario = '". $usuario ."') ";
+$sql  = "select id_func, usuario, nivel from usuarios where (usuario = '". $usuario ."') && ativo='1'";
 $sql .= "and (senha = '". $senha ."')";
 
 $query = mysqli_query($con, $sql);
@@ -20,8 +20,7 @@ $query = mysqli_query($con, $sql);
 
 if (mysqli_num_rows($query) != 1) {
 	// Mensagem de erro quando os dados são inválidos e/ou o usuário não foi encontrado
-	header('Content-Type: text/html; charset=utf-8');
-	echo "Login invalido!"; exit;
+	header("Location: index.php?invalid=true"); exit;
 } else {
 	// Salva os dados encontados na variável $resultado
 	$resultado = mysqli_fetch_assoc($query);

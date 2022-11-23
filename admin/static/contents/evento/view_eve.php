@@ -5,7 +5,7 @@
 	if(!empty($_GET['id_tmp'])){
 		$id_tmp = (int) $_GET['id_tmp'];
 	}
-	$sql = mysqli_query($con, "select * from ".(($_GET['status'] != 'edit' && $_GET['status'] != 'add')? 'eventos where id_evento ='.$id_evento:'tmp_eve where id_tmp ='.$id_tmp));
+	$sql = mysqli_query($con, "select *,  ".(($_GET['status'] != 'edit' && $_GET['status'] != 'add')? '(select ano_letivo from calendario where calendario.id_calendario = eventos.id_calendario) as ano_letivo from eventos where id_evento ='.$id_evento:'(select ano_letivo from calendario where calendario.id_calendario = tmp_eve.id_calendario) as ano_letivo from tmp_eve where id_tmp ='.$id_tmp));
 	$row = mysqli_fetch_array($sql);
 	$a_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row["id_calendario"]."';");
 	$inst_cal_sql =mysqli_query($con, "select sigla_ue from ue where id_ue = '".mysqli_fetch_array($a_sql)[0]."';");
@@ -31,7 +31,7 @@
 		</div>
 		<div class="form-group col-md-2">
 			<label class="font-info" for="id_calendario"><strong>Calendário</strong></label>
-			<input type="text" class="form-control" name="id_calendario" value="<?php echo $row["id_calendario"];?>" readonly>
+			<input type="text" class="form-control" name="id_calendario" value="<?php echo $row["ano_letivo"];?>" readonly>
 		</div>
 		<div class="form-group col-md-2">
 			<label class="font-info" for="id_leg"><strong>Tipo de Evento</strong></label>

@@ -23,7 +23,7 @@
 		else{
 			$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
 
 
@@ -175,9 +175,10 @@
 	<div id="bottom" class="row" >
 			<div class="col-md-12">
 				<?php
-					
+					if(!empty($sqlTotal)){
 					$qrTotal  		= mysqli_query($con, $sqlTotal) or die (mysqli_error());
 					$numTotal 		= mysqli_num_rows($qrTotal);
+				
 					$totalpagina = (ceil($numTotal/$quantidade)<=0) ? 1 : ceil($numTotal/$quantidade);
 
 					$anterior = (($pagina-1) <= 0) ? 1 : $pagina - 1;
@@ -201,7 +202,7 @@
 					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$posterior".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevron-right'></i></a></li>";
 
 					echo "<li class='page-item d-none d-sm-inline-block'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'> &Uacute;ltima</a></li>";
-					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevrons-right'></i></a></li></ul>";
+					echo "<li class='page-item d-inline-block d-sm-none'><a class='page-link' href='?page=lista_eve&pagina=$totalpagina".((!empty($_POST['ue']))?'&ue='.$_POST['ue'].'&calendario='.$_POST['calendario']:'')."'><i class='align-middle' data-feather='chevrons-right'></i></a></li></ul>";}
 				?>	
 			</div>
 		</div><!--bottom-->

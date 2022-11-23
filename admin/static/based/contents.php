@@ -121,6 +121,14 @@
             case 'insere_usu':
                 include "contents/usuario/insere_usu.php";
                 break;
+				
+			case 'ativa_usu':
+                include "contents/usuario/ativa_usu.php";
+                break;
+				
+			case 'block_usu':
+                include "contents/usuario/block_usu.php";
+                break;
 
                             
             // Funcionários

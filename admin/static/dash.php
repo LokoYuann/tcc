@@ -16,7 +16,7 @@ if (!isset($_SESSION)){ session_start();}
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
 	<title>DailyEvents</title>
 
-
+	
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="img/icons/icone.ico" />
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
@@ -29,6 +29,7 @@ if (!isset($_SESSION)){ session_start();}
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
+	
 	
 	
 </head>

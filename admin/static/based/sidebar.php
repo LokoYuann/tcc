@@ -26,7 +26,7 @@ $inst_pages = ['lista_ue','view_ue','addue','edit_ue'];
 						<img src="img/faetec.png" alt="" width="80" id="faetec" style="margin-left:7px;">
 					</a>
 					<li class="sidebar-item <?php if(isset($_GET['page']) && $_GET['page'] == 'home')echo "active";?>">
-						<a class="sidebar-link" href="?page=home">
+						<a class="sidebar-link" href="?page=home" >
               			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Calendário</span>
             			</a>
 					</li>
@@ -48,21 +48,22 @@ $inst_pages = ['lista_ue','view_ue','addue','edit_ue'];
 
 					<?php 
 					if ($_SESSION['UsuarioNivel'] == 2){ 
-						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$inst_pages))?"active":"")."'>
-							<a class='sidebar-link' href='?page=lista_ue'>
-							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Instituição</span>
-							</a>
-						</li>";
+						echo '<span class="sidebar-link" style="padding-left:3px;padding-top:15px;padding-bottom:0px"></i>Administração</span>';
 						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$usu_pages))?"active":"")."'>
 							<a class='sidebar-link' href='?page=lista_usu'>
 							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Usuários</span>
 							</a>
 						</li>";
 						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$func_pages))?"active":"")."'>
-						<a class='sidebar-link' href='?page=lista_func'>
-						<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Funcionários</span>
-						</a>
-					</li>";
+							<a class='sidebar-link' href='?page=lista_func'>
+							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Funcionários</span>
+							</a>
+						</li>";
+						echo"<li class='sidebar-item ".(isset($_GET['page']) && (in_array($_GET['page'],$inst_pages))?"active":"")."'>
+							<a class='sidebar-link' href='?page=lista_ue'>
+							<i class='align-middle' data-feather='list'></i> <span class='align-middle'>Instituição</span>
+							</a>
+						</li>";
 					}
 					
 					?>

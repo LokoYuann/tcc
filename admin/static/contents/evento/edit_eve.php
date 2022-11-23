@@ -6,7 +6,7 @@
 	if(!empty($_GET['id_tmp'])){
 		$id_tmp = (int) $_GET['id_tmp'];
 	}
-	$sql = mysqli_query($con, "select * from ".(($_GET['status'] != 'edit' && $_GET['status'] != 'add')? 'eventos where id_evento ='.$id_evento:'tmp_eve where id_tmp ='.$id_tmp));
+	$sql = mysqli_query($con, "select * from ".(($_GET['status'] != 'edit' && $_GET['status'] != 'add')? 'eventos where id_evento ='.$id_evento:'tmp_eve where id_tmp ='.$id_tmp));	
 	$row = mysqli_fetch_array($sql);
 	$cal_sql = mysqli_query($con, "select id_ue from calendario where id_calendario = '".$row['id_calendario']."';");
 	$cal = mysqli_fetch_array($cal_sql);
@@ -14,7 +14,7 @@
 	if($_SESSION['UsuarioNivel'] == 2){
 		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
 
 
@@ -33,6 +33,7 @@
 		</div>
 	</div>
 	<hr>
+	<div> <?php include "mensagens.php"; ?> </div>
 	<br>
 	
 	<form action="?page=atualiza_eve&id_evento=<?php echo $row['id_evento']."&status=".$_GET['status']; ?>" method="post">
@@ -53,8 +54,8 @@
 				<label for="id_calendario"><strong>UE</strong></label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
-					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func_inst[0].'" readonly>';
-					echo '<input type="text" class="form-control readonly" name="" value="'.$func_inst_sigla[0].'" readonly>';
+					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func[0].'" readonly>';
+					echo '<input type="text" class="form-control readonly" name="" value="'.$func['sigla_inst'].'" readonly>';
 				}
 				else{
 				?>
@@ -91,7 +92,7 @@
 
 		<div class="form-group col-md-2">
 			<label for="id_leg"><strong>Tipo de Evento</strong></label>
-			<select class="form-control" id="id_leg" name="id_leg">
+			<select class="form-control" id="id_leg" name="id_leg" onchange='verifybase(this.value)'>
 				<option> --------- </option>
 					<?php
 															
@@ -111,12 +112,12 @@
 	<div class="row"> 
 		<div class="form-group col-md-3">
 			<label class="font-info" for="dt_ini_ev"> <strong>Data de Início</strong> </label>
-			<input type="date" class="form-control" name="dt_ini_ev" value="<?php echo $row[1]; ?>">
+			<input type="date" class="form-control" name="dt_ini_ev" id="verifybase1" value="<?php echo $row[1]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="date_limit(this.value, 1)" required>
 		</div>
 
 		<div class="form-group col-md-3">
 			<label class="font-info" for="dt_fim_ev"> <strong>Data de Fim</strong> </label>
-			<input type="date" class="form-control" name="dt_fim_ev" value="<?php echo $row[2]; ?>">
+			<input type="date" class="form-control" name="dt_fim_ev" id="verifybase2" value="<?php echo $row[2]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="date_limit(this.value, 2)" required>
 		</div>
 	</div><br>
 

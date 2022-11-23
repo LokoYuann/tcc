@@ -190,7 +190,16 @@ select[readonly] {
     font-family: "Montserrat", sans-serif;
 
 }
+.sidebar-link{
+  text-decoration: none !important;
+}
+a.sidebar-link:hover {
+  background-color: #1b2631;
+}
 
+li.sidebar-item:hover {
+    background-color: #1b2631;
+}
 /* crud */
 
 .table-all {

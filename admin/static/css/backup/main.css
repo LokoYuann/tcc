@@ -138,3 +138,23 @@ select[readonly] {
 
   padding-left: 15px;
 }
+
+input {
+  border: 1px solid #ecf0f1;
+  color: #00A79D;
+}
+
+input[type=date] {
+  text-align: right;
+}
+
+input[type="date"]:before {
+  color: lightgrey;
+  content: attr(placeholder) !important;
+  margin-right: 0.5em;
+  padding: 11px;
+}
+
+input[type="date"]:focus:before {
+    color: #00a79d;
+}

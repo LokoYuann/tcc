@@ -8,7 +8,13 @@
 
     $fdg_dt_ini_ev = date('Y-m-d',strtotime($dt_ini_ev));
     $fdg_dt_fim_ev = date('Y-m-d',strtotime($dt_fim_ev));
-    
+    $sql_base = mysqli_query($con, "select dt_ini_ev as data_ini, dt_fim_ev as data_fim from eventos where id_calendario='0' && id_leg = '".$id_leg."'");
+$base = mysqli_fetch_array($sql_base);
+if((mysqli_num_rows($sql_base) != 0) && ($dt_ini_ev < $base['data_ini']||$dt_ini_ev > $base['data_fim']||$dt_fim_ev < $base['data_ini']||$dt_fim_ev > $base['data_fim'])){
+    echo "haha";
+    header('Location: dash.php?page=edit_eve&msg=6&status='.$_POST["status"].'&id_tmp='.$id_tmp.'&id_evento='.$id_evento.'');exit;
+}
+
     if($_POST["status"] != 'active'){
         $sql = "update tmp_eve set ";
         $sql .= "id_evento ='".$id_evento."', dt_ini_tmp ='".$fdg_dt_ini_ev ."', dt_fim_tmp='".$fdg_dt_fim_ev."', id_calendario='".$id_calendario."', id_leg='".$id_leg."'".(($_POST["status"] == "del")?", act_tmp='edit'":"")." where id_tmp='".$id_tmp."';";

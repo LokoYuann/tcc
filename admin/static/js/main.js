@@ -84,8 +84,29 @@ function formreact(a,b,c) {
     xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"&cal_esc="+c);
     xhttp.send();
 }
+function verifybase(a) {
+    let xhttp = new XMLHttpRequest();
+    let xhttp2 = new XMLHttpRequest();
+    xhttp.onload = function() {
+        document.getElementById('verifybase1').value = this.responseText;
+        
+        }
+    xhttp2.onload = function() {
+        document.getElementById('verifybase2').value = this.responseText;
+        }
 
-
+    xhttp.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=1");
+    xhttp2.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=2");
+    xhttp.send();
+    xhttp2.send();
+}
+function date_limit(a, b){
+    if(b == 1){
+        document.getElementById('verifybase2').min = a;
+    }else{
+        document.getElementById('verifybase1').max = a;
+    }
+}
 
 // inserir novo símbolo
 function sla(a){
