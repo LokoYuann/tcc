@@ -4,10 +4,10 @@
 	}
 </style>
 
-<div class="container-fluid">
+<div id="main" class="container-fluid">
 	<div id="top" class="row">
 		<div class="d-flex justify-content-between">
-			<h2 style="font-family: 'Roboto', sans-serif;">Usuários</h2>
+			<h2 class="td-indicador" style="font-family: 'Roboto', sans-serif;">Usuários</h2>
 			<a href="?page=addusu" class="btn btn-primary pull-right h2">Novo Usuário</a> 
 		</div>
 	</div>
@@ -34,10 +34,11 @@
 					
 					echo "<table class='table table-striped' cellspacing='0' cellpading='0'>";
 					echo "<thead><tr>";
-					echo "<td class='centro'><strong>ID</strong></td>"; 
-					echo "<td class='centro'><strong>Usuário</strong></td>"; 
-					echo "<td class='centro'><strong>Senha</strong></td>"; 
-					echo "<td class='centro'><strong>Nível</strong></td>";
+					echo "<td class='td-center'><strong>ID</strong></td>"; 
+					echo "<td class='td-center'><strong>Usuário</strong></td>"; 
+					echo "<td class='td-center'><strong>Senha</strong></td>"; 
+					echo "<td class='td-center'><strong>Nível</strong></td>";
+					echo "<td class='td-center'><strong>Status</strong></td>";
 					echo "<td class='td-center'><strong>Ações</strong></td>"; 
 					echo "</tr></thead><tbody>";
 					while($info = mysqli_fetch_array($data)){ 
@@ -46,22 +47,35 @@
 						echo "<td class='centro'>".$info['usuario']."</td>";
 						echo "<td class='centro'>".$info['senha']." </td>";
 						echo "<td class='centro'>".(($info['nivel'] == 1)?"SUP":"ADMIN")." </td>";
+						echo "<td class='centro'>".(($info['ativo'] == 1)?"ATIVO":"INATIVO")." </td>";
 
 						echo "<td class='actions btn-group-sm td-center'>";
 						echo "<span class='d-none d-sm-inline-block'><a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."> Visualizar </a></span>";
 						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-success btn-xs' href=?page=view_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='eye'></i></a></span>";
 
 						echo "<span class='d-none d-sm-inline-block'><a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."> Editar </a></span>";
-						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='edit'></i></a></span>"; 
+						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-warning btn-xs' href=?page=edit_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='edit'></i></a></span>";
 
-						echo "<span class='d-none d-sm-inline-block'><a href=?page=excluir_usu&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Excluir </a></span>";
-						echo "<span class='d-inline-block d-sm-none'><a class='btn btn-danger btn-xs' href=?page=excluir_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='edit'></i></a></span></td>"; 
+
+						if($info['ativo'] == 1){
+							echo "<span class='d-none d-sm-inline-block'><a href=?page=block_usu&id_func=".$info['id_func']." class='btn btn-danger btn-xs'> Bloquear </a></span>";
+							
+							echo "<span class='d-inline-block d-sm-none'><a class='btn btn-danger btn-xs' href=?page=block_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='slash'></i></a></span></td>";
+							}else if($info['ativo'] == 0){
+							echo "<span class='d-none d-sm-inline-block'><a href=?page=ativa_usu&id_func=".$info['id_func']." class='btn btn-info btn-xs'>  &nbsp Ativar &nbsp  </a></span>";
+
+							echo "<span class='d-inline-block d-sm-none'><a class='btn btn-info btn-xs' href=?page=ativa_usu&id_func=".$info['id_func']."><i class='align-middle' data-feather='check'></i></a></span></td>";
+						}
+
+
 					}
 				echo "</tr></tbody></table>";
 			?>				
 		</div><!-- Div Table -->
 	</div><!--list-->
-	<br>			
+	<br>
+	
+
 	
 	<!-- PAGINAÇÃO -->
 	<div id="bottom" class="row">

@@ -1,8 +1,5 @@
 
-<?php
-	$sql = mysqli_query($con, "select *, (select nome_ue from ue where funcionario.id_ue = ue.id_ue) as nome_ue, (select foto_perfil from usuarios where funcionario.id_func = usuarios.id_func) as foto_perfil from funcionario where id_func = '".$_SESSION['UsuarioID']."';");
-	$row = mysqli_fetch_array($sql);
-?>
+
 
 
 

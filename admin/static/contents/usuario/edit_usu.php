@@ -44,10 +44,23 @@
 				<input  type="radio" name="nivel" value="1" <?php if($row["nivel"]==1){echo "checked";}else{}?>  required>Supervisão
 				</label>
 				<label class="font-info" class="radio-inline">
-				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==2){echo "checked";}else{}?>  required>Admnistraddor
+				<input  type="radio" name="nivel" value="2" <?php if($row["nivel"]==2){echo "checked";}else{}?>  required>Admnistrador
 				</label>
 			</div>
+			
+			<div class="form-group col-md-4">
+				<label class="font-info" for="ativo"><strong>Status do usuário</strong></label><br>
+				<label class="font-info" class="radio-inline">
+				<input  type="radio" name="ativo" value="1" <?php if($row["ativo"]==1){echo "checked";}else{}?>  required>Ativo
+				</label>
+				<label class="font-info" class="radio-inline">
+				<input  type="radio" name="ativo" value="0" <?php if($row["ativo"]==0){echo "checked";}else{}?>  required>Inativo
+				</label>
+			</div>
+
 		</div>
+
+		
 
 	<br>
 
