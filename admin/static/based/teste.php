@@ -1,3 +1,3 @@
-    <?php
-   echo  date("d/m/y");  
-    ?>
+<form action="teste.php" method="post">
+    
+</form>

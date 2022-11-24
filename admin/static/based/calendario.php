@@ -12,6 +12,7 @@ if(!empty($_GET['calendario'])){
     $_POST['calendario'] = $_GET['calendario'];
     $_POST['ue'] = $_GET['ue'];
 }
+
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
 			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
@@ -118,6 +119,7 @@ if(!empty($_GET['calendario'])){
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
                 <option value="none">----------------</option>
 				<?php 
+                echo '<option value="novo_cal" '.(($_POST['calendario']=="novo_cal")?'selected':"").'>Novo Calendário</option>';
 				for($i = 0; $i < count($ids); $i++)
 				{
 					
@@ -148,7 +150,17 @@ if(!empty($_GET['calendario'])){
 
         echo "</div>";
 	echo "</form>";
-
+    if(!empty($_POST['calendario']) && $_POST['calendario'] == "novo_cal"){
+        echo '<form action="based/create.php" method="post" >';
+        echo '<input type="hidden" name="ue" value="'.$_POST['ue'].'">';
+            echo 'Ano Letivo:';
+            echo '<select class="form-control col-md-3" name="ano">
+            <option value="'.date('Y').'">'.date('Y').'</option>
+            <option value="'.date('Y')+1..'">'.date('Y')+1..'</option>
+            </select>
+            <button type="submit" class="btn btn-secondary" id="add_btn">Salvar</button>';
+        echo '</form>';
+    }else{
 
 
 
@@ -167,14 +179,14 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
         //adiciona eventos
         if(!empty($row_base['id_leg'])||!empty($row['id_leg']) && $row['act_tmp'] != 'del'){
             if(!empty($row_base['id_leg'])){
-                
+                $need_eve = 1;
             }
             $m_ini = ((empty($row_base))?$row['m_ini']:$row_base['m_ini']);
             $d_ini = ((empty($row_base))?$row['d_ini']:$row_base['d_ini']);
             $m_fim = ((empty($row_base))?$row['m_fim']:$row_base['m_fim']);
             $d_fim = ((empty($row_base))?$row['d_fim']:$row_base['d_fim']);
             $leg_sql = mysqli_query($con, "select * from legenda where id_leg = ".((empty($row_base))?$row['id_leg']:$row_base['id_leg']).";");
-
+            $dde = ((!empty($row_base['id_leg']))?"**":"");
 
             $leg = mysqli_fetch_array($leg_sql);
             array_push($leg_use,$leg[0]);   
@@ -182,24 +194,24 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
             if ($d_ini <= $d_fim && $m_ini == $m_fim) {
                 for ($d_ini; $d_ini < $d_fim; $d_ini++) { 
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                 }
             }
             else{
                 if ($d_ini >= $d_fim && $m_ini < $m_fim) {
                 if ($d_ini <= 32) {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                     $d_ini++;
                     // se o mes inicial for menor ou igual ao mes final e o dia final for 32(máximo), reinicia o valor do dia inicial para um, voltando ao loop acima, e aumenta em um o valor do mes inicial, até satisfazer o mes inicial
                     
                     for ($d_fim; $d_fim >= 1; $d_fim--) { 
                             $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                            $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                            $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                         }
                     } else {
                         $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['desc_leg']."'";
-                        $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                        $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
 
 
                 }
@@ -207,7 +219,7 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
             }
                 for ($d_ini; $d_ini < 32; $d_ini++) { 
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                    $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
 
                 }
 
@@ -216,7 +228,7 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
 
 
             $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg']."; ' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
-            $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?"<a>".$leg["sigla_leg"]."</a>":"<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+            $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
 
 
 
@@ -225,9 +237,9 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
 
         $calendario_lis .= "<tr>";
         $calendario_lis .= "<td style='text-align: center;'>".$meses[((empty($row_base))?$row['m_ini']:$row_base['m_ini'])]."</td>";
-        $calendario_lis .= "<td style='text-align: center;'>".((empty($row_base))?$row['d_ini']:$row_base['d_ini'])."/".((empty($row_base))?$row['m_ini']:$row_base['m_ini'])."</td>";
+        $calendario_lis .= "<td style='text-align: center;'>".$dde.((empty($row_base))?$row['d_ini']:$row_base['d_ini'])."/".((empty($row_base))?$row['m_ini']:$row_base['m_ini'])."</td>";
         $calendario_lis .= "<td style='text-align: center;' class='d-none d-sm-table-cell'>".$dias[$week_ini]."</td>";
-        $calendario_lis .= "<td style='text-align: center;'>".((empty($row_base))?$row['d_fim']:$row_base['d_fim'])."/".((empty($row_base))?$row['m_fim']:$row_base['m_fim'])."</td>";
+        $calendario_lis .= "<td style='text-align: center;'>".$dde.((empty($row_base))?$row['d_fim']:$row_base['d_fim'])."/".((empty($row_base))?$row['m_fim']:$row_base['m_fim'])."</td>";
         $calendario_lis .= "<td style='text-align: center;' class='d-none d-sm-table-cell'>".$dias[$week_fim]."</td>";
         $calendario_lis .= "<td >".$leg['tipo_evento']."</td>";
 
@@ -252,7 +264,7 @@ $calendario_lis .= "</table>";
 
 
 // começo do calendário
-echo "<div id='calendario'>";
+echo "<div id='calendario'>".((!empty($need_eve) && $need_eve == 1)?"**Esses eventos são necessários de acordo com a DDE":"");
 $calendario = "<div style='text-align: -webkit-center;display:".((isMobile())?"none":"block").";' id='cal_esc'>";
 if($ano == date("Y")){
     $calendario .= "<table class='table table-bordered border border-3 border-warning stripped ' style='border-collapse: collapse;'>";
@@ -429,5 +441,5 @@ if($calendario_lis != null){
 if(($leg_use) != null && !empty($legenda)){
     $_SESSION['legenda'] = $legenda;}
 unset($_SESSION['calendario']);
-$_SESSION['calendario'] = $calendario;
+$_SESSION['calendario'] = $calendario;}
 ?>

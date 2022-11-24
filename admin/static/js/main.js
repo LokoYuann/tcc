@@ -100,7 +100,7 @@ function verifybase(a) {
     xhttp.send();
     xhttp2.send();
 }
-function date_limit(a, b){
+function dateLimit(a, b){
     if(b == 1){
         document.getElementById('verifybase2').min = a;
     }else{

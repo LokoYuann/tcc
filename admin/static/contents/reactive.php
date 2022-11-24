@@ -18,7 +18,7 @@ $id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue
 	}
 	if($_GET['page'] != "addeve"){
 	echo "<option value='none'>".(($_GET['page'] == "lista_eve")?"Todos":"----------------")."</option>";}
-	if($_GET['page'] == "addeve" && $_GET['value'] != "none" && $_GET['value'] != 0){
+	if(($_GET['page'] == "addeve" || $_GET['page'] == "calendario") && $_GET['value'] != "none" && $_GET['value'] != 0){
 		echo "<option value='novo_cal'>Novo Calendário</option>";
 	}
 	for($i = 0; $i < count($ids); $i++)
