@@ -18,6 +18,8 @@ function tipoCal(){
     if(document.getElementById("cal_lis").style.display == "block"){
         document.getElementById("cal_esc").style.display = "block";
         document.getElementById( 'pdf_versao_esc' ).style.display = 'block';
+        document.getElementById( 'escdownload' ).style.display = 'block';
+        document.getElementById( 'acaddownload' ).style.display = 'none';
         document.getElementById( 'cal_lis' ).style.display = 'none';
         document.getElementById( 'pdf_versao_acad' ).style.display = 'none';
         //document.getElementById( 'ver_button' ).style.display = 'none';
@@ -25,7 +27,10 @@ function tipoCal(){
         document.getElementById( 'cal_esc' ).style.display = 'none';
         document.getElementById( 'pdf_versao_esc' ).style.display = 'none';
         document.getElementById("cal_lis").style.display = "block";
+        
         document.getElementById( 'pdf_versao_acad' ).style.display = 'block';
+        document.getElementById( 'acaddownload' ).style.display = 'block';
+        document.getElementById( 'escdownload' ).style.display = 'none';
         //document.getElementById("ver_button").style.display = "block";
         //document.getElementById("cal_lis").innerHTML = this.responseText;
     }}
@@ -46,18 +51,31 @@ function Pdf(a){
     }}
 }
 
-function arroz(src, ver, ver_atual){
+function arroz(src, ver, ver_atual, device){
     if(ver != 'recent_ver'){
         esc = '<embed src="' + src + ver + ' - esc.pdf" width="1000px" height="770px" ></embed>';
         acad = '<embed src="' + src + ver + ' - acad.pdf" width="1000px" height="770px" ></embed>';
-        document.getElementById( 'pdf_versao_esc' ).innerHTML = esc;
-        document.getElementById( 'pdf_versao_acad' ).innerHTML = acad;
-    
-        document.getElementById("calendario").style.display = "none";
-        document.getElementById("pdf").style.display = "block";
-        document.getElementById("recent_button").style.display = "none";
-        document.getElementById("button_pdf").style.display = "none";
-        document.getElementById("nv_button").style.display = "none";
+        if(device =='pc'){
+            document.getElementById( 'pdf_versao_esc' ).innerHTML = esc;
+            document.getElementById( 'pdf_versao_acad' ).innerHTML = acad;
+        
+            document.getElementById("calendario").style.display = "none";
+            document.getElementById("pdf").style.display = "block";
+            document.getElementById("recent_button").style.display = "none";
+            document.getElementById("button_pdf").style.display = "none";
+            document.getElementById("nv_button").style.display = "none";
+        }
+        else{
+            document.getElementById('sel_ver').value = 'recent_ver';
+            var link = document.createElement("a");
+            link.download = /[^/]*$/.exec(src)[0] + ver + ' - esc.pdf';
+            link.href = src + ver +' - esc.pdf';
+            link.click();
+            var link2 = document.createElement("a");
+            link2.download = /[^/]*$/.exec(src)[0] + ver + ' - acad.pdf';
+            link2.href = src + ver +' - acad.pdf';
+            link2.click();
+        }
     }else{
         esc = '<embed src="' + src + ver_atual + ' - esc.pdf" width="1000px" height="770px" ></embed>';
         acad = '<embed src="' + src + ver_atual + ' - acad.pdf" width="1000px" height="770px" ></embed>';

@@ -136,7 +136,10 @@ if(!empty($_GET['calendario'])){
     echo '<div class="form-group col-md-4">
         Versão:';
                     $arroz = '/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v';
-                    echo "<select name='versao' class='form-control ' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",'pc')'>";
+                    if(isMobile()){
+                        echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"mobile\")'>";
+                    }else{
+                    echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"pc\")'>";}
                     for($i = 1; $i < $versao; $i++)
                     {
                             
@@ -264,7 +267,7 @@ $calendario_lis .= "</table>";
 echo "<div id='calendario'>".((!empty($need_eve) && $need_eve == 1)?"**Esses eventos são necessários de acordo com a DDE":"");
 $calendario = "<div style='text-align: -webkit-center;display:block' id='cal_esc'>";
 
-if($ano == date("Y")){
+if($ano >= date("Y")){
     
 if(isMobile()){
     $a = 1;
@@ -488,17 +491,21 @@ echo "<button class='btn btn-info' style='margin-bottom:10px;width:175px' onclic
 if($versao != 0){
     $a = 0;
     if(isMobile()){ 
-        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" id="pdfdownload">';
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" style="display:block" id="escdownload">';
         $a = 1;
     }
 
-    echo '<button class="btn btn-info" style="width:175px" onclick="Pdf(\''.$a.'\')" id="button_pdf">PDF</button>';
+    echo '<button class="btn btn-info" style="width:175px;display:block" onclick="Pdf(\''.$a.'\')" id="button_pdf">PDF</button>';
     if(isMobile()){ 
-        echo '<a>';
+        echo '</a>';
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" style="display:none" id="acaddownload">';
+        echo '<button class="btn btn-info" style="width:175px;" onclick="Pdf(\''.$a.'\')" id="button_pdf">PDF</button></a>';
     }
 
+   
+
+    echo "<a class='btn btn-info' style='display:none;width:175px' onclick=\"Pdf('".$a."')\" id='recent_button'>Voltar ao calendário</a><br>";
 }
-echo "<a class='btn btn-info' style='display:none;width:175px' onclick=\"Pdf('".$a."')\" id='recent_button'>Voltar ao calendário</a><br>";
 echo "</div>";
 if(!empty($ano_sql)){
 
