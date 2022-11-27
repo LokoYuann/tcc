@@ -1,7 +1,8 @@
 <?php
 //insere informações da localidade do funcionário
     $cep = str_replace("-", "", $_POST["cep"]);
-  
+    $verify_sql = mysqli_query($con, "select cep from localidade where cep = '".$cep."'");
+    if(mysqli_num_rows($verify_sql) == 0){
     $json = file_get_contents('https://viacep.com.br/ws/'. $cep . '/json/');
 
     $jsonToArray = json_decode($json);
@@ -16,7 +17,7 @@
     $sql = "insert into localidade values ";
     $sql .= "('$cep','$uf','$cidade','$bairro','$log','$num','$comp');";
     $resultado_loc = mysqli_query($con, $sql)or die(mysqli_error());
-
+    }
 
 //insere informações do funcionário
     $id_func      = $_POST["id_func"];
@@ -34,7 +35,7 @@
     $sql .= "('0','$mat_func','$funcao_func','$nome_func','$nasc_func','$sexo_func','$tel_func','$cpf_func','$cep','$id_ue');";
     $resultado_func = mysqli_query($con, $sql)or die(mysqli_error());
 
-    if($resultado_loc&&$resultado_func){
+    if($resultado_loc||$resultado_func){
         header('Location: dash.php?page=lista_func&msg=1');
         mysqli_close($con);
     }else{

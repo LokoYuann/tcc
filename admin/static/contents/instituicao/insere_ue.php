@@ -1,7 +1,8 @@
 <?php
     //insere informações da localidade da ue
     $cep = str_replace("-", "", $_POST["cep"]);
-  
+    $verify_sql = mysqli_query($con, "select cep from localidade where cep = '".$cep."'");
+    if(mysqli_num_rows($verify_sql) == 0){
     $json = file_get_contents('https://viacep.com.br/ws/'. $cep . '/json/');
 
     $jsonToArray = json_decode($json);
@@ -16,7 +17,7 @@
     $sql = "insert into localidade values ";
     $sql .= "('$cep','$uf','$cidade','$bairro','$log','$num','$comp');";
     $resultado_loc = mysqli_query($con, $sql)or die(mysqli_error());
-
+    }
     
     //insere informações da ue
     $tel_ue      = str_replace([" ","(",")","-"], "", $_POST["tel_ue"]);
@@ -35,7 +36,7 @@
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 
-    if($resultado){
+    if($resultado_loc||$resultado){
         header('Location: dash.php?page=lista_ue&msg=1');
         mysqli_close($con);
     }else{

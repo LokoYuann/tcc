@@ -69,8 +69,18 @@
   }
 
 /* calendário */
+.merdinha{
+  white-space: nowrap;
+  padding:0px !important;
+}
+
 .cal-content{
   text-align: center;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
 #cal_esc td{

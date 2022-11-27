@@ -271,7 +271,8 @@ if($ano >= date("Y")){
     
 if(isMobile()){
     $a = 1;
-$calendarioM = "<table class='table table-bordered border border-3 border-warning stripped ' style=''>";
+    $calendarioM = '<div class="clearfix" style="display:flex;justify-content:center;height:100%">';
+$calendarioM .= "<table class='table table-bordered border border-3 border-warning stripped ' style='float:left;height:100%'>";
 
 
 $meses = array('','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
@@ -297,11 +298,11 @@ $calendarioM .= "</table>";
         $diaini = date('N',strtotime($ano.'-'.$mmm.'-01'));
         $diafim = cal_days_in_month(CAL_GREGORIAN, $mmm, $ano);
         
-        $calendarioM .= "<table border='1' id='".$mmm."' style='display: none;' class='table table-bordered border border-3 border-warning stripped ' >";
+        $calendarioM .= "<table border='1' id='".$mmm."' style='display: none;float:left;height:100%;' class='table table-bordered border border-3 border-warning stripped ' >";
         $calendarioM .= "<tr>";
         for ($ça=1; $ça < 8; $ça++) { 
             foreach ($penes as $a => $value) {
-                $calendarioM .= "<td><strong>".$penes[$ça]."<br></strong></td>";
+                $calendarioM .= "<td ><strong>".$penes[$ça]."<br></strong></td>";
                 break;
             }            }
         $calendarioM .= "</tr>";
@@ -322,11 +323,10 @@ $calendarioM .= "</table>";
                 // dia span
                 $calendarioM .= $pe;
                 $pe++;
-                $calendarioM .= "<br>";
 
-                $calendarioM .= " ".((!empty($simb[$mmm][$pe-1]))?$simb[$mmm][$pe-1]:"")." ";
+                $calendarioM .= "<br>".((!empty($simb[$mmm][$pe-1]))?$simb[$mmm][$pe-1]:"")." ";
             } else {
-                $calendarioM .= " style='background-color:rgb(190, 190, 190);'  >";
+                $calendarioM .= " style='background-color:rgb(190, 190, 190);height: 40px;'>";
             }
 
             $calendarioM .= "</td>";
@@ -336,8 +336,8 @@ $calendarioM .= "</table>";
             }
         }
         $calendarioM .= "</table>";
-        
     }
+    $calendarioM .= "</div>";
 }else{
     
     $calendario .= "<table class='table table-bordered border border-3 border-warning stripped' align='center' style='border-collapse: collapse;'>";
