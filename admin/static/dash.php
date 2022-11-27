@@ -29,7 +29,7 @@ if (!isset($_SESSION)){ session_start();}
 	<link rel="stylesheet" href="css/main.css">
 	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="css/bootstrap.css">
-	
+	<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/vanillajs-datepicker@1.1.4/dist/css/datepicker.min.css'>   
 	
 	
 </head>
@@ -73,6 +73,7 @@ if (!isset($_SESSION)){ session_start();}
 		<script src="js/jquery.inputmask.bundle.js" type="text/javascript"></script>
 		<script src="js/jquery_maskmoney.js" type="text/javascript"></script>
 		<script src="js/script_mask.js" type="text/javascript"></script>
+		
 		
 </body>
 

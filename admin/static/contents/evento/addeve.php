@@ -2,7 +2,7 @@
 	if($_SESSION['UsuarioNivel'] == 2){
 		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func_inst[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
 	
 
 
@@ -41,11 +41,11 @@
 			</div>
 			
 			<div class="form-group col-md-2">
-				<label for="id_calendario"><strong>UE</strong></label>
+				<label for="id_ue"><strong>UE</strong></label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
-					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func_inst[0].'" readonly>';
-					echo '<input type="text" class="form-control readonly" name="" value="'.$func_inst_sigla[0].'" readonly required>';
+					echo '<input type="hidden" class="form-control readonly" name="id_ue" value="'.$func[0].'" readonly>';
+					echo '<input type="text" class="form-control readonly" name="" value="'.$func['sigla_inst'].'" readonly required>';
 				}
 				else{
 				?>
@@ -69,6 +69,9 @@
 				<label for="id_calendario"><strong>Calendário</strong></label>
 				<select class="form-control " id="reactive" name="id_calendario" required>
 				<?php 
+				if($_SESSION['UsuarioNivel'] == 1){
+					echo "<option value='novo_cal'>Novo Calendário</option>";
+				}
 					for($i = 0; $i < count($ids); $i++)
 					{
 						
@@ -85,13 +88,13 @@
 		<!-- 2ª LINHA -->
 
 
-		<div class="form-group" id="show_item">
+		
 
 
 		<div class="row">
 		<div class="form-group col-md-2">
 				<label for="id_leg"><strong>Tipo Evento</strong></label>
-				<select class="form-control" id="id_leg" name="id_leg" onchange='verifybase(this.value)' required>
+				<select class="form-control" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, 0)' required>
 				<option> --------- </option>
 					<?php
 															
@@ -107,21 +110,21 @@
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Início</strong></label>
-				<input type="date" class="form-control " id="verifybase1" name="dt_ini_ev" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value, 1)" required>
+				<input type="date" class="form-control verifybase1 0" name="dt_ini_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,1,0)" required>
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Fim</strong></label>
-				<input type="date" class="form-control " id="verifybase2" name="dt_fim_ev" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value, 2)" required>
+				<input type="date" class="form-control verifybase2 0" name="dt_fim_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y") ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
 			</div>
 			<div class="col-md-3">
 			<label for="dt_nasc"><strong>Múltiplos Eventos</strong></label> <br>
-				<a href="javascript:void(0)" value="add" class="btn btn-success add_item_btn">Add More</a>
+				<a href="javascript:void(0)" value="add" class="btn btn-success add_item_btn"><i class='align-middle' style="width:100%" data-feather='plus'></i></a>
 				<!-- <a href="javascript:void(0)" class="btn btn-danger" id="minus5">Remove</a> -->
 			</div>
 		</div>
 		
+		<div class="form-group" id="show_item">
 	</div>
-
 		<br>
 		<div id="actions" class="row">
 			<div class="col-md-12">
@@ -135,12 +138,13 @@
 <script>
 	$(document).ready(function() {
 		$(".add_item_btn").click(function(e) {
+			number = document.querySelectorAll('.remove_item_btn').length+1;
 			e.preventDefault();
 			$("#show_item").prepend(`
 			<div class="row">
 		<div class="form-group col-md-2">
 				<label for="id_leg"><strong>Tipo Evento</strong></label>
-			<select class="form-control" id="id_leg" name="id_leg" required>
+				<select class="form-control" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, `+number+`)' required>
 				<option> --------- </option>
 					<?php
 															
@@ -156,15 +160,16 @@
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Início</strong></label>
-				<input type="date" class="form-control" name="dt_ini_ev" required>
+				<input type="date" class="form-control verifybase1 `+number+`" onchange="dateLimit(this.value,1,`+number+`)" name="dt_ini_ev[]" required>
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Fim</strong></label>
-				<input type="date" class="form-control" name="dt_fim_ev" required>
+				<input type="date" class="form-control verifybase2 `+number+`" onchange="dateLimit(this.value,2,`+number+`)" name="dt_fim_ev[]" required>
 			</div>
 			<div class="col-md-3">
 				<br>
-				<a href="javascript:void(0)" class="btn btn-danger remove_item_btn">remove</a>
+				<a href="javascript:void(0)" class="btn btn-danger remove_item_btn">
+				<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-minus"><line x1="5" y1="12" x2="19" y2="12"></line></svg></a>
 			</div>
 		</div>
 		

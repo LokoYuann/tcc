@@ -47,9 +47,7 @@ if(!empty($_GET['calendario'])){
                 $ue = $row[1];
                 $versao = $row[2];
             }
-            if($versao == 0){
                 $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_POST['calendario']."')");
-            }   
         }
 
         else if(!empty($func['cal'])){
@@ -61,11 +59,10 @@ if(!empty($_GET['calendario'])){
                 $ue = $row[1];
                 $versao = $row[2];
             }
-            if($versao == 0){
                 $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$func['cal']."')");
-            }  
+        }else{
+            $_POST['calendario'] = "novo_cal";
         }
-
         
         if(!empty($ano_sql)){
             
@@ -97,7 +94,8 @@ if(!empty($_GET['calendario'])){
 
 <form action="?page=home" method="post" >
 		<div class="d-flex row justify-content-left" > 
-        <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
+            
+            <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-4">
 				Instituição:
 				<select name="ue" class="form-control " action="post" onchange='formreact(this.value,"calendario")';>
@@ -111,33 +109,34 @@ if(!empty($_GET['calendario'])){
 
                 echo "</select>
 			</div>";}
-            
+           else{ echo '<input type="hidden" class="form-control readonly" name="ue" value="'.$func[0].'" readonly>';}
 				?> 
 			
 			<div class="form-group col-md-4">
 				Calendário:
 				<select name="calendario" class="form-control " id="reactive" action="post" onchange='this.form.submit()';>
-                <option value="none">----------------</option>
 				<?php 
                 echo '<option value="novo_cal" '.(($_POST['calendario']=="novo_cal")?'selected':"").'>Novo Calendário</option>';
+                if(!empty($ids)){
 				for($i = 0; $i < count($ids); $i++)
 				{
 					
 					echo '<option value="'.$ids[$i].'" '.(($_POST['calendario']==$ids[$i]||$ids[$i]==$func['cal'] && !isset($_POST['calendario']))?'selected':"").'>'.$ano_sel[$i].'</option>';
 					
 
-				}
+				}}
 
 				
 				echo "</select>
 			</div>";
             ?> 
     
-            <div class="form-group col-md-4">
-                    Versão:
-                    <?php   
+    <?php 
+    if(!empty($ids)){
+    echo '<div class="form-group col-md-4">
+        Versão:';
                     $arroz = '/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v';
-                    echo "<select name='versao' class='form-control ' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.")'>";
+                    echo "<select name='versao' class='form-control ' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",'pc')'>";
                     for($i = 1; $i < $versao; $i++)
                     {
                             
@@ -147,22 +146,21 @@ if(!empty($_GET['calendario'])){
                     echo '<option value="recent_ver" selected>'.$versao.'</option>';
                     echo "</select>
                 </div>";
-
-        echo "</div>";
-	echo "</form>";
+                
+                echo "</div>";
+            }
+                echo "</form>";
     if(!empty($_POST['calendario']) && $_POST['calendario'] == "novo_cal"){
         echo '<form action="based/create.php" method="post" >';
-        echo '<input type="hidden" name="ue" value="'.$_POST['ue'].'">';
+        echo '<input type="hidden" name="ue" value="'.((!empty($_POST['ue']))?$_POST['ue']:$func[0]).'">';    
             echo 'Ano Letivo:';
             echo '<select class="form-control col-md-3" name="ano">
             <option value="'.date('Y').'">'.date('Y').'</option>
             <option value="'.date('Y')+1..'">'.date('Y')+1..'</option>
             </select>
-            <button type="submit" class="btn btn-secondary" id="add_btn">Salvar</button>';
+            <button type="submit" class="btn btn-info" id="add_btn">Salvar</button>';
         echo '</form>';
     }else{
-
-
 
 
 // armazena dias invalidos
@@ -262,12 +260,84 @@ $calendario_lis .= "</table>";
        $simb[$domingo_m][$domingo_d] = "<a>D</a>";
     }
 
-
 // começo do calendário
 echo "<div id='calendario'>".((!empty($need_eve) && $need_eve == 1)?"**Esses eventos são necessários de acordo com a DDE":"");
-$calendario = "<div style='text-align: -webkit-center;display:".((isMobile())?"none":"block").";' id='cal_esc'>";
+$calendario = "<div style='text-align: -webkit-center;display:block' id='cal_esc'>";
+
 if($ano == date("Y")){
-    $calendario .= "<table class='table table-bordered border border-3 border-warning stripped ' style='border-collapse: collapse;'>";
+    
+if(isMobile()){
+    $a = 1;
+$calendarioM = "<table class='table table-bordered border border-3 border-warning stripped ' style=''>";
+
+
+$meses = array('','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
+$penes = array('','D','S','T','Q','Q','S','S');
+
+for ($i=1; $i < 13; $i++) { 
+    # code...
+    foreach ($meses as $a => $value) {
+        $calendarioM .= "<tr onclick='sort(".$i.")'><td><span ><strong>".$meses[$i]."<br></strong></span></td></tr>";
+        break;
+    }
+}
+$calendarioM .= "</table>";
+
+
+
+
+    $ano = date("Y");
+
+    
+    for ($mmm=1; $mmm < 13; $mmm++) { 
+        
+        $diaini = date('N',strtotime($ano.'-'.$mmm.'-01'));
+        $diafim = cal_days_in_month(CAL_GREGORIAN, $mmm, $ano);
+        
+        $calendarioM .= "<table border='1' id='".$mmm."' style='display: none;' class='table table-bordered border border-3 border-warning stripped ' >";
+        $calendarioM .= "<tr>";
+        for ($ça=1; $ça < 8; $ça++) { 
+            foreach ($penes as $a => $value) {
+                $calendarioM .= "<td><strong>".$penes[$ça]."<br></strong></td>";
+                break;
+            }            }
+        $calendarioM .= "</tr>";
+        $calendarioM .= "<tr >";
+        for ($z=1; $z < 42; $z++) { 
+            
+            $calendarioM .= "<td class='merdinha' ";
+        
+            if ($diaini+1 == $z){
+                $pe = 1;
+                
+                // if do dia span
+            } if (!empty($pe) && $pe < 32) {
+                if(!empty($eve[$mmm][$pe])){
+                    $calendarioM .= $eve[$mmm][$pe];
+                }
+                $calendarioM .= " >";
+                // dia span
+                $calendarioM .= $pe;
+                $pe++;
+                $calendarioM .= "<br>";
+
+                $calendarioM .= " ".((!empty($simb[$mmm][$pe-1]))?$simb[$mmm][$pe-1]:"")." ";
+            } else {
+                $calendarioM .= " style='background-color:rgb(190, 190, 190);'  >";
+            }
+
+            $calendarioM .= "</td>";
+            
+            if ($z % 7 == 0){
+                $calendarioM .= "</tr><tr>";
+            }
+        }
+        $calendarioM .= "</table>";
+        
+    }
+}else{
+    
+    $calendario .= "<table class='table table-bordered border border-3 border-warning stripped' align='center' style='border-collapse: collapse;'>";
     $calendario .= "<tr class=''>";
     $calendario .= "<td  rowspan='2' class='cal-content cal-cab'>Meses</td>";
     $calendario .= "<td colspan='31' class='cal-content'>Dias</td>";
@@ -319,10 +389,10 @@ for ($i=1; $i < 13; $i++) {
 $calendario .= "</tr>";
 
 
-$calendario .= "</table>";
+$calendario .= "</table>";}
 
 echo $calendario;
-
+if(isMobile()){echo $calendarioM;}
 //Legenda
 if(($leg_use) != null){
 echo "<br>";
@@ -342,9 +412,9 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
     $o=0;
     $n=0;
     echo "<div class= 'd-flex flex-row justify-content-center mt-4'>";
-    $legenda = "<div class= 'd-flex flex-column justify-content-center mt-4' style='width:50%;' id='leg_table'>";
+    $legenda = "<div class= 'mt-4' id='l_table'>";
     $legenda .= "Legenda:";
-    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;float:left;'>";
+    echo "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important;float:left;'>";
     //$legenda .= "<table class='table table-bordered table-responsive border border-3 rounded border-warning stripped' id='leg_table' style='justify-content: center !important; overflow:wrap;'>";
     $legenda .= "<table class='table table-bordered  border border-1  border-warning stripped' style='overflow:wrap;border-spacing: 5px 0;border-collapse: collapse;border-radius:11px;'>";
     while($row = mysqli_fetch_array($leg_sql)){
@@ -389,8 +459,8 @@ if($ano < date("Y")){
 }
 echo "</div>";
 
-echo "<div id='cal_lis' style='text-align: -webkit-center;display:".((isMobile())?"block":"none").";'>";
-echo "<table class='table table-bordered table-responsive border border-4 stripped' id='list_cal' >";
+echo "<div id='cal_lis' style='text-align: -webkit-center;display:none;'>";
+echo "<table class='table table-bordered border border-4 stripped' id='list_cal' >";
 echo "<tr>";
 echo "<td style='text-align: center;'>Mês</td>";
 echo "<td colspan='2' style='text-align: center;' class='d-none d-sm-table-cell'>Data de início</td>";
@@ -415,8 +485,20 @@ echo "</div>";
 echo "<div style='display:flex;flex-direction:row;text-decoration:none;justify-content:space-between;'>";
 echo "<div style='display:flex;flex-direction:column;'>";
 echo "<button class='btn btn-info' style='margin-bottom:10px;width:175px' onclick=\"tipoCal()\">Alternar calendário</button><br>";
-echo "<button class='btn btn-info' style='width:175px' onclick=\"Pdf()\" id='button_pdf'>PDF</button>";
-echo "<button class='btn btn-info' style='display:none;width:175px' onclick=\"Pdf()\" id='recent_button'>Voltar ao calendário</button><br>";
+if($versao != 0){
+    $a = 0;
+    if(isMobile()){ 
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" id="pdfdownload">';
+        $a = 1;
+    }
+
+    echo '<button class="btn btn-info" style="width:175px" onclick="Pdf(\''.$a.'\')" id="button_pdf">PDF</button>';
+    if(isMobile()){ 
+        echo '<a>';
+    }
+
+}
+echo "<a class='btn btn-info' style='display:none;width:175px' onclick=\"Pdf('".$a."')\" id='recent_button'>Voltar ao calendário</a><br>";
 echo "</div>";
 if(!empty($ano_sql)){
 
@@ -443,3 +525,22 @@ if(($leg_use) != null && !empty($legenda)){
 unset($_SESSION['calendario']);
 $_SESSION['calendario'] = $calendario;}
 ?>
+
+<script>
+
+function sort(a) {
+
+    let i = 0;
+    for(i=1;i<=12;i++){
+        if(a == i){
+            if(document.getElementById(i).style.display == 'none'){document.getElementById(i).style.display = 'block'}
+            else{document.getElementById(i).style.display = 'none'}
+        }
+        else{document.getElementById(i).style.display = 'none'}
+        }
+
+
+ }
+
+
+</script>

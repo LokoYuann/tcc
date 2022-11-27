@@ -16,9 +16,8 @@ $desc_leg      = $_POST["desc_leg"];
 $simbolo_leg   = "/admin/static/img/simbolos/".$_POST["simbolo_leg"];
 $sigla_leg   = $_POST["sigla_leg"];
 $cor_leg   = $_POST["cor_leg"];
-
    $sql = "insert into legenda values ";
-    $sql .= "('0','$tipo_evento','$desc_leg','".((!empty($_POST["simbolo_leg"]))?".$simbolo_leg.":"")."','$sigla_leg','$cor_leg');";
+    $sql .= "('0','$tipo_evento','$desc_leg','".((!empty($_POST["simbolo_leg"]))?"$simbolo_leg.":"")."','$sigla_leg','$cor_leg');";
     
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());

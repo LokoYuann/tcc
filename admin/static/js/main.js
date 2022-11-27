@@ -31,7 +31,8 @@ function tipoCal(){
     }}
 
 
-function Pdf(){
+function Pdf(a){
+    if(a == 0){
     if(document.getElementById("pdf").style.display == "block"){
         document.getElementById( 'calendario' ).style.display = 'block';
         document.getElementById( 'pdf' ).style.display = 'none';
@@ -42,7 +43,7 @@ function Pdf(){
         document.getElementById( 'pdf' ).style.display = 'block';
         document.getElementById("button_pdf").style.display = "none";
         document.getElementById("recent_button").style.display = "block";
-    }
+    }}
 }
 
 function arroz(src, ver, ver_atual){
@@ -84,15 +85,15 @@ function formreact(a,b,c) {
     xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"&cal_esc="+c);
     xhttp.send();
 }
-function verifybase(a) {
+function verifybase(a, b) {
     let xhttp = new XMLHttpRequest();
     let xhttp2 = new XMLHttpRequest();
     xhttp.onload = function() {
-        document.getElementById('verifybase1').value = this.responseText;
+        document.getElementsByClassName('verifybase1 ' + b)[0].value = this.responseText;
         
         }
     xhttp2.onload = function() {
-        document.getElementById('verifybase2').value = this.responseText;
+        document.getElementsByClassName('verifybase2 ' + b)[0].value = this.responseText;
         }
 
     xhttp.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=1");
@@ -100,11 +101,11 @@ function verifybase(a) {
     xhttp.send();
     xhttp2.send();
 }
-function dateLimit(a, b){
+function dateLimit(a, b, c){
     if(b == 1){
-        document.getElementById('verifybase2').min = a;
+        document.getElementsByClassName('verifybase2 ' + c)[0].min = a;
     }else{
-        document.getElementById('verifybase1').max = a;
+        document.getElementsByClassName('verifybase1 ' + c)[0].max = a;
     }
 }
 
@@ -135,7 +136,3 @@ $(document).ready(function(){
 
 
 //simbolo
-
-function simbolo(a){
-    document.getElementById("simb").innerHTML = '<img src="/admin/static/img/simbolos/'+a+'" class="simbico_leg_edit" alt=""><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">Mudar</button>';
-}

@@ -76,7 +76,9 @@
 #cal_esc td{
   padding:7px !important;
 }
-
+#cal_esc table{
+  width:auto;
+}
 
   table.table.table-bordered.border.border-warning.stripped {
   border-color: rgb(216, 214, 231) !important;
@@ -92,34 +94,18 @@ select[readonly] {
   border: 1px solid;
    
 }
-.table{
-  width:30%px !important; 
-}
 
 #list_cal{
-  height:70vh !important; 
   justify-content: center !important; 
   overflow:wrap;
 }
-@media (max-width:600px){
-  #list_cal{
-    width:100% !important;
-  }
-}
-@media (min-width:600px) and (max-width:1200px){
-  #list_cal{
-   width:70% !important; 
-  }
-}
-@media (min-width:1200px){
-  #list_cal{
-   width:50% !important; 
-  }
-}
 
+#cal_lis table{
+  width:auto ;
+}
 /* simbolos */
 .simbico{
-  max-width: 15px;
+  max-width: 18px;
  justify-content: center;
 }
 .simbico_leg{
@@ -133,35 +119,16 @@ select[readonly] {
 
 /* legenda */
 #leg_table{
-  height:40vh !important; 
+  width:auto !important; 
   justify-content: center !important; 
   overflow:wrap;
 }
 #leg_table td{
   padding:3px !important;
-}
-@media (max-width:600px){
-  #leg_table{
-    width:100% !important;
-  }
-}
-@media (min-width:600px) and (max-width:1200px){
-  #leg_table{
-   width:95% !important; 
-  }
-}
-@media (min-width:1200px){
-  #leg_table{
-   width:60% !important; 
-  }
+  margin:3px !important;
 }
 
-#feriados{
-  height:30vh !important; 
-  width:70% !important; 
-  justify-content: center !important; 
-  overflow:wrap;
-}
+
 
 .badge-warning {
   background-color: #ffdf80!important;
@@ -330,4 +297,9 @@ li.sidebar-item:hover {
 .teste-aq{
 
     padding-right: 20px;
+}
+
+.BirthdayDatePicker .ui-datepicker-year
+{
+ display:none;   
 }

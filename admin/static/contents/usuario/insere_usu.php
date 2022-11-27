@@ -6,7 +6,7 @@
     $nivel   = $_POST["nivel"];
 
    $sql = "insert into usuarios values ";
-    $sql .= "('$id_func','$usuario','$senha','$nivel','1','');";
+    $sql .= "('$id_func','$usuario','$senha','$nivel','','1');";
     
     $resultado = mysqli_query($con, $sql)or die(mysqli_error());
 

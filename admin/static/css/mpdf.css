@@ -2,18 +2,21 @@
     margin-top:21px;
 }
 
-#list_cal{
+#cal_lis table{
     margin-top:30px;
     margin-right:auto;
     margin-left:auto;
-    width: 98%;
+    width: 98% !important;
     
 }
-
-#leg_table{
+#cal_esc table{
+  left:45%;
+  width:90%;
+}
+#l_table{
     margin-right:auto;
     margin-left:auto;
-    width: 98%;
+    width:55% !important;
     
 }
 table tr td {
@@ -35,13 +38,12 @@ table tr td:last-of-type {
     border-right: 1px solid;
     
   }
-
+#leg{
+  font-size:20px;
+}
 .cal-cab{
     border-right: 1px solid;
     border-bottom: 1px solid;
     color: black
 }
 
-.simbico{
-    width: 10%;
-}

@@ -45,7 +45,6 @@
 			<input type="color" name="cor_leg" style="width:100%" id="cor_leg" value="<?php echo $row["cor_leg"];?>">
 		</div>
 			<div class="botao-leg form-group col-md-7" id="simb">
-				<img src="<?php echo $row["simbolo_leg"];?>" class="teste-aq simbico_leg_edit" alt="">
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
 					<?php echo ((!empty($row["simbolo_leg"]))?"Mudar Símbolo":"Escolher Símbolo") ?>
 				</button>
@@ -69,7 +68,7 @@
 							foreach ($dir as $fileinfo) {
 								if (!$fileinfo->isDot()) {
 									echo '<label class="switch">
-										<input  type="radio" name="simbolo_leg" value="'.$fileinfo.'">
+										<input  type="radio" name="simbolo_leg" value="'.$fileinfo.'"'.(($row["simbolo_leg"] == '/admin/static/img/simbolos/'.$fileinfo)?"checked":"").'>
 										<span class="slider round"><img src="/admin/static/img/simbolos/'.$fileinfo.'" class="simbico" alt=""></span>
 									</label>';
 								}

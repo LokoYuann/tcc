@@ -7,19 +7,19 @@ $fontDirs = $defaultConfig['fontDir'];
 $con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 
 $cabecalho = "<div style='float: left;width:70px;'>";
-$cabecalho .= "<img src='/admin/static/img/logo1.png' style='width:70px;'/>";
+$cabecalho .= "<img src='/admin/static/img/logo1.png' style='width:90px;'/>";
 $cabecalho .= "</div>";
-$cabecalho .= "<div style='font-size:12px;float: left;text-align: center;margin-right:auto;margin-left:auto;width: 90%;'>";
+$cabecalho .= "<div style='font-size:16px;float: left;text-align: center;margin-right:auto;margin-left:auto;width: 90%;'>";
 $cabecalho .= "GOVERNO DO ESTADO DO RIO DE JANEIRO<br>";
 $cabecalho .= "SECRETARIA DE ESTADO DE CIÊNCIA,TECNOLOGIA E INOVAÇÃO<br>";
 $cabecalho .= "FUNDAÇÃO DE APOIO À ESCOLA TÉCNICA<br>";
-$cabecalho .= mb_strtoupper($_SESSION['ue'])."<br><br>";
+$cabecalho .= mb_strtoupper($_SESSION['ue'])."<br>";
 $cabecalho .= "<strong>CALENDÁRIO ESCOLAR - ".$_SESSION['ano']."<br>";
 $cabecalho .= "EDUCAÇAO PROFISSIONAL TÉCNICA DE NÍVEL MÉDIO INTEGRADO</strong>";
 $cabecalho .= "</div>";
 $cabecalho .= "<div style='text-align: right; float: left;position: absolute; right:0%;'>";
 if($_SESSION['logo_ue']){
-$cabecalho .= "<img src='".$_SESSION['logo_ue']."' style='width:90px;'/>";}
+$cabecalho .= "<img src='".$_SESSION['logo_ue']."' style='width:100px;'/>";}
 $cabecalho .= "</div>";
 
 $lis = "<div id='cal_lis' style='text-align: -webkit-center;'>";
@@ -46,7 +46,7 @@ $mpdf = new \Mpdf\Mpdf([
     'margin_bottom' => 0,
     'margin_right' => 4,
     'margin_left' => 4,
-    'format' => 'A4',
+    'format' => 'A3',
     'orientation' => 'L'
 ]);
 $mpdf->SetDisplayMode('fullwidth');
@@ -92,8 +92,8 @@ if(!empty($_GET['value']) && $_GET['value'] == 'nova_versao'){
     $mpdf_acad->Output('C:/xampp/htdocs/admin/static/img/versao/'.$_SESSION['sigla_ue'].'/'.$_SESSION['ano'].'/'.$_SESSION['sigla_ue'].' - '.$_SESSION['ano'].' v'.$_GET['versao'].' - acad.pdf', 'F');
     header('Location: dash.php?page=home&calendario='.$_SESSION['cal_atual'].'&ue='.mysqli_fetch_array($ue)[0]);}
 else{
-    $mpdf->Output();
     $mpdf_acad->Output();
+    $mpdf->Output();
 }
 
 ?>
