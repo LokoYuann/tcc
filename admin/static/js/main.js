@@ -15,20 +15,20 @@ $(function () {
 
 //pdf e versões
 function tipoCal(){
-    if(document.getElementById("cal_lis").style.display == "block"){
-        document.getElementById("cal_esc").style.display = "block";
+    if(document.getElementById("pdf_versao_acad").style.display == "block"){
         document.getElementById( 'pdf_versao_esc' ).style.display = 'block';
+        document.getElementById( 'pdf_versao_acad' ).style.display = 'none';
+        document.getElementById("cal_esc").style.display = "block";
         document.getElementById( 'escdownload' ).style.display = 'block';
         document.getElementById( 'acaddownload' ).style.display = 'none';
         document.getElementById( 'cal_lis' ).style.display = 'none';
-        document.getElementById( 'pdf_versao_acad' ).style.display = 'none';
         //document.getElementById( 'ver_button' ).style.display = 'none';
     }else{
-        document.getElementById( 'cal_esc' ).style.display = 'none';
         document.getElementById( 'pdf_versao_esc' ).style.display = 'none';
+        document.getElementById( 'pdf_versao_acad' ).style.display = 'block';
+        document.getElementById( 'cal_esc' ).style.display = 'none';
         document.getElementById("cal_lis").style.display = "block";
         
-        document.getElementById( 'pdf_versao_acad' ).style.display = 'block';
         document.getElementById( 'acaddownload' ).style.display = 'block';
         document.getElementById( 'escdownload' ).style.display = 'none';
         //document.getElementById("ver_button").style.display = "block";
@@ -106,12 +106,15 @@ function formreact(a,b,c) {
 function verifybase(a, b) {
     let xhttp = new XMLHttpRequest();
     let xhttp2 = new XMLHttpRequest();
+    let date =  new Date().getFullYear();
     xhttp.onload = function() {
         document.getElementsByClassName('verifybase1 ' + b)[0].value = this.responseText;
-        
+        document.getElementsByClassName('verifybase2 ' + b)[0].min = date+'-01-01';
+        console.log(Date().getFullYear());
         }
     xhttp2.onload = function() {
         document.getElementsByClassName('verifybase2 ' + b)[0].value = this.responseText;
+        document.getElementsByClassName('verifybase1 ' + b)[0].max = (date+1) +'-12-31  ';
         }
 
     xhttp.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=1");

@@ -137,9 +137,9 @@ if(!empty($_GET['calendario'])){
         Versão:';
                     $arroz = '/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v';
                     if(isMobile()){
-                        echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"mobile\")'>";
+                        echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"mobile\")' ".(($ano < date('Y'))?"disabled":"").">";
                     }else{
-                    echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"pc\")'>";}
+                    echo "<select name='versao' class='form-control ' id='sel_ver' action='post' onchange='arroz(\"".$arroz."\", this.value, ".$versao.",\"pc\")' ".(($ano < date('Y'))?"disabled":"").">";}
                     for($i = 1; $i < $versao; $i++)
                     {
                             
@@ -179,7 +179,7 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
         if(!empty($row['act_tmp']) && !empty($row['act_tmp']) != null){$nv_ver = true;}
         //adiciona eventos
         if(!empty($row_base['id_leg'])||!empty($row['id_leg']) && $row['act_tmp'] != 'del'){
-            if(!empty($row_base['id_leg'])){
+            if(!empty($row_base['id_leg']) && $ano >= date('Y')){
                 $need_eve = 1;
             }
             $m_ini = ((empty($row_base))?$row['m_ini']:$row_base['m_ini']);
@@ -199,7 +199,8 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
                 }
             }
             else{
-                if ($d_ini >= $d_fim && $m_ini < $m_fim) {
+                if ($m_ini < $m_fim) {
+                    echo "arroz";
                 if ($d_ini <= 32) {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                     $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
@@ -266,8 +267,8 @@ $calendario_lis .= "</table>";
 // começo do calendário
 echo "<div id='calendario'>".((!empty($need_eve) && $need_eve == 1)?"**Esses eventos são necessários de acordo com a DDE":"");
 $calendario = "<div style='text-align: -webkit-center;display:block' id='cal_esc'>";
-
 if($ano >= date("Y")){
+
     
 if(isMobile()){
     $a = 1;
@@ -458,7 +459,19 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
 
 if($ano < date("Y")){
     echo "<div style='text-align: -webkit-center;' id='calendario'>";
-    echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.'.pdf" width="1000px" height="770px" ></embed>';
+    if(isMobile()){
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf"><button class="btn btn-info">Versão Escolar</button></a><br>';
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf"><button class="btn btn-info">Versão Acadêmica</button></a>';
+    }
+    else{
+
+    echo "<div id='pdf_versao_esc' style='text-align: -webkit-center; display:block'>";
+    echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" width="1000px" height="770px" ></embed>';
+    echo "</div>";
+    echo "<div id='pdf_versao_acad' style='text-align: -webkit-center; display:none'>";
+    echo '<embed src="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" width="1000px" height="770px" ></embed>';
+    echo "</div>";
+    }
 }
 echo "</div>";
 
@@ -487,8 +500,9 @@ echo "</div>";
 
 echo "<div style='display:flex;flex-direction:row;text-decoration:none;justify-content:space-between;'>";
 echo "<div style='display:flex;flex-direction:column;'>";
-echo "<button class='btn btn-info' style='margin-bottom:10px;width:175px' onclick=\"tipoCal()\">Alternar calendário</button><br>";
-if($versao != 0){
+if($ano >= date('Y') || $ano < date('Y') && !isMobile()){
+echo "<button class='btn btn-info' style='margin-bottom:10px;width:175px' onclick=\"tipoCal()\">Alternar calendário</button><br>";}
+if($versao != 0 && $ano >= date('Y')){
     $a = 0;
     if(isMobile()){ 
         echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" style="display:block" id="escdownload">';
@@ -507,7 +521,7 @@ if($versao != 0){
     echo "<a class='btn btn-info' style='display:none;width:175px' onclick=\"Pdf('".$a."')\" id='recent_button'>Voltar ao calendário</a><br>";
 }
 echo "</div>";
-if(!empty($ano_sql)){
+if(!empty($ano_sql) && $ano >= date('Y')){
 
     if(!empty($nv_ver)){
         echo "<div style='display:flex;flex-direction:column;margin-right:10px' id='nv_button'>";
