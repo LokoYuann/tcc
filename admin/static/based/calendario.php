@@ -200,7 +200,6 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
             }
             else{
                 if ($m_ini < $m_fim) {
-                    echo "arroz";
                 if ($d_ini <= 32) {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                     $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
@@ -461,7 +460,7 @@ if($ano < date("Y")){
     echo "<div style='text-align: -webkit-center;' id='calendario'>";
     if(isMobile()){
         echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf"><button class="btn btn-info">Versão Escolar</button></a><br>';
-        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - esc.pdf"><button class="btn btn-info">Versão Acadêmica</button></a>';
+        echo '<a href="/admin/static/img/versao/'.$sigla_ue.'/'.$ano.'/'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf" download="'.$sigla_ue.' - '.$ano.' v'.$versao.' - acad.pdf"><button class="btn btn-info">Versão Acadêmica</button></a>';
     }
     else{
 

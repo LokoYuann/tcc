@@ -114,7 +114,7 @@
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Fim</strong></label>
-				<input type="date" class="form-control verifybase2 0" name="dt_fim_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y") ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
+				<input type="date" class="form-control verifybase2 0" name="dt_fim_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
 			</div>
 			<div class="col-md-3">
 			<label for="dt_nasc"><strong>Múltiplos Eventos</strong></label> <br>
