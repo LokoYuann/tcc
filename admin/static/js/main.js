@@ -19,9 +19,10 @@ function tipoCal(){
         document.getElementById( 'pdf_versao_esc' ).style.display = 'block';
         document.getElementById( 'pdf_versao_acad' ).style.display = 'none';
         document.getElementById("cal_esc").style.display = "block";
+        document.getElementById('cal_lis').style.display = 'none';
+        
         document.getElementById( 'escdownload' ).style.display = 'block';
         document.getElementById( 'acaddownload' ).style.display = 'none';
-        document.getElementById( 'cal_lis' ).style.display = 'none';
         //document.getElementById( 'ver_button' ).style.display = 'none';
     }else{
         document.getElementById( 'pdf_versao_esc' ).style.display = 'none';

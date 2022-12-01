@@ -271,17 +271,15 @@ if($ano >= date("Y")){
     
 if(isMobile()){
     $a = 1;
-    $calendarioM = '<div class="clearfix" style="display:flex;justify-content:center;height:100%">';
+    $calendarioM = '<div class="clearfix" style="display:flex;align-content:center;justify-content:center;height:100%">';
+    $meses = array('','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
+    $penes = array('','D','S','T','Q','Q','S','S');
 $calendarioM .= "<table class='table table-bordered border border-3 border-warning stripped ' style='float:left;height:100%'>";
-
-
-$meses = array('','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
-$penes = array('','D','S','T','Q','Q','S','S');
 
 for ($i=1; $i < 13; $i++) { 
     # code...
     foreach ($meses as $a => $value) {
-        $calendarioM .= "<tr onclick='sort(".$i.")' id='mes".$i."' ><td><span ><strong>".$meses[$i]."<br></strong></span></td></tr>";
+        $calendarioM .= "<tr onclick='sort(".$i.")' id='mes".$i."' ><td style=''><span ><strong>".$meses[$i]."<br></strong></span></td></tr>";
         break;
     }
 }
@@ -340,7 +338,7 @@ $calendarioM .= "</table>";
     $calendarioM .= "</div>";
 }else{
     
-    $calendario .= "<table class='table table-bordered border border-3 border-warning stripped' align='center' style='border-collapse: collapse;'>";
+    $calendario .= "<table class='table table-bordered border border-3 border-warning stripped'style='border-collapse: collapse;'>";
     $calendario .= "<tr class=''>";
     $calendario .= "<td  rowspan='2' class='cal-content cal-cab'>Meses</td>";
     $calendario .= "<td colspan='31' class='cal-content'>Dias</td>";
