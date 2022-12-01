@@ -12,9 +12,9 @@
 	$cal = mysqli_fetch_array($cal_sql);
 
 	if($_SESSION['UsuarioNivel'] == 2){
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_ue, ano_letivo ASC") or die(mysqli_error());}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_ue, ano_letivo ASC") or die(mysqli_error());}
 	
 
 
@@ -45,7 +45,7 @@
 		if(!empty($_GET['id_tmp'])){
 		echo '<input type="hidden" name="id_tmp" class="form-control" value="'.$_GET['id_tmp'].'" readonly>';}
 		?>
-		<div class="form-group col-md-3">
+		<div class="form-group col-md-2">
 			<label class="font-info" for="id_evento">ID Evento</label>
 			<input type="text" class="form-control"  name="id_evento" value="<?php if($_GET['status'] != 'add'){echo $id_evento;}?>" readonly>
 		</div>
@@ -54,13 +54,13 @@
 				<label for="id_calendario"><strong>UE</strong></label>
 				<?php
 				if ($_SESSION['UsuarioNivel'] == 1){
-					echo '<input type="hidden" class="form-control readonly" name="id_calendario" value="'.$func[0].'" readonly>';
+					echo '<input type="hidden" class="form-control readonly" name="id_ue" value="'.$func[0].'" readonly>';
 					echo '<input type="text" class="form-control readonly" name="" value="'.$func['sigla_inst'].'" readonly>';
 				}
 				else{
 				?>
 				
-					<select class="form-control " id="" name="" onchange='formreact(this.value,"addeve")'>
+					<select class="form-control " id="" name="id_ue" onchange='formreact(this.value,"edit_eve"),calAno("novo_cal", this.value)'>
 							<?php
 							echo "<option value='none'>Todas</option>";
 							for($i = 0; $i < count($inst); $i++)
@@ -77,7 +77,7 @@
 
 			<div class="form-group col-md-2">
 				<strong><label for="id_calendario">Calendário</label></strong>
-				<select class="form-control " id="reactive" name="id_calendario" >
+				<select class="form-control " onchange="calAno()" id="reactive" name="id_calendario" required>
 				<?php 
 					for($i = 0; $i < count($ids); $i++)
 					{
@@ -89,10 +89,25 @@
 				?>
 				</select>
 			</div>
+			<div class="form-group col-md-2">
+			<label for="ano_letivo"><strong>Ano Letivo</strong></label>
+				<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio1" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')?>" onchange="anoLetivo(this.value)"   checked>
+				<label class="custom-control-label" for="customRadio1"><?php echo date('Y')?></label>
+				</div>
+				<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio2" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')+1?>" onchange="anoLetivo(this.value)" >
+				<label class="custom-control-label" for="customRadio2"><?php echo date('Y')+1?></label>
+				</div>
+			</div>	
 
-		<div class="form-group col-md-2">
+		
+	</div>
+	<!-- 2ª LINHA -->
+	<div class="row"> 
+	<div class="form-group col-md-2">
 			<label for="id_leg"><strong>Tipo de Evento</strong></label>
-			<select class="form-control" id="id_leg" name="id_leg" onchange='verifybase(this.value)'>
+			<select class="form-control select 0" id="id_leg" name="id_leg" onchange='verifybase(this.value, 0)'>
 				<option> --------- </option>
 					<?php
 															
@@ -107,18 +122,16 @@
 			</select>
 
 		</div>
-	</div>
-	<!-- 2ª LINHA -->
-	<div class="row"> 
 		<div class="form-group col-md-3">
 			<label class="font-info" for="dt_ini_ev"> <strong>Data de Início</strong> </label>
-			<input type="date" class="form-control" name="dt_ini_ev" id="verifybase1" value="<?php echo $row[1]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="date_limit(this.value, 1)" required>
+			<input type="date" class="form-control verifybase1 0" name="dt_ini_ev" value="<?php echo $row[1]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,1,0)" required>
 		</div>
 
 		<div class="form-group col-md-3">
 			<label class="font-info" for="dt_fim_ev"> <strong>Data de Fim</strong> </label>
-			<input type="date" class="form-control" name="dt_fim_ev" id="verifybase2" value="<?php echo $row[2]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="date_limit(this.value, 2)" required>
+			<input type="date" class="form-control verifybase2 0" name="dt_fim_ev" value="<?php echo $row[2]; ?>" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
 		</div>
+		
 	</div><br>
 
 

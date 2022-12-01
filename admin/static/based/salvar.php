@@ -3,7 +3,7 @@ $con = mysqli_connect('localhost', 'root', '', 'dailyevent');
 $sql_tmp = mysqli_query($con, "select * from tmp_eve where id_calendario = '".$_GET['cal']."'");
 $ue = mysqli_query($con , 'select id_ue from calendario where id_calendario ="'.$_GET['cal'].'";');
 
-$base_cal = mysqli_query($con, "select id_leg FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_GET['cal']."')");
+$base_cal = mysqli_query($con, "select id_leg FROM eventos WHERE id_calendario='0' && EXTRACT(YEAR FROM dt_ini_ev) = (select ano_letivo from calendario where id_calendario='".$_GET['cal']."') && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_GET['cal']."')");
 if(mysqli_num_rows($base_cal) != 0){
     header('Location: ../dash.php?page=home&msg=true&calendario='.$_GET['cal'].'&ue='.mysqli_fetch_array($ue)[0]);exit;
 }
@@ -30,7 +30,7 @@ $sql_del = "delete from tmp_eve where id_calendario = '".$_GET['cal']."';";
 $resultado = mysqli_query($con, $sql_del)or die(mysqli_error());
 
 $sql_ver = mysqli_query($con, "select versao_cal from calendario where id_calendario = '".$_GET['cal']."';")or die(mysqli_error());
-if($_GET['cal'] !=0){
+if($_GET['cal'] !=0  && $_GET['cal'] !=1){
 $ver = mysqli_fetch_array($sql_ver)[0]+1;
 }else{
     $ver = mysqli_fetch_array($sql_ver)[0];

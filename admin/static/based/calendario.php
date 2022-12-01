@@ -15,15 +15,15 @@ if(!empty($_GET['calendario'])){
 
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
 		else if(isset($_POST['ue']) && $_POST['ue'] == 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario  ORDER BY ano_letivo ASC") or die(mysqli_error());}
         else{
-            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());
+            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());
         }
         }
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
         while($row = mysqli_fetch_array($id_cal))
         {
             $ids[] = $row['id_calendario'];
@@ -47,8 +47,8 @@ if(!empty($_GET['calendario'])){
                 $ue = $row[1];
                 $versao = $row[2];
             }
-                $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_POST['calendario']."')");
-        }
+                $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE (select id_ue from calendario where eventos.id_calendario = calendario.id_calendario)='0' && (select ano_letivo from calendario where eventos.id_calendario = calendario.id_calendario) = '".$ano."' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$_POST['calendario']."' UNION ALL SELECT id_leg  FROM eventos where id_calendario = '".$_POST['calendario']."' && id_evento not in (SELECT id_evento  FROM tmp_eve))");
+        }   
 
         else if(!empty($func['cal'])){
             $daysql = mysqli_query($con, "(SELECT id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE (id_calendario='".$func['cal']."' && id_evento not in (SELECT id_evento  FROM tmp_eve)) union all SELECT id_leg, EXTRACT(DAY FROM dt_ini_tmp) AS d_ini, EXTRACT(DAY FROM dt_fim_tmp) AS d_fim, EXTRACT(MONTH FROM dt_ini_tmp) AS m_ini, EXTRACT(MONTH FROM dt_fim_tmp) AS m_fim, id_evento, act_tmp,dt_ini_tmp as data_ini, dt_fim_tmp as data_fim  FROM tmp_eve wHERE id_calendario ='".$func['cal']."') order by data_ini");
@@ -59,7 +59,7 @@ if(!empty($_GET['calendario'])){
                 $ue = $row[1];
                 $versao = $row[2];
             }
-                $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE id_calendario='0' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$func['cal']."')");
+                $base_cal = mysqli_query($con, "select id_leg, EXTRACT(DAY FROM dt_ini_ev) AS d_ini, EXTRACT(DAY FROM dt_fim_ev) AS d_fim, EXTRACT(MONTH FROM dt_ini_ev) AS m_ini, EXTRACT(MONTH FROM dt_fim_ev) AS m_fim, id_evento, null as act_tmp,dt_ini_ev as data_ini, dt_fim_ev as data_fim FROM eventos WHERE (select id_ue from calendario where eventos.id_calendario = calendario.id_calendario)='0' && (select ano_letivo from calendario where eventos.id_calendario = calendario.id_calendario) = '".$ano."' && id_leg not in (SELECT id_leg  FROM tmp_eve where id_calendario = '".$func['cal']."' UNION ALL SELECT id_leg  FROM eventos where id_calendario = '".$func['cal']."' && id_evento not in (SELECT id_evento  FROM tmp_eve))");
         }else{
             $_POST['calendario'] = "novo_cal";
         }
@@ -281,7 +281,7 @@ $penes = array('','D','S','T','Q','Q','S','S');
 for ($i=1; $i < 13; $i++) { 
     # code...
     foreach ($meses as $a => $value) {
-        $calendarioM .= "<tr onclick='sort(".$i.")'><td><span ><strong>".$meses[$i]."<br></strong></span></td></tr>";
+        $calendarioM .= "<tr onclick='sort(".$i.")' id='mes".$i."' ><td><span ><strong>".$meses[$i]."<br></strong></span></td></tr>";
         break;
     }
 }
@@ -549,17 +549,26 @@ $_SESSION['calendario'] = $calendario;}
 <script>
 
 function sort(a) {
-
     let i = 0;
     for(i=1;i<=12;i++){
         if(a == i){
-            if(document.getElementById(i).style.display == 'none'){document.getElementById(i).style.display = 'block'}
-            else{document.getElementById(i).style.display = 'none'}
+            if(document.getElementById(i).style.display == 'none'){
+                document.getElementById(i).style.display = 'block'
+                document.getElementById('mes'+i).classList.add("mes-ativo");
+            }
+            else{
+                document.getElementById(i).style.display = 'none'
+                document.getElementById('mes'+i).classList.remove("mes-ativo");
+            }
+            
         }
-        else{document.getElementById(i).style.display = 'none'}
+        else{
+            document.getElementById(i).style.display = 'none'
+            document.getElementById('mes'+i).classList.remove("mes-ativo");
         }
-
-
+    }
+    
+    
  }
 
 

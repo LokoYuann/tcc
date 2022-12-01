@@ -69,6 +69,15 @@
   }
 
 /* calendário */
+.mes-ativo{
+  /*
+  background: rgb(0,44,255);
+  background: linear-gradient(90deg, rgba(0,44,255,1) 0%, rgba(0,44,255,0.8127626050420168) 6%, rgba(0,44,255,0) 9%); */
+  background: rgb(0,44,255);
+  background: linear-gradient(90deg, rgba(0,44,255,0.8239670868347339) 2%, rgba(0,44,255,0.21612394957983194) 7%);
+
+}
+
 .merdinha{
   white-space: nowrap;
   padding:0px !important;

@@ -1,8 +1,8 @@
 <?php
 	if($_SESSION['UsuarioNivel'] == 2){
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario  ORDER BY id_ue, ano_letivo ASC") or die(mysqli_error());}
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_calendario ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario, ano_letivo, (select sigla_ue from ue where calendario.id_ue = ue.id_ue) as sigla from calendario where id_ue = '".$func[0]."' ORDER BY id_ue, ano_letivo ASC") or die(mysqli_error());}
 	
 
 
@@ -50,12 +50,12 @@
 				else{
 				?>
 				
-					<select class="form-control " id="" name="id_ue" onchange='formreact(this.value,"addeve")' required>
+					<select class="form-control " name="id_ue" onchange='formreact(this.value,"addeve"),calAno("novo_cal", this.value)' required>
 							<?php
 							echo "<option value='none'>Todas</option>";
 							for($i = 0; $i < count($inst); $i++)
 							{
-							echo '<option value="'.$id_ue[$i].'" '.((!(strcmp($func_inst[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
+							echo '<option value="'.$id_ue[$i].'" '.((!(strcmp($func[0], $id_ue[$i]))&&$_SESSION['UsuarioNivel'] == 1)?"SELECTED":"").'>'.$inst[$i].'</option>';
 								
 							}
 																	
@@ -67,7 +67,7 @@
 			
 			<div class="form-group col-md-2">
 				<label for="id_calendario"><strong>Calendário</strong></label>
-				<select class="form-control " id="reactive" name="id_calendario" required>
+				<select class="form-control " onchange="calAno()" id="reactive" name="id_calendario" required>
 				<?php 
 				if($_SESSION['UsuarioNivel'] == 1){
 					echo "<option value='novo_cal'>Novo Calendário</option>";
@@ -82,7 +82,17 @@
 				?>
 				</select>
 			</div>
-
+			<div class="form-group col-md-2">
+			<label for="ano_letivo"><strong>Ano Letivo</strong></label>
+				<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio1" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')?>" onchange="anoLetivo(this.value)"  disabled checked>
+				<label class="custom-control-label" for="customRadio1"><?php echo date('Y')?></label>
+				</div>
+				<div class="custom-control custom-radio">
+				<input type="radio" id="customRadio2" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')+1?>" onchange="anoLetivo(this.value)" disabled>
+				<label class="custom-control-label" for="customRadio2"><?php echo date('Y')+1?></label>
+				</div>
+			</div>			
 
 		</div>
 		<!-- 2ª LINHA -->
@@ -94,7 +104,7 @@
 		<div class="row">
 		<div class="form-group col-md-2">
 				<label for="id_leg"><strong>Tipo Evento</strong></label>
-				<select class="form-control" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, 0)' required>
+				<select class="form-control select 0" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, 0)' required>
 				<option> --------- </option>
 					<?php
 															
@@ -110,11 +120,11 @@
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Início</strong></label>
-				<input type="date" class="form-control verifybase1 0" name="dt_ini_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,1,0)" required>
+				<input type="date" class="form-control verifybase1 0" name="dt_ini_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y") ?>-12-31" onchange="dateLimit(this.value,1,0)" required>
 			</div>
 			<div class="col-md-3">
 				<label for="dt_nasc"><strong>Data Fim</strong></label>
-				<input type="date" class="form-control verifybase2 0" name="dt_fim_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y")+1 ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
+				<input type="date" class="form-control verifybase2 0" name="dt_fim_ev[]" min="<?php echo date("Y") ?>-01-01" max="<?php echo date("Y") ?>-12-31" onchange="dateLimit(this.value,2,0)" required>
 			</div>
 			<div class="col-md-3">
 			<label for="dt_nasc"><strong>Múltiplos Eventos</strong></label> <br>
@@ -144,7 +154,7 @@
 			<div class="row">
 		<div class="form-group col-md-2">
 				<label for="id_leg"><strong>Tipo Evento</strong></label>
-				<select class="form-control" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, `+number+`)' required>
+				<select class="form-control select `+number+`" id="id_leg" name="id_leg[]" onchange='verifybase(this.value, `+number+`)' required>
 				<option> --------- </option>
 					<?php
 															

@@ -16,10 +16,12 @@
 
 
 -- Copiando estrutura do banco de dados para dailyevent
+DROP DATABASE IF EXISTS `dailyevent`;
 CREATE DATABASE IF NOT EXISTS `dailyevent` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
 USE `dailyevent`;
 
 -- Copiando estrutura para tabela dailyevent.calendario
+DROP TABLE IF EXISTS `calendario`;
 CREATE TABLE IF NOT EXISTS `calendario` (
   `id_calendario` int(11) NOT NULL AUTO_INCREMENT,
   `ano_letivo` year(4) DEFAULT NULL,
@@ -29,23 +31,36 @@ CREATE TABLE IF NOT EXISTS `calendario` (
   PRIMARY KEY (`id_calendario`),
   KEY `FK_calendario_ue` (`id_ue`),
   CONSTRAINT `FK_calendario_ue` FOREIGN KEY (`id_ue`) REFERENCES `ue` (`id_ue`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.calendario: ~4 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.calendario: ~11 rows (aproximadamente)
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
 	(0, '2022', 0, '2022-11-22', 1);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
-	(1, '2022', 21, '2022-11-25', 1);
+	(1, '2023', 0, '2022-11-30', 1);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
-	(2, '2022', 21, '2022-11-25', 1);
+	(2, '2022', 12, '2022-11-25', 1);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
 	(3, '2022', 2, NULL, 1);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
 	(9, '2022', 2, '2022-11-23', 0);
 REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
 	(10, '2022', 2, '2022-11-24', 0);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(14, '2022', 28, '2022-11-26', 0);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(15, '2023', 21, '2022-11-30', 1);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(16, '2022', 12, '2022-11-26', 0);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(17, '2022', 21, '2022-11-30', 1);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(19, '2022', 21, '2022-11-30', 0);
+REPLACE INTO `calendario` (`id_calendario`, `ano_letivo`, `id_ue`, `dt_pub`, `versao_cal`) VALUES
+	(20, '2023', 21, '2022-11-30', 0);
 
 -- Copiando estrutura para tabela dailyevent.eventos
+DROP TABLE IF EXISTS `eventos`;
 CREATE TABLE IF NOT EXISTS `eventos` (
   `id_evento` int(11) NOT NULL AUTO_INCREMENT,
   `dt_ini_ev` date DEFAULT NULL,
@@ -57,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `eventos` (
   KEY `FK_eventos_legenda` (`id_leg`),
   CONSTRAINT `FK_eventos_calendario` FOREIGN KEY (`id_calendario`) REFERENCES `calendario` (`id_calendario`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_eventos_legenda` FOREIGN KEY (`id_leg`) REFERENCES `legenda` (`id_leg`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela dailyevent.eventos: ~47 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.eventos: ~48 rows (aproximadamente)
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(3, '2022-04-28', '2022-04-28', 2, 3);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
@@ -135,8 +150,6 @@ REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, 
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(64, '2022-01-01', '2022-01-29', 3, 11);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(65, '2022-11-04', '2022-11-29', 1, 11);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(66, '2022-11-04', '2022-11-22', 2, 7);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(68, '2022-11-05', '2022-11-24', 0, 5);
@@ -145,8 +158,6 @@ REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, 
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(74, '2022-11-05', '2022-11-24', 2, 5);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
-	(75, '2022-02-06', '2022-02-27', 1, 2);
-REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(76, '2022-02-06', '2022-02-27', 2, 2);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(77, '2022-02-06', '2022-02-27', 2, 2);
@@ -154,8 +165,17 @@ REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, 
 	(78, '2022-02-06', '2022-02-27', 2, 2);
 REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
 	(79, '2022-11-05', '2022-11-24', 2, 5);
+REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(84, '2023-05-05', '2023-05-20', 1, 5);
+REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(87, '2023-05-06', '2023-05-19', 15, 5);
+REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(88, '2022-02-10', '2022-02-23', 17, 2);
+REPLACE INTO `eventos` (`id_evento`, `dt_ini_ev`, `dt_fim_ev`, `id_calendario`, `id_leg`) VALUES
+	(89, '2022-11-17', '2022-11-24', 17, 5);
 
 -- Copiando estrutura para tabela dailyevent.funcionario
+DROP TABLE IF EXISTS `funcionario`;
 CREATE TABLE IF NOT EXISTS `funcionario` (
   `id_func` int(11) NOT NULL AUTO_INCREMENT,
   `mat_func` int(11) DEFAULT NULL,
@@ -172,9 +192,9 @@ CREATE TABLE IF NOT EXISTS `funcionario` (
   KEY `FK_funcionario_ue` (`id_ue`),
   CONSTRAINT `FK_funcionario_localidade` FOREIGN KEY (`cep`) REFERENCES `localidade` (`cep`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_funcionario_ue` FOREIGN KEY (`id_ue`) REFERENCES `ue` (`id_ue`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.funcionario: ~27 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.funcionario: ~30 rows (aproximadamente)
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(1, 1, 'Supervisor', 'Kael', '2000-07-15', 'f', '23573859234', '34234234344', 2147483647, 1);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
@@ -186,7 +206,7 @@ REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(5, 5, 'Supervisor', 'Eugene', '2000-07-10', 'm', '23573859234', '34234234344', 28016812, 5);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
-	(6, 6, 'Supervisor', 'Jase', '2000-07-10', 'f', '23573859234', '34234234344', 23550050, 6);
+	(6, 6, 'Supervisor', 'Jase', '2000-07-10', 'f', '23573859234', '34234234344', 57085, 6);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(7, 7, 'Supervisor', 'Reece', '2000-07-10', 'm', '23573859234', '34234234344', 21311281, 7);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
@@ -198,7 +218,7 @@ REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(11, 11, 'Supervisor', 'Clarissa', '2000-07-10', 'f', '23573859234', '34234234344', 24110305, 11);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
-	(12, 12, 'Supervisor', 'Jamarcus', '2000-07-10', 'm', '23573859234', '34234234344', 23550050, 12);
+	(12, 12, 'Supervisor', 'Jamarcus', '2000-07-10', 'm', '23573859234', '34234234344', 57085, 12);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(13, 13, 'Supervisor', 'Lola', '2000-07-10', 'f', '23573859234', '34234234344', 28993000, 13);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
@@ -206,7 +226,7 @@ REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(15, 15, 'Supervisor', 'Emilia', '2000-07-10', 'f', '23573859234', '34234234344', 26221080, 15);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
-	(16, 16, 'Supervisor', 'Jacqueline', '2000-07-10', 'f', '23573859234', '34234234344', 23550050, 16);
+	(16, 16, 'Supervisor', 'Jacqueline', '2000-07-10', 'f', '23573859234', '34234234344', 57085, 16);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(17, 17, 'Supervisor', 'Claudia', '2000-07-10', 'f', '23573859234', '34234234344', NULL, 17);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
@@ -229,8 +249,19 @@ REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `
 	(26, 2342, 'aasdawdaw', 'Thiago', '2000-07-10', 'm', '23573859234', '34636346___', 49035200, 4);
 REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
 	(28, 21234421, 'ASD', 'Matheus', '2000-07-10', 'm', '23573859234', '31241234124', 1223, 1);
+REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
+	(32, 345235, 'ASD', 'Steve', '2022-11-10', 'm', '23523525352', '43643636236', 87202340, 28);
+REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
+	(37, 5345235, 'aasdawdaw', '12312', '2022-11-09', 'f', '23523523523', '52352352353', 57085, 5);
+REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
+	(39, 5345235, 'aasdawdaw', '12312', '2022-11-03', 'm', '42342342342', '23523523523', 57085813, 4);
+REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
+	(40, 35235, 'aasdawdaw', 'sgseg', '2022-11-03', 'm', '23523523523', '12523523523', 57050090, 4);
+REPLACE INTO `funcionario` (`id_func`, `mat_func`, `funcao_func`, `nome_func`, `nasc_func`, `sexo_func`, `tel_func`, `cpf_func`, `cep`, `id_ue`) VALUES
+	(41, 21234421, 'ASD', 'fdsfsef', '2022-11-01', 'f', '23523523523', '55235235345', 57050090, 4);
 
 -- Copiando estrutura para tabela dailyevent.legenda
+DROP TABLE IF EXISTS `legenda`;
 CREATE TABLE IF NOT EXISTS `legenda` (
   `id_leg` int(11) NOT NULL AUTO_INCREMENT,
   `tipo_evento` varchar(50) DEFAULT NULL,
@@ -241,7 +272,7 @@ CREATE TABLE IF NOT EXISTS `legenda` (
   PRIMARY KEY (`id_leg`)
 ) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8;
 
--- Copiando dados para a tabela dailyevent.legenda: ~28 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.legenda: ~26 rows (aproximadamente)
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
 	(1, 'Avaliação', 'Teste de aceitabilidade do que foi aprendido.', '/admin/static/img/simbolos/paste-solid.png', 'AV', '#46adfb');
 REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sigla_leg`, `cor_leg`) VALUES
@@ -300,6 +331,7 @@ REPLACE INTO `legenda` (`id_leg`, `tipo_evento`, `desc_leg`, `simbolo_leg`, `sig
 	(32, '', '', '/admin/static/img/simbolos/emoji-frown-fill.png.', '', '#000000');
 
 -- Copiando estrutura para tabela dailyevent.localidade
+DROP TABLE IF EXISTS `localidade`;
 CREATE TABLE IF NOT EXISTS `localidade` (
   `cep` int(11) NOT NULL,
   `uf` char(2) DEFAULT NULL,
@@ -311,9 +343,11 @@ CREATE TABLE IF NOT EXISTS `localidade` (
   PRIMARY KEY (`cep`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.localidade: ~30 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.localidade: ~36 rows (aproximadamente)
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(1223, '', '', '', '', '12', '');
+REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+	(57085, 'RJ', 'Rio de Janeiro', 'Santa Cruz', 'Largo do Bodegão', '46', NULL);
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(9991060, 'SP', 'Diadema', 'Conceição', 'Rua Guarani', '735', NULL);
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
@@ -341,8 +375,6 @@ REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numer
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(23523523, '', '', '', '', '100', '');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
-	(23550050, 'RJ', 'Rio de Janeiro', 'Santa Cruz', 'Largo do Bodegão', '46', NULL);
-REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(23552352, '', '', '', '', '34', '');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(24110305, 'RJ', 'Niterói', 'Barreto', 'Guimarães Junior', '182', NULL);
@@ -367,9 +399,15 @@ REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numer
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(49035200, 'SE', 'Aracaju', 'Coroa do Meio', 'Rua Doutor Álvaro Santana', '12', '');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
-	(52353252, '', '', '', '', '235235', '');
+	(57050090, 'AL', 'Maceió', 'Farol', 'Rua Oldemburgo da Silva Paranh', '23', 'até 179 - lado ímpar');
+REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+	(57075585, 'AL', 'Maceió', 'Santos Dumont', 'Rua Supervisor Ivaldo Ferino', '34', '');
+REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+	(57085813, '', '', '', '', '34', '');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(60346218, 'CE', 'Fortaleza', 'Jardim Guanabara', 'Rua Professora Maria Clara', '100', 'de 780/781 a 1648/16');
+REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+	(68909501, 'AP', 'Macapá', 'Boné Azul', 'Avenida Rio Amazonas', '43', '(Lot. A. Ville)');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(69021370, 'AM', 'Manaus', 'Tarumã', 'Rua Marques Rabelo', '22', '');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
@@ -377,9 +415,12 @@ REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numer
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(76900970, 'RO', 'Ji-Paraná', 'Centro', 'Avenida Marechal Rondon', '12', '721');
 REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
+	(87202340, 'PR', 'Cianorte', 'Residencial Ilha do Mel', 'Rua Cabo Frio', '223', 'de 437 a 489 - lado ');
+REPLACE INTO `localidade` (`cep`, `uf`, `cidade`, `bairro`, `logradouro`, `numero`, `complemento`) VALUES
 	(2147483647, '', '', '', '', '847', '');
 
 -- Copiando estrutura para tabela dailyevent.tmp_eve
+DROP TABLE IF EXISTS `tmp_eve`;
 CREATE TABLE IF NOT EXISTS `tmp_eve` (
   `id_evento` int(11) DEFAULT NULL,
   `dt_ini_tmp` date DEFAULT NULL,
@@ -390,17 +431,18 @@ CREATE TABLE IF NOT EXISTS `tmp_eve` (
   `id_tmp` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id_tmp`),
   KEY `FK_tmp_eve_eventos` (`id_evento`)
-) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=275 DEFAULT CHARSET=utf8mb4;
 
 -- Copiando dados para a tabela dailyevent.tmp_eve: ~3 rows (aproximadamente)
 REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
-	(0, '2022-02-06', '2022-02-27', 9, 2, 'add', 201);
+	(0, '2022-11-05', '2022-11-24', 3, 5, 'add', 253);
 REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
-	(0, '2022-02-06', '2022-02-27', 9, 2, 'add', 226);
+	(0, '2022-11-05', '2022-11-24', 3, 5, 'add', 255);
 REPLACE INTO `tmp_eve` (`id_evento`, `dt_ini_tmp`, `dt_fim_tmp`, `id_calendario`, `id_leg`, `act_tmp`, `id_tmp`) VALUES
-	(0, '2022-11-05', '2022-11-24', 9, 5, 'add', 227);
+	(0, '2022-02-08', '2022-02-23', 3, 2, 'add', 257);
 
 -- Copiando estrutura para tabela dailyevent.ue
+DROP TABLE IF EXISTS `ue`;
 CREATE TABLE IF NOT EXISTS `ue` (
   `id_ue` int(11) NOT NULL AUTO_INCREMENT,
   `tel_ue` char(10) DEFAULT NULL,
@@ -412,9 +454,9 @@ CREATE TABLE IF NOT EXISTS `ue` (
   PRIMARY KEY (`id_ue`),
   KEY `FK_ue_localidade` (`cep`),
   CONSTRAINT `FK_ue_localidade` FOREIGN KEY (`cep`) REFERENCES `localidade` (`cep`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4;
 
--- Copiando dados para a tabela dailyevent.ue: ~23 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.ue: ~22 rows (aproximadamente)
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(0, NULL, 'DDE', 'DDE', NULL, NULL, NULL);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
@@ -432,7 +474,7 @@ REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_u
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(7, '2123321056', 'Escola Tecnica Estadual Oscar Tenório', 'ETEOT', 'secretaria.eteot@oi.com.br', NULL, 21610330);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
-	(8, '2123337225', 'Escola Técnica Estadual Santa Cruz', 'ETESC', 'etesc@faetec.rj.gov.br', NULL, 23550050);
+	(8, '2123337225', 'Escola Técnica Estadual Santa Cruz', 'ETESC', 'etesc@faetec.rj.gov.br', NULL, 57085);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(9, '2127259148', 'Escola Técnica Estadual Henrique Lage', 'ETEHL', 'secretaria.etehl@faetec.rio.gov.br', NULL, 24110305);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
@@ -461,8 +503,15 @@ REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_u
 	(21, NULL, 'sla', 'sla', NULL, NULL, NULL);
 REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
 	(27, '3543252352', 'sim la a', 'sla', 'thrh', 'C:/xampp/htdocs/admin/static/img/logo_ue/sla.jpg', 69021370);
+REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
+	(28, '5657585686', 'Un En', 'ETEUE', 'sla.com', 'C:/xampp/htdocs/admin/static/img/logo_ue/ETEUE.png', 68909501);
+REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
+	(29, '2352352534', 'sim la a', 'dfe', 'qwefqwf', 'C:/xampp/htdocs/admin/static/img/logo_ue/dfe.jpg', 57075585);
+REPLACE INTO `ue` (`id_ue`, `tel_ue`, `nome_ue`, `sigla_ue`, `email_ue`, `logo_ue`, `cep`) VALUES
+	(30, '5707558534', '4t34t', 'wef', 'qwefqwf', 'C:/xampp/htdocs/admin/static/img/logo_ue/wef.ico', 57075585);
 
 -- Copiando estrutura para tabela dailyevent.usuarios
+DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id_func` int(11) NOT NULL,
   `usuario` varchar(25) CHARACTER SET utf8mb4 DEFAULT NULL,
@@ -476,7 +525,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   CONSTRAINT `FK_usuarios_funcionario` FOREIGN KEY (`id_func`) REFERENCES `funcionario` (`id_func`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
--- Copiando dados para a tabela dailyevent.usuarios: ~23 rows (aproximadamente)
+-- Copiando dados para a tabela dailyevent.usuarios: ~21 rows (aproximadamente)
 REPLACE INTO `usuarios` (`id_func`, `usuario`, `senha`, `nivel`, `foto_perfil`, `ativo`) VALUES
 	(1, 'SUPETER', '123', 1, NULL, 1);
 REPLACE INTO `usuarios` (`id_func`, `usuario`, `senha`, `nivel`, `foto_perfil`, `ativo`) VALUES
@@ -523,6 +572,8 @@ REPLACE INTO `usuarios` (`id_func`, `usuario`, `senha`, `nivel`, `foto_perfil`, 
 	(22, 'fgw3', 'w3gw3', 1, '1', 1);
 REPLACE INTO `usuarios` (`id_func`, `usuario`, `senha`, `nivel`, `foto_perfil`, `ativo`) VALUES
 	(23, 'efgw4', 'g34g', 2, '', 1);
+REPLACE INTO `usuarios` (`id_func`, `usuario`, `senha`, `nivel`, `foto_perfil`, `ativo`) VALUES
+	(32, 'SUPETEUE', '123', 1, '', 1);
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

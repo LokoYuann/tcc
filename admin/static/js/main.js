@@ -103,22 +103,31 @@ function formreact(a,b,c) {
     xhttp.open("GET", "contents/reactive.php?value=" +a+ "&page=" +b+"&cal_esc="+c);
     xhttp.send();
 }
-function verifybase(a, b) {
+function verifybase(a, b, c) { 
+    let ano = document.querySelector('.ano_letivo:checked').value;
+    let cal = document.getElementsByName('id_calendario')[0].value;
     let xhttp = new XMLHttpRequest();
     let xhttp2 = new XMLHttpRequest();
-    let date =  new Date().getFullYear();
     xhttp.onload = function() {
-        document.getElementsByClassName('verifybase1 ' + b)[0].value = this.responseText;
-        document.getElementsByClassName('verifybase2 ' + b)[0].min = date+'-01-01';
-        console.log(Date().getFullYear());
+        if(this.responseText != ''){
+            document.getElementsByClassName('verifybase1 ' + b)[0].min = this.responseText;
+            document.getElementsByClassName('verifybase2 ' + b)[0].min = this.responseText;
+            document.getElementsByClassName('verifybase1 ' + b)[0].value = '';
+            document.getElementsByClassName('verifybase2 ' + b)[0].value = '';
         }
+    }
     xhttp2.onload = function() {
-        document.getElementsByClassName('verifybase2 ' + b)[0].value = this.responseText;
-        document.getElementsByClassName('verifybase1 ' + b)[0].max = (date+1) +'-12-31  ';
+        if(this.responseText != ''){
+            document.getElementsByClassName('verifybase1 ' + b)[0].max = this.responseText;
+            document.getElementsByClassName('verifybase2 ' + b)[0].max = this.responseText;
+            document.getElementsByClassName('verifybase1 ' + b)[0].value = '';
+            document.getElementsByClassName('verifybase2 ' + b)[0].value = '';
         }
+    }
 
-    xhttp.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=1");
-    xhttp2.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=2");
+    
+    xhttp.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=1&ano="+ano+"&triste="+c+"&cal="+cal);
+    xhttp2.open("GET", "contents/verifybase.php?id_leg=" +a+"&num=2&ano="+ano+"&triste="+c+"&cal="+cal);
     xhttp.send();
     xhttp2.send();
 }
@@ -127,6 +136,72 @@ function dateLimit(a, b, c){
         document.getElementsByClassName('verifybase2 ' + c)[0].min = a;
     }else{
         document.getElementsByClassName('verifybase1 ' + c)[0].max = a;
+    }
+}
+
+function calAno(a, b){
+    let year = new Date().getFullYear();
+    let valor = document.getElementById('reactive').value;
+    if(a == 'novo_cal' && b !=0){
+        valor = 'novo_cal';
+    }
+    if(b == 0){
+        valor = year;
+    }
+    
+    if(valor != 'novo_cal'){
+    document.getElementById('customRadio1').disabled = true;
+    document.getElementById('customRadio2').disabled = true;
+    function getSelectedText(elementId) {
+        var elt = document.getElementById(elementId);
+    
+        if (elt.selectedIndex == -1)
+            return null;
+    
+        return elt.options[elt.selectedIndex].text;
+    }
+    
+    var text = getSelectedText('reactive');
+    if (text.indexOf('-') > -1){
+        
+        text = text.split('-');
+        text = text[1].trim();
+    }
+    if(b == 0){
+        text = year;
+    }
+    if(text == year){
+        document.getElementById('customRadio1').checked = true;
+    }else{
+        document.getElementById('customRadio2').checked = true;
+    }
+    anoLetivo(text);
+    }
+    else{
+        document.getElementById('customRadio1').disabled = false;
+        document.getElementById('customRadio2').disabled = false;
+    }
+    console.log(text);
+}
+
+function anoLetivo(a){
+    for(i = 0;i < document.getElementsByClassName('verifybase1').length;i++){
+        date = a+ '-01-01';
+        date2 = a+ '-12-31';
+        value=null;
+        value2=null;
+        oDate =  document.getElementsByClassName('verifybase1 '+ i)[0].value.split('-');
+        oDate2 =  document.getElementsByClassName('verifybase2 '+ i)[0].value.split('-');
+        if(oDate[0] !== ""){date = a+ '-' +oDate[1]+'-'+oDate[2];value=date;}
+        if(oDate2[0] !== ""){date2 = a+ '-' +oDate2[1]+'-'+oDate2[2];value2=date2;}
+        
+        elem = document.getElementsByClassName('verifybase1 '+ i)[0];
+        Object.assign(elem, {value:value,min:`${a}-01-01`,max:date2});
+        elem2 = document.getElementsByClassName('verifybase2 '+ i)[0];
+        Object.assign(elem2, {value:value2,min:date,max:`${a}-12-31`});
+        verifybase(document.getElementsByClassName('select '+ i)[0].value, i, 'triste');
+
+    
     }
 }
 
