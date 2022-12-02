@@ -107,6 +107,7 @@ function formreact(a,b,c) {
 function verifybase(a, b, c) { 
     let ano = document.querySelector('.ano_letivo:checked').value;
     let cal = document.getElementsByName('id_calendario')[0].value;
+    console.log(cal);
     let xhttp = new XMLHttpRequest();
     let xhttp2 = new XMLHttpRequest();
     xhttp.onload = function() {

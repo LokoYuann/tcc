@@ -85,11 +85,11 @@
 			<div class="form-group col-md-2">
 			<label for="ano_letivo"><strong>Ano Letivo</strong></label>
 				<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio1" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')?>" onchange="anoLetivo(this.value)"  disabled checked>
+				<input type="radio" id="customRadio1" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')?>" onchange="anoLetivo(this.value)"  <?php if($_SESSION['UsuarioNivel'] == 2){echo "disabled";} ?> checked>
 				<label class="custom-control-label" for="customRadio1"><?php echo date('Y')?></label>
 				</div>
 				<div class="custom-control custom-radio">
-				<input type="radio" id="customRadio2" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')+1?>" onchange="anoLetivo(this.value)" disabled>
+				<input type="radio" id="customRadio2" name="ano_letivo" class="custom-control-input ano_letivo" value="<?php echo date('Y')+1?>" onchange="anoLetivo(this.value)" <?php if($_SESSION['UsuarioNivel'] == 2){echo "disabled";} ?>>
 				<label class="custom-control-label" for="customRadio2"><?php echo date('Y')+1?></label>
 				</div>
 			</div>			
