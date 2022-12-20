@@ -2,17 +2,22 @@
 function isMobile() {
     return preg_match("/(android|avantgo|blackberry|bolt|boost|cricket|docomo|fone|hiptop|mini|mobi|palm|phone|pie|tablet|up\.browser|up\.link|webos|wos)/i", $_SERVER["HTTP_USER_AGENT"]);
 }
+
+// alerta caso os eventos necessários não foram adicionados
 if(!empty($_GET['msg']) && $_GET['msg'] == 'true'){
     echo '	<div class="alert alert-warning alert-dismissible fade show" role="alert">
 						Eventos necessários não adicionados!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 		  			</div>';
 }
+
+// condicional para evitar erros de calendário vazio
 if(!empty($_GET['calendario'])){
     $_POST['calendario'] = $_GET['calendario'];
     $_POST['ue'] = $_GET['ue'];
 }
 
+// condicional caso o usuário for um supervisor ou um administrador
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
 			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
@@ -24,6 +29,8 @@ if(!empty($_GET['calendario'])){
         }
 	else{
 		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
+
+        // enquanto tiver valores nessa conexão, ele repete e declara a variável
         while($row = mysqli_fetch_array($id_cal))
         {
             $ids[] = $row['id_calendario'];
@@ -64,9 +71,11 @@ if(!empty($_GET['calendario'])){
             $_POST['calendario'] = "novo_cal";
         }
         
+        // condicional para evitar erros de calendário vazio, possíveis inúteis e declarando novos
+
         if(!empty($ano_sql)){
             
-            
+                    
                 $ue_sql = mysqli_query($con, "select nome_ue, logo_ue, sigla_ue from ue where id_ue = '".$ue."';");
                 while($row = mysqli_fetch_array($ue_sql))
                     {
@@ -94,7 +103,10 @@ if(!empty($_GET['calendario'])){
 
 <form action="?page=home" method="post" >
 		<div class="d-flex row justify-content-left" > 
-            
+    
+        <!-- checa da onde vai pegar os valores no banco de dados, fazendo com que eles mudem com javascript -->
+    
+        
             <?php if($_SESSION['UsuarioNivel'] == 2){ ?>
 			<div class="form-group col-md-4">
 				Instituição:
@@ -169,11 +181,13 @@ if(!empty($_GET['calendario'])){
 // armazena dias invalidos
 $invday = mysqli_query($con, "with recursive date_ranges AS (SELECT '".$ano."-01-01' dt UNION ALL SELECT dt + INTERVAL 1 DAY FROM date_ranges WHERE dt + INTERVAL 1 DAY <= '".$ano."-12-31') SELECT  EXTRACT(DAY FROM dt) AS d_eve_inv, EXTRACT(MONTH FROM dt) AS m_eve_inv, EXTRACT(DAY FROM LAST_DAY(dt)) AS fim_mes FROM date_ranges WHERE DAYNAME(dt) = 'Sunday';");
 
+// cria a base para os arrays bidimensionais de evento e símbolo
 $simb = array();
 $eve = array();
 $leg_use = array();
 
 $calendario_lis = "</tr>";
+// declara como eles devem se comportar, em relação a um plano cartesiano, e que infomações devem conter
 if(!empty($daysql)){
 while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = mysqli_fetch_array($base_cal))){
         if(!empty($row['act_tmp']) && !empty($row['act_tmp']) != null){$nv_ver = true;}
@@ -192,19 +206,21 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
             $leg = mysqli_fetch_array($leg_sql);
             array_push($leg_use,$leg[0]);   
 
+            // se o dia inicial for  menor ou igual ao dia final e se o mês inicial for igual ao final, coloca os eventos e símbolos
             if ($d_ini <= $d_fim && $m_ini == $m_fim) {
                 for ($d_ini; $d_ini < $d_fim; $d_ini++) { 
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                     $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                 }
             }
+
             else{
+                // se o mês inicial for menor que o final e o dia inicial for menor ou igual a 32, ele aumenta o número da váriavel de dia inicial e diminui a final, assim preenchendo o espaço desejado
                 if ($m_ini < $m_fim) {
                 if ($d_ini <= 32) {
                     $eve[$m_ini][$d_ini] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                     $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                     $d_ini++;
-                    // se o mes inicial for menor ou igual ao mes final e o dia final for 32(máximo), reinicia o valor do dia inicial para um, voltando ao loop acima, e aumenta em um o valor do mes inicial, até satisfazer o mes inicial
                     
                     for ($d_fim; $d_fim >= 1; $d_fim--) { 
                             $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
@@ -233,6 +249,7 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
 
 
 
+            // aqui se pega onde começa e termina uma seman, a fim de ordenar como fica o calendário acadêmico
         $week_ini = date("w", strtotime(((empty($row_base))?$row['data_ini']:$row_base['data_ini'])));
         $week_fim = date("w", strtotime(((empty($row_base))?$row['data_fim']:$row_base['data_fim'])));
 
@@ -250,6 +267,7 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
    
 }}
 $calendario_lis .= "</table>";
+    // variável que armazena os domingos, e imrpime eles em cima de todos
     while($row = mysqli_fetch_array($invday)){
         $domingo_d = $row[0];
         $domingo_m = $row[1];
@@ -268,12 +286,12 @@ echo "<div id='calendario'>".((!empty($need_eve) && $need_eve == 1)?"**Esses eve
 $calendario = "<div style='text-align: -webkit-center;display:block' id='cal_esc'>";
 if($ano >= date("Y")){
 
-    
+    // se o dispositivo for um celular, ele entra na visualização de celular
 if(isMobile()){
     $a = 1;
     $calendarioM = '<div class="clearfix" style="display:flex;align-content:center;justify-content:center;height:100%">';
     $meses = array('','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
-    $penes = array('','D','S','T','Q','Q','S','S');
+    $sigla_day = array('','D','S','T','Q','Q','S','S');
 $calendarioM .= "<table class='table table-bordered border border-3 border-warning stripped ' style='float:left;height:100%'>";
 
 for ($i=1; $i < 13; $i++) { 
@@ -299,8 +317,8 @@ $calendarioM .= "</table>";
         $calendarioM .= "<table border='1' id='".$mmm."' style='display: none;float:left;height:100%;' class='table table-bordered border border-3 border-warning stripped ' >";
         $calendarioM .= "<tr>";
         for ($ça=1; $ça < 8; $ça++) { 
-            foreach ($penes as $a => $value) {
-                $calendarioM .= "<td ><strong>".$penes[$ça]."<br></strong></td>";
+            foreach ($sigla_day as $a => $value) {
+                $calendarioM .= "<td ><strong>".$sigla_day[$ça]."<br></strong></td>";
                 break;
             }            }
         $calendarioM .= "</tr>";
@@ -337,7 +355,7 @@ $calendarioM .= "</table>";
     }
     $calendarioM .= "</div>";
 }else{
-    
+    // se não estiver num celular, ele mostra a versão normal
     $calendario .= "<table class='table table-bordered border border-3 border-warning stripped'style='border-collapse: collapse;'>";
     $calendario .= "<tr class=''>";
     $calendario .= "<td  rowspan='2' class='cal-content cal-cab'>Meses</td>";
@@ -366,12 +384,7 @@ for ($i=1; $i < 13; $i++) {
     // fecha a linha de meses
     $calendario .= "</td>";
 
-    // tentativa fracassada de repetir o argumento do if else
-        // while ($coords = mysqli_fetch_array($daysql)) {
 
-    // começo do argumento
-    // enquanto tiver valores no banco de dados, ele imprime o argumento || geralmente cria um ou outro mas me confundi e deixei assim
-       
         // começo da repetição dos dias $j
         for ($j=1; $j < 32; $j++) { 
             $calendario .= "<td ";
@@ -381,8 +394,7 @@ for ($i=1; $i < 13; $i++) {
         $calendario .= " class='cal-content'>".((!empty($simb[$i][$j]))?$simb[$i][$j]:"")."<span class='number' style='display:flex; justify-content:center;'></span></td>";
         }
     
-    // condição alternativa do argumento acima, geralmente imprime um ou outro, então é redundante. mas como quem planta verde colhe maduro...
-    
+
 
 
 }
@@ -394,7 +406,7 @@ $calendario .= "</table>";}
 
 echo $calendario;
 if(isMobile()){echo $calendarioM;}
-//Legenda
+//Campo onde se declara os campos de legenda que serão mostrados legenda
 if(($leg_use) != null){
 echo "<br>";
 $leg_sql = mysqli_query($con, "select tipo_evento as tipo, desc_leg as descricao, simbolo_leg as simbolo, sigla_leg as sigla, cor_leg as cor from legenda where id_leg IN (" . implode(",", array_map('intval', $leg_use)) . ");");
@@ -402,8 +414,8 @@ $sla_sql = mysqli_query($con, "select id_leg from legenda where id_leg IN (" . i
 
 
     $sla= array();
-    while ($kkk = mysqli_fetch_array($sla_sql)) {
-        $sla[] = $kkk[0];
+    while ($als = mysqli_fetch_array($sla_sql)) {
+        $sla[] = $als[0];
     }
 
     echo "Legenda:";
