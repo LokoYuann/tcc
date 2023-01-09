@@ -20,22 +20,22 @@ if(!empty($_GET['calendario'])){
 // condicional caso o usuário for um supervisor ou um administrador
 	if($_SESSION['UsuarioNivel'] == 2){
 		if(isset($_POST['ue']) && $_POST['ue'] !== 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$_POST['ue']."' ORDER BY ano_letivo ASC");}
 		else if(isset($_POST['ue']) && $_POST['ue'] == 'none'){
-			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario  ORDER BY ano_letivo ASC") or die(mysqli_error());}
+			$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario  ORDER BY ano_letivo ASC");}
         else{
-            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());
+            $id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC");
         }
         }
 	else{
-		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC") or die(mysqli_error());}
+		$id_cal = mysqli_query($con, "select id_calendario,ano_letivo, id_ue from calendario where id_ue = '".$func['id_ue']."' ORDER BY ano_letivo ASC");}
 
         // enquanto tiver valores nessa conexão, ele repete e declara a variável
         while($row = mysqli_fetch_array($id_cal))
         {
             $ids[] = $row['id_calendario'];
             $ano_sel[] = $row['ano_letivo'];
-            $sig_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$row['id_ue']."' ") or die(mysqli_error());
+            $sig_sql = mysqli_query($con, "select sigla_ue from ue where id_ue = '".$row['id_ue']."' ");
             $sig[] = mysqli_fetch_array($sig_sql)[0]; 
         }
 
@@ -222,6 +222,16 @@ while(($row = mysqli_fetch_array($daysql)) || (!empty($base_cal) && $row_base = 
                     $simb[$m_ini][$d_ini] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
                     $d_ini++;
                     
+                    if($m_ini+1 != $m_fim){
+                        $m_ini_temp = $m_ini+1;
+                        for($m_ini_temp;$m_ini_temp < $m_fim;$m_ini_temp++){
+                            for($dia = 1;$dia <= 31;$dia++){
+                                $eve[$m_ini_temp][$dia] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
+                                 $simb[$m_ini_temp][$dia] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
+                            }
+                        }
+                    }
+
                     for ($d_fim; $d_fim >= 1; $d_fim--) { 
                             $eve[$m_fim][$d_fim] = "style='background-color:".$leg['cor_leg'].";' data-toggle='tooltip' data-placement='top' title='".$leg['tipo_evento']."'";
                             $simb[$m_fim][$d_fim] = ((empty($leg["simbolo_leg"]))?$dde."<a>".$leg["sigla_leg"]."</a>":$dde."<img src='".$leg["simbolo_leg"]."' class='simbico' alt=''>");
